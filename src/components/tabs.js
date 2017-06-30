@@ -11,7 +11,7 @@ class Tabs extends React.Component {
               <Tab
                 data={tab}
                 key={i}
-                isActive={this.props.activeTab === tab.name}
+                isActive={this.props.activeTab === tab.tabID}
                 handleClick={this.props.changeTab.bind(this, tab)}
               />
             );
