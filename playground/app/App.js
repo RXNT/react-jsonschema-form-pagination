@@ -1,5 +1,5 @@
 import React from "react";
-import applyRules from "../../src/index";
+import applyPagination from "../../src/index";
 import Form from "react-jsonschema-form";
 
 const schema = {
@@ -71,26 +71,20 @@ const uiSchema = {
   },
 };
 
-const rules = {
-  password: {
-    action: "remove",
-    when: { firstName: "empty" },
+var tabData = [
+  {
+    schemaID: "0",
+    name: "Tab 1",
   },
-  telephone: [
-    {
-      action: "require",
-      when: { age: { greater: 10 } },
-    },
-    {
-      action: "replaceUi",
-      when: { age: { greater: 20 } },
-      conf: {
-        classNames: "col-md-12 col-xs-12",
-        "ui:help": "Look how big I am",
-      },
-    },
-  ],
-};
+  {
+    schemaID: "1",
+    name: "Tab 2",
+  },
+  {
+    schemaID: "2",
+    name: "Tab 3",
+  },
+];
 
 const formData = {
   lastName: "",
@@ -98,12 +92,12 @@ const formData = {
   age: 20,
 };
 
-let FormWithPagination = applyRules(Form);
+let FormWithPagination = applyPagination(Form);
 
 export function App() {
   return (
     <FormWithPagination
-      rules={rules}
+      tabData={tabData}
       liveValidate={false}
       safeRenderCompletion={true}
       noHtml5Validate={true}
