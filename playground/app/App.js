@@ -1,5 +1,8 @@
 import React from "react";
 import applyPagination from "../../src/index";
+import applyRules, {
+  SimplifiedRuleEngineFactory,
+} from "react-jsonschema-form-conditionals";
 import Form from "react-jsonschema-form";
 
 const schema = {
@@ -73,7 +76,7 @@ const uiSchema = {
   },
 };
 
-var tabData = [
+const tabData = [
   {
     tabID: "0",
     name: "Tab 1",
@@ -94,7 +97,7 @@ const formData = {
   age: 20,
 };
 
-let FormWithPagination = applyPagination(Form);
+let FormWithPagination = applyRules(applyPagination(Form));
 
 export function App() {
   return (
@@ -107,6 +110,8 @@ export function App() {
       schema={schema}
       onChange={({ formData }) =>
         console.log(`FormData ${JSON.stringify(formData)}`)}
+      rules={[]}
+      rulesEngine={SimplifiedRuleEngineFactory}
       uiSchema={uiSchema}
     />
   );

@@ -1,25 +1,19 @@
 import React from "react";
 import Tab from "./tab";
 
-class Tabs extends React.Component {
-  render() {
-    return (
-      <ul className="nav nav-tabs">
-        {this.props.tabData.map(
-          function(tab, i) {
-            return (
-              <Tab
-                data={tab}
-                key={i}
-                isActive={this.props.activeTab === tab.tabID}
-                handleClick={this.props.changeTab.bind(this, tab)}
-              />
-            );
-          }.bind(this)
-        )}
-      </ul>
-    );
-  }
+function Tabs({ activeTab, tabData, onTabChange }) {
+  return (
+    <ul className="nav nav-tabs">
+      {tabData.map((tab, i) =>
+        <Tab
+          key={i}
+          data={tab}
+          isActive={activeTab === tab.tabID}
+          handleClick={() => onTabChange(tab)}
+        />
+      )}
+    </ul>
+  );
 }
 
 export default Tabs;

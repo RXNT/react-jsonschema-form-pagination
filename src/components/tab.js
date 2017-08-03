@@ -1,17 +1,13 @@
 import React from "react";
 
-class Tab extends React.Component {
-  render() {
-    return (
-      <li
-        onClick={this.props.handleClick}
-        className={this.props.isActive ? "active" : null}>
-        <a href="#">
-          {this.props.data.name}
-        </a>
-      </li>
-    );
-  }
+function Tab({ handleClick, isActive, data: { name } }) {
+  return (
+    <li onClick={handleClick} className={isActive ? "active" : null}>
+      <a href="#">
+        {name}
+      </a>
+    </li>
+  );
 }
 
 export default Tab;

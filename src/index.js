@@ -10,6 +10,7 @@ export default function applyPagination(FormComponent) {
       super(props);
 
       let { formData, tabData } = this.props;
+      console.log("Constructing new");
       this.state = { formData, activeTabID: tabData[0].tabID };
     }
 
@@ -55,7 +56,8 @@ export default function applyPagination(FormComponent) {
       let configs = Object.assign(
         {},
         this.props,
-        { schema: tabSchema, formData },
+        { schema: tabSchema },
+        { formData },
         { onChange: this.handleOnChange }
       );
 
@@ -64,7 +66,7 @@ export default function applyPagination(FormComponent) {
           <Tabs
             tabData={tabData}
             activeTab={activeTabID}
-            changeTab={this.handleTabChange}
+            onTabChange={this.handleTabChange}
           />
           <FormComponent {...configs} />
         </div>
