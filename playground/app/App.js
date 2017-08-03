@@ -105,6 +105,8 @@ export function App() {
       noHtml5Validate={true}
       formData={formData}
       schema={schema}
+      onChange={({ formData }) =>
+        console.log(`FormData ${JSON.stringify(formData)}`)}
       uiSchema={uiSchema}
     />
   );

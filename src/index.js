@@ -9,11 +9,8 @@ export default function applyPagination(FormComponent) {
     constructor(props) {
       super(props);
 
-      let { schema, uiSchema, tabData } = this.props;
-      this.state = { schema, uiSchema, tabData };
-      this.state.activeTabID = tabData[0].tabID;
-
-      this.calculateTab = this.calculateTab.bind(this);
+      let { formData, tabData } = this.props;
+      this.state = { formData, activeTabID: tabData[0].tabID };
     }
 
     componentWillReceiveProps(nextProps) {
@@ -21,72 +18,55 @@ export default function applyPagination(FormComponent) {
       this.setState({ schema, uiSchema, tabData, activeTabID });
     }
 
-    calculateTab(tab) {
-      console.log("setting activeTabID to: " + tab.tabID);
+    handleTabChange = tab => {
+      this.setState({ activeTabID: tab.tabID });
+    };
 
-      this.setState(prevState => ({
-        activeTabID: tab.tabID,
-      }));
-    }
-
-    calculateTabSchema(activeTabID, schema, uiSchema) {
-      let tabSchema = schema;
-      let tabFields = [];
-
-      for (let field in schema.properties) {
-        if (uiSchema[field] && uiSchema[field]["ui:tabID"] === activeTabID) {
-          tabFields.push(schema.properties[field]);
-        }
+    handleOnChange = state => {
+      this.setState({ formData: state.formData });
+      if (this.props.onChange) {
+        this.props.onChange(state);
       }
+    };
 
-      tabSchema.properties = tabFields;
+    calculateTabSchema(tabID, schema, uiSchema) {
+      let tabSchema = deepcopy(schema);
+      if (!tabSchema.required) {
+        tabSchema.required = [];
+      }
+      Object.keys(tabSchema.properties)
+        .filter(field => uiSchema[field]["ui:tabID"] !== tabID)
+        .forEach(field => {
+          if (tabSchema.required.includes(field)) {
+            tabSchema.required = tabSchema.required.filter(
+              reqField => reqField !== field
+            );
+          }
+          delete tabSchema.properties[field];
+        });
       return tabSchema;
     }
 
-    stripTabData(uiSchema) {
-      let updatedUISchema = {};
-
-      for (let field in uiSchema) {
-        let modFieldContents = uiSchema[field];
-        delete modFieldContents["ui:tabID"];
-
-        updatedUISchema[field] = modFieldContents;
-      }
-
-      return updatedUISchema;
-    }
-
     render() {
-      let configs = Object.assign({}, this.props);
+      let { schema, uiSchema, tabData } = this.props;
+      let { activeTabID, formData } = this.state;
+      let tabSchema = this.calculateTabSchema(activeTabID, schema, uiSchema);
 
-      delete configs.schema;
-      delete configs.uiSchema;
-
-      let tabSchema = this.calculateTabSchema(
-        deepcopy(this.state.activeTabID),
-        deepcopy(this.state.schema),
-        deepcopy(this.state.uiSchema)
+      let configs = Object.assign(
+        {},
+        this.props,
+        { schema: tabSchema, formData },
+        { onChange: this.handleOnChange }
       );
-      let filteredUISchema = this.stripTabData(deepcopy(this.state.uiSchema));
-
-      console.log("tabSchema: " + JSON.stringify(tabSchema));
-      console.log(
-        "original schema (in state) is: " + JSON.stringify(this.state.schema)
-      );
-      console.log("updatedUISchema: " + JSON.stringify(filteredUISchema));
 
       return (
         <div>
           <Tabs
-            tabData={this.state.tabData}
-            activeTab={this.state.activeTabID}
-            changeTab={this.calculateTab}
+            tabData={tabData}
+            activeTab={activeTabID}
+            changeTab={this.handleTabChange}
           />
-          <FormComponent
-            {...configs}
-            schema={tabSchema}
-            uiSchema={filteredUISchema}
-          />
+          <FormComponent {...configs} />
         </div>
       );
     }
