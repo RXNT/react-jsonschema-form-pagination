@@ -49,7 +49,7 @@ const uiSchema = {
     classNames: "col-md-4 col-xs-4",
     "ui:widget": "updown",
     "ui:title": "Age of person",
-    "ui:tabID": "1",
+    "ui:tabID": "0",
   },
   bio: {
     "ui:widget": "textarea",
@@ -104,7 +104,24 @@ let rules = [
       },
     },
   },
+  {
+    conditions: {
+      firstName: { not: "empty" },
+    },
+    event: {
+      type: "incAge",
+    },
+  },
 ];
+
+const extraActions = {
+  incAge: function(params, schema, uiSchema, formData) {
+    if (!formData.age) {
+      formData.age = 0;
+    }
+    formData.age = formData.age + 1;
+  },
+};
 
 export default {
   schema,
@@ -112,5 +129,6 @@ export default {
   formData,
   tabData,
   rules,
+  extraActions,
   rulesEngine: SimplifiedRuleEngineFactory,
 };

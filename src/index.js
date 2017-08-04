@@ -9,14 +9,10 @@ export default function applyPagination(FormComponent) {
     constructor(props) {
       super(props);
 
-      let { formData, tabData } = this.props;
+      let { formData, tabData, schema, uiSchema } = this.props;
 
       let activeTabID = tabData[0].tabID;
-      this.idToSchema = divideInTabs(
-        tabData,
-        this.props.schema,
-        this.props.uiSchema
-      );
+      this.idToSchema = divideInTabs(tabData, schema, uiSchema);
       this.state = {
         formData,
         activeTabID,
@@ -24,7 +20,14 @@ export default function applyPagination(FormComponent) {
       };
     }
 
-    componentWillReceiveProps({ tabData, schema, uiSchema }) {
+    sameData = formData => {
+      return (
+        deepequal(this.props.formData, formData) ||
+        deepequal(this.formData, formData)
+      );
+    };
+
+    componentWillReceiveProps({ tabData, schema, uiSchema, formData }) {
       if (
         !deepequal(
           { tabData, schema, uiSchema },
@@ -37,6 +40,10 @@ export default function applyPagination(FormComponent) {
       ) {
         this.idToSchema = divideInTabs(tabData, schema, uiSchema);
         this.setState({ schema: this.idToSchema[this.state.activeTabID] });
+      }
+      if (!this.sameData(formData)) {
+        this.formData = formData;
+        this.setState({ formData });
       }
     }
 
