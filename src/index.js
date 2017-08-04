@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Tabs from "./components/tabs";
-import { isDevelopment } from "./utils";
-import deepcopy from "deepcopy";
+import deepequal from "deep-equal";
+import { isDevelopment, divideInTabs } from "./utils";
 
 export default function applyPagination(FormComponent) {
   class FormWithPagination extends Component {
@@ -10,56 +10,72 @@ export default function applyPagination(FormComponent) {
       super(props);
 
       let { formData, tabData } = this.props;
-      console.log("Constructing new");
-      this.state = { formData, activeTabID: tabData[0].tabID };
+
+      let activeTabID = tabData[0].tabID;
+      this.idToSchema = divideInTabs(
+        tabData,
+        this.props.schema,
+        this.props.uiSchema
+      );
+      this.state = {
+        formData,
+        activeTabID,
+        schema: this.idToSchema[activeTabID],
+      };
     }
 
-    componentWillReceiveProps(nextProps) {
-      let { schema, uiSchema, tabData, activeTabID } = nextProps;
-      this.setState({ schema, uiSchema, tabData, activeTabID });
+    componentWillReceiveProps({ tabData, schema, uiSchema }) {
+      if (
+        !deepequal(
+          { tabData, schema, uiSchema },
+          {
+            tabData: this.props.tabData,
+            schema: this.props.schema,
+            uiSchema: this.props.uiSchema,
+          }
+        )
+      ) {
+        this.idToSchema = divideInTabs(tabData, schema, uiSchema);
+        this.setState({ schema: this.idToSchema[this.state.activeTabID] });
+      }
     }
 
-    handleTabChange = tab => {
-      this.setState({ activeTabID: tab.tabID });
+    handleTabChange = ({ tabID }) => {
+      this.setState({ activeTabID: tabID, schema: this.idToSchema[tabID] });
     };
 
     handleOnChange = state => {
+      this.formData = state.formData;
       this.setState({ formData: state.formData });
       if (this.props.onChange) {
         this.props.onChange(state);
       }
     };
 
-    calculateTabSchema(tabID, schema, uiSchema) {
-      let tabSchema = deepcopy(schema);
-      if (!tabSchema.required) {
-        tabSchema.required = [];
-      }
-      Object.keys(tabSchema.properties)
-        .filter(field => uiSchema[field]["ui:tabID"] !== tabID)
-        .forEach(field => {
-          if (tabSchema.required.includes(field)) {
-            tabSchema.required = tabSchema.required.filter(
-              reqField => reqField !== field
-            );
-          }
-          delete tabSchema.properties[field];
-        });
-      return tabSchema;
+    shouldComponentUpdate(nextProps, nextState) {
+      let sameProps = deepequal(
+        Object.assign({}, this.props, { formData: {} }),
+        Object.assign({}, nextProps, { formData: {} })
+      );
+      let sameState = deepequal(
+        Object.assign({}, this.state, { formData: this.formData }),
+        nextState
+      );
+      let sameData =
+        deepequal(this.props.formData, nextProps.formData) ||
+        deepequal(this.formData, nextProps.formData);
+      return !sameProps || !sameState || !sameData;
     }
 
     render() {
-      let { schema, uiSchema, tabData } = this.props;
-      let { activeTabID, formData } = this.state;
-      let tabSchema = this.calculateTabSchema(activeTabID, schema, uiSchema);
+      let { tabData } = this.props;
+      let { activeTabID, formData, schema } = this.state;
 
-      let configs = Object.assign(
-        {},
-        this.props,
-        { schema: tabSchema },
-        { formData },
-        { onChange: this.handleOnChange }
-      );
+      let configs = Object.assign({}, this.props, {
+        schema,
+        formData,
+        onChange: this.handleOnChange,
+      });
 
       return (
         <div>
