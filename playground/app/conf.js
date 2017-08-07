@@ -1,10 +1,13 @@
 import { SimplifiedRuleEngineFactory } from "react-jsonschema-form-conditionals";
 
 const schema = {
-  title: "A registration form",
   type: "object",
   required: [],
   properties: {
+    encounter: {
+      type: "string",
+      title: "Encounter",
+    },
     firstName: {
       type: "string",
       title: "First name",
@@ -35,6 +38,9 @@ const schema = {
 };
 
 const uiSchema = {
+  encounter: {
+    classNames: "col-md-12",
+  },
   firstName: {
     classNames: "col-md-4 col-xs-4 success",
     "ui:autofocus": true,

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Tabs from "./components/tabs";
 import deepequal from "deep-equal";
-import { isDevelopment, divideInTabs } from "./utils";
+import { divideInTabs, GENERIC_TAB, isDevelopment } from "./utils";
 
 export default function applyPagination(FormComponent) {
   class FormWithPagination extends Component {
@@ -84,14 +84,28 @@ export default function applyPagination(FormComponent) {
         onChange: this.handleOnChange,
       });
 
+      let genericConfigs = Object.assign({}, this.props, {
+        schema: this.idToSchema[GENERIC_TAB],
+        formData,
+        onChange: this.handleOnChange,
+      });
+
       return (
         <div>
-          <Tabs
-            tabData={tabData}
-            activeTab={activeTabID}
-            onTabChange={this.handleTabChange}
-          />
-          <FormComponent {...configs} />
+          <FormComponent {...genericConfigs}>
+            <div />
+          </FormComponent>
+          <div className="col-md-12">
+            <Tabs
+              tabData={tabData}
+              activeTab={activeTabID}
+              onTabChange={this.handleTabChange}
+            />
+          </div>
+          <div className="col-md-12">
+            <br />
+            <FormComponent {...configs} />
+          </div>
         </div>
       );
     }
