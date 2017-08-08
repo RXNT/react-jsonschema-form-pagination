@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import deepequal from "deep-equal";
 import formWithTabs from "./FormWithTabs";
-import { divideInTabs, isDevelopment } from "./utils";
-import { splitInLayers } from "./tabSplitter";
+import { isDevelopment, splitInLayers } from "./utils";
 
 export default function applyPagination(FormComponent) {
   const FormWithTabs = formWithTabs(FormComponent);
@@ -14,15 +13,8 @@ export default function applyPagination(FormComponent) {
 
       let { formData, tabData, schema, uiSchema } = this.props;
 
-      let activeTabID = tabData[0].tabID;
-      this.idToSchema = divideInTabs(tabData, schema, uiSchema);
-
       this.layers = splitInLayers(schema, uiSchema, tabData);
-      this.state = {
-        formData,
-        activeTabs: ["default"],
-        schema: this.idToSchema[activeTabID],
-      };
+      this.state = { formData, activeTabs: ["default"] };
     }
 
     sameData = formData => {
@@ -43,8 +35,7 @@ export default function applyPagination(FormComponent) {
           }
         )
       ) {
-        this.idToSchema = divideInTabs(tabData, schema, uiSchema);
-        this.setState({ schema: this.idToSchema[this.state.activeTabID] });
+        this.layers = splitInLayers(schema, uiSchema, tabData);
       }
       if (!this.sameData(formData)) {
         this.formData = formData;
