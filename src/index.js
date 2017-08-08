@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Tabs from "./components/tabs";
 import deepequal from "deep-equal";
+import formWithTabs from "./FormWithTabs";
 import { divideInTabs, GENERIC_TAB, isDevelopment } from "./utils";
 
 export default function applyPagination(FormComponent) {
+  const FormWithTabs = formWithTabs(FormComponent);
+
   class FormWithPagination extends Component {
     constructor(props) {
       super(props);
@@ -68,19 +70,18 @@ export default function applyPagination(FormComponent) {
         Object.assign({}, this.state, { formData: this.formData }),
         nextState
       );
-      let sameData =
-        deepequal(this.props.formData, nextProps.formData) ||
-        deepequal(this.formData, nextProps.formData);
+      let sameData = this.sameData(nextProps.formData);
       return !sameProps || !sameState || !sameData;
     }
 
     render() {
       let { tabData } = this.props;
-      let { activeTabID, formData, schema } = this.state;
+      let { formData, schema, activeTabID } = this.state;
 
       let configs = Object.assign({}, this.props, {
         schema,
         formData,
+        activeTabID,
         onChange: this.handleOnChange,
       });
 
@@ -90,22 +91,16 @@ export default function applyPagination(FormComponent) {
         onChange: this.handleOnChange,
       });
 
+      delete genericConfigs.tabData;
+
       return (
         <div>
-          <FormComponent {...genericConfigs}>
-            <div />
-          </FormComponent>
-          <div className="col-md-12">
-            <Tabs
-              tabData={tabData}
-              activeTab={activeTabID}
-              onTabChange={this.handleTabChange}
-            />
-          </div>
-          <div className="col-md-12">
-            <br />
-            <FormComponent {...configs} />
-          </div>
+          <FormWithTabs {...genericConfigs} />
+          <FormWithTabs
+            tabData={tabData}
+            {...configs}
+            onTabChange={this.handleTabChange}
+          />
         </div>
       );
     }
