@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import deepequal from "deep-equal";
 import PropTypes from "prop-types";
-import { isDevelopment } from "./utils";
+import { GENERIC_TAB, isDevelopment } from "./utils";
 import Tabs from "./components/tabs";
 
 const formWithTabs = FormComponent => {
@@ -49,8 +49,9 @@ const formWithTabs = FormComponent => {
     }
 
     render() {
-      let { tabData, activeTabID } = this.props;
+      let { tabs, activeTab } = this.props;
       let { formData } = this.state;
+      let relTabs = tabs.filter(({ tabID }) => tabID !== GENERIC_TAB);
 
       let configs = Object.assign({}, this.props, {
         formData,
@@ -60,20 +61,20 @@ const formWithTabs = FormComponent => {
       return (
         <div>
           <div className="row">
+            <FormComponent {...configs}>
+              <div />
+            </FormComponent>
+          </div>
+          <div className="row">
             <div className="col-md-12">
-              {tabData && tabData.length > 0
+              {relTabs && relTabs.length > 0
                 ? <Tabs
-                    tabData={tabData}
-                    activeTab={activeTabID}
+                    tabData={relTabs}
+                    activeTab={activeTab}
                     onTabChange={this.props.onTabChange}
                   />
                 : <div />}
             </div>
-          </div>
-          <div className="row">
-            <FormComponent {...configs}>
-              <div />
-            </FormComponent>
           </div>
         </div>
       );
@@ -82,7 +83,7 @@ const formWithTabs = FormComponent => {
 
   if (isDevelopment()) {
     FormWithTabs.propTypes = {
-      tabData: PropTypes.array,
+      tabs: PropTypes.array,
     };
   }
 

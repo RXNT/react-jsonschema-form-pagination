@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import deepequal from "deep-equal";
 import formWithTabs from "./FormWithTabs";
-import { divideInTabs, GENERIC_TAB, isDevelopment } from "./utils";
+import { divideInTabs, isDevelopment } from "./utils";
+import { splitInLayers } from "./tabSplitter";
 
 export default function applyPagination(FormComponent) {
   const FormWithTabs = formWithTabs(FormComponent);
@@ -15,9 +16,11 @@ export default function applyPagination(FormComponent) {
 
       let activeTabID = tabData[0].tabID;
       this.idToSchema = divideInTabs(tabData, schema, uiSchema);
+
+      this.layers = splitInLayers(schema, uiSchema, tabData);
       this.state = {
         formData,
-        activeTabID,
+        activeTabs: ["default"],
         schema: this.idToSchema[activeTabID],
       };
     }
@@ -49,8 +52,10 @@ export default function applyPagination(FormComponent) {
       }
     }
 
-    handleTabChange = ({ tabID }) => {
-      this.setState({ activeTabID: tabID, schema: this.idToSchema[tabID] });
+    handleTabChange = index => ({ tabID }) => {
+      let activeTabs = this.state.activeTabs.slice(0, index + 1);
+      activeTabs[index] = tabID;
+      this.setState({ activeTabs });
     };
 
     handleOnChange = state => {
@@ -62,45 +67,39 @@ export default function applyPagination(FormComponent) {
     };
 
     shouldComponentUpdate(nextProps, nextState) {
+      let sameActive = deepequal(nextState.activeTabs, this.state.activeTabs);
+      if (!sameActive) {
+        return true;
+      }
       let sameProps = deepequal(
         Object.assign({}, this.props, { formData: {} }),
         Object.assign({}, nextProps, { formData: {} })
       );
+      if (!sameProps) {
+        return true;
+      }
       let sameState = deepequal(
         Object.assign({}, this.state, { formData: this.formData }),
         nextState
       );
+      if (!sameState) {
+        return true;
+      }
       let sameData = this.sameData(nextProps.formData);
       return !sameProps || !sameState || !sameData;
     }
 
     render() {
-      let { tabData } = this.props;
-      let { formData, schema, activeTabID } = this.state;
-
-      let configs = Object.assign({}, this.props, {
-        schema,
-        formData,
-        activeTabID,
-        onChange: this.handleOnChange,
-      });
-
-      let genericConfigs = Object.assign({}, this.props, {
-        schema: this.idToSchema[GENERIC_TAB],
-        formData,
-        onChange: this.handleOnChange,
-      });
-
-      delete genericConfigs.tabData;
-
+      let subForms = this.layers.toArray(this.state.activeTabs);
       return (
         <div>
-          <FormWithTabs {...genericConfigs} />
-          <FormWithTabs
-            tabData={tabData}
-            {...configs}
-            onTabChange={this.handleTabChange}
-          />
+          {subForms.map((conf, i) =>
+            <FormWithTabs
+              key={i}
+              {...conf}
+              onTabChange={this.handleTabChange(i)}
+            />
+          )}
         </div>
       );
     }

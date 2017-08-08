@@ -45,11 +45,11 @@ const uiSchema = {
     classNames: "col-md-4 col-xs-4 success",
     "ui:autofocus": true,
     "ui:emptyValue": "",
-    "ui:tabID": "0",
+    "ui:tabID": ["0", "some"],
   },
   lastName: {
     classNames: "col-md-4 col-xs-4",
-    "ui:tabID": "0",
+    "ui:tabID": ["0", "some"],
   },
   age: {
     classNames: "col-md-4 col-xs-4",
@@ -66,7 +66,7 @@ const uiSchema = {
     classNames: "col-md-6 col-xs-6",
     "ui:widget": "password",
     "ui:help": "Hint: Make it strong!",
-    "ui:tabID": "2",
+    "ui:tabID": ["2"],
   },
   telephone: {
     classNames: "col-md-6 col-xs-6",
