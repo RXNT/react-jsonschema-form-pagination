@@ -1,7 +1,7 @@
-import { divideInTabs } from "./utils";
+import { divideInLayers } from "./utils";
 
 const tabSplitter = (schema, uiSchema, tabData) => {
-  this.idToSchema = divideInTabs(tabData, schema, uiSchema);
+  divideInLayers(schema, uiSchema, tabData);
 };
 
 export default tabSplitter;
