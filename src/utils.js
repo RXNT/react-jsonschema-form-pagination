@@ -21,14 +21,15 @@ class Layer {
     return nonDefaultTabs.length > 0 ? nonDefaultTabs[0].tabID : GENERIC_TAB;
   }
 
-  toActiveTabs = (activeTabs, i = 0) => {
+  fillActiveTabs = (activeTabs, i = 0) => {
     if (i === activeTabs.length) {
       if (this.activeTab !== GENERIC_TAB) {
         activeTabs.push(this.activeTab);
-        this.conf[this.activeTab].toActiveTabs(activeTabs, i + 1);
+        this.conf[this.activeTab].fillActiveTabs(activeTabs, i + 1);
       }
     } else {
-      this.conf[activeTabs[i]].toActiveTabs(activeTabs, i + 1);
+      this.activeTab = activeTabs[i];
+      this.conf[activeTabs[i]].fillActiveTabs(activeTabs, i + 1);
     }
     return activeTabs;
   };

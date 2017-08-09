@@ -20,6 +20,10 @@ const schema = {
       type: "integer",
       title: "Age",
     },
+    nickName: {
+      type: "string",
+      title: "nickname",
+    },
     bio: {
       type: "string",
       title: "Bio",
@@ -56,6 +60,11 @@ const uiSchema = {
     "ui:widget": "updown",
     "ui:title": "Age of person",
     "ui:tabID": ["0", "firstName", "age"],
+  },
+  nickName: {
+    classNames: "col-md-4 col-xs-4",
+    "ui:title": "nickname",
+    "ui:tabID": ["0", "firstName", "nickName"],
   },
   bio: {
     "ui:widget": "textarea",
