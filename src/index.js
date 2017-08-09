@@ -86,13 +86,17 @@ export default function applyPagination(FormComponent) {
       let subForms = this.layers.toSubForms(this.state.activeTabs);
       return (
         <div>
-          {subForms.map((conf, i) =>
-            <FormWithTabs
-              key={i}
-              {...conf}
-              onTabChange={this.handleTabChange(i)}
-            />
-          )}
+          {subForms.map((conf, i) => {
+            let allConf = Object.assign({}, this.props, conf);
+            return (
+              <FormWithTabs
+                key={i}
+                {...allConf}
+                onChange={this.handleOnChange}
+                onTabChange={this.handleTabChange(i)}
+              />
+            );
+          })}
         </div>
       );
     }

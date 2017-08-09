@@ -49,7 +49,6 @@ const uiSchema = {
     classNames: "col-md-4 col-xs-4 success",
     "ui:autofocus": true,
     "ui:emptyValue": "",
-    "ui:tabID": ["0", "firstName"],
   },
   lastName: {
     classNames: "col-md-4 col-xs-4",
@@ -115,7 +114,7 @@ let rules = [
     event: {
       type: "require",
       params: {
-        field: "lastName",
+        field: "encounter",
       },
     },
   },
