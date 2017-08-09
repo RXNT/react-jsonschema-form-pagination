@@ -14,7 +14,8 @@ export default function applyPagination(FormComponent) {
       let { formData, tabData, schema, uiSchema } = this.props;
 
       this.layers = splitInLayers(schema, uiSchema, tabData);
-      this.state = { formData, activeTabs: ["default"] };
+      let activeTabs = this.layers.toActiveTabs([], 0);
+      this.state = { formData, activeTabs };
     }
 
     sameData = formData => {
@@ -46,6 +47,7 @@ export default function applyPagination(FormComponent) {
     handleTabChange = index => ({ tabID }) => {
       let activeTabs = this.state.activeTabs.slice(0, index + 1);
       activeTabs[index] = tabID;
+      this.layers.toActiveTabs(activeTabs);
       this.setState({ activeTabs });
     };
 

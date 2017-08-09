@@ -13,7 +13,26 @@ class Layer {
     this.uiSchema = uiSchema;
     this.conf = conf;
     this.defaultTab = { tabs, schema: conf[GENERIC_TAB], uiSchema };
+    this.activeTab = this.chooseActive(tabs);
   }
+
+  chooseActive(tabs) {
+    let nonDefaultTabs = tabs.filter(({ tabID }) => tabID != GENERIC_TAB);
+    return nonDefaultTabs.length > 0 ? nonDefaultTabs[0].tabID : GENERIC_TAB;
+  }
+
+  toActiveTabs = (activeTabs, i = 0) => {
+    if (i === activeTabs.length) {
+      if (this.activeTab !== GENERIC_TAB) {
+        activeTabs.push(this.activeTab);
+        this.conf[this.activeTab].toActiveTabs(activeTabs, i + 1);
+      }
+    } else {
+      this.conf[activeTabs[i]].toActiveTabs(activeTabs, i + 1);
+    }
+    return activeTabs;
+  };
+
   toArray = activeTabs => {
     let agg = [];
     let tab = activeTabs[0];
