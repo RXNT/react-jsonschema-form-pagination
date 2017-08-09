@@ -87,7 +87,9 @@ export default function applyPagination(FormComponent) {
       return (
         <div>
           {subForms.map((conf, i) => {
-            let allConf = Object.assign({}, this.props, conf);
+            let allConf = Object.assign({}, this.props, conf, {
+              formData: this.formData,
+            });
             return (
               <FormWithTabs
                 key={i}
