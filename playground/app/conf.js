@@ -55,7 +55,7 @@ const uiSchema = {
     classNames: "col-md-4 col-xs-4",
     "ui:widget": "updown",
     "ui:title": "Age of person",
-    "ui:tabID": ["0", "age"],
+    "ui:tabID": ["0", "firstName", "age"],
   },
   bio: {
     "ui:widget": "textarea",

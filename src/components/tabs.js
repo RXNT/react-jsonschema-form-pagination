@@ -6,7 +6,7 @@ function Tabs({ activeTab, tabs, onTabChange }) {
   let relTabs = tabs.filter(({ tabID }) => tabID !== GENERIC_TAB);
   if (relTabs.length > 0) {
     return (
-      <ul className="nav nav-tabs">
+      <ul className="nav nav-pills">
         {relTabs.map((tab, i) =>
           <Tab
             key={i}
