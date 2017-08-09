@@ -45,17 +45,17 @@ const uiSchema = {
     classNames: "col-md-4 col-xs-4 success",
     "ui:autofocus": true,
     "ui:emptyValue": "",
-    "ui:tabID": ["0", "some"],
+    "ui:tabID": ["0", "firstName"],
   },
   lastName: {
     classNames: "col-md-4 col-xs-4",
-    "ui:tabID": ["0", "some"],
+    "ui:tabID": ["0", "lastName"],
   },
   age: {
     classNames: "col-md-4 col-xs-4",
     "ui:widget": "updown",
     "ui:title": "Age of person",
-    "ui:tabID": "0",
+    "ui:tabID": ["0", "age"],
   },
   bio: {
     "ui:widget": "textarea",

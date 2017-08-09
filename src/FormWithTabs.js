@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import deepequal from "deep-equal";
 import PropTypes from "prop-types";
-import { GENERIC_TAB, isDevelopment } from "./utils";
+import { isDevelopment } from "./utils";
 import Tabs from "./components/tabs";
 
 const formWithTabs = FormComponent => {
@@ -48,32 +48,39 @@ const formWithTabs = FormComponent => {
       return !sameProps || !sameState || !sameData;
     }
 
+    renderForm = () => {
+      if (this.props.schema) {
+        let { formData } = this.state;
+        let configs = Object.assign({}, this.props, {
+          formData,
+          onChange: this.handleOnChange,
+        });
+        return (
+          <FormComponent {...configs}>
+            <div />
+          </FormComponent>
+        );
+      } else {
+        return <div />;
+      }
+    };
+
+    renderTabs = () => {
+      let { tabs, activeTab, onTabChange } = this.props;
+      return (
+        <Tabs tabs={tabs} activeTab={activeTab} onTabChange={onTabChange} />
+      );
+    };
+
     render() {
-      let { tabs, activeTab } = this.props;
-      let { formData } = this.state;
-      let relTabs = tabs.filter(({ tabID }) => tabID !== GENERIC_TAB);
-
-      let configs = Object.assign({}, this.props, {
-        formData,
-        onChange: this.handleOnChange,
-      });
-
       return (
         <div>
           <div className="row">
-            <FormComponent {...configs}>
-              <div />
-            </FormComponent>
+            {this.renderForm()}
           </div>
           <div className="row">
             <div className="col-md-12">
-              {relTabs && relTabs.length > 0
-                ? <Tabs
-                    tabData={relTabs}
-                    activeTab={activeTab}
-                    onTabChange={this.props.onTabChange}
-                  />
-                : <div />}
+              {this.renderTabs()}
             </div>
           </div>
         </div>
