@@ -21,20 +21,22 @@ class Layer {
     return nonDefaultTabs.length > 0 ? nonDefaultTabs[0].tabID : GENERIC_TAB;
   }
 
-  fillActiveTabs = (activeTabs, i = 0) => {
+  doUpdateActiveTabs = (activeTabs, i) => {
     if (i === activeTabs.length) {
       if (this.activeTab !== GENERIC_TAB) {
         activeTabs.push(this.activeTab);
-        this.conf[this.activeTab].fillActiveTabs(activeTabs, i + 1);
+        this.conf[this.activeTab].doUpdateActiveTabs(activeTabs, i + 1);
       }
     } else {
       this.activeTab = activeTabs[i];
-      this.conf[activeTabs[i]].fillActiveTabs(activeTabs, i + 1);
+      this.conf[activeTabs[i]].doUpdateActiveTabs(activeTabs, i + 1);
     }
     return activeTabs;
   };
 
-  toArray = activeTabs => {
+  updateActiveTabs = activeTabs => this.doUpdateActiveTabs(activeTabs, 0);
+
+  toSubForms = activeTabs => {
     let agg = [];
     let tab = activeTabs[0];
     agg.push(Object.assign({}, this.defaultTab, { activeTab: tab }));
@@ -44,7 +46,7 @@ class Layer {
     if (tab !== GENERIC_TAB) {
       let nextConf = this.conf[tab];
       let nextTabs = activeTabs.slice(1);
-      let nestedTabs = nextConf.toArray(nextTabs);
+      let nestedTabs = nextConf.toSubForms(nextTabs);
       nestedTabs.forEach(conf => agg.push(conf));
     }
     return agg;
