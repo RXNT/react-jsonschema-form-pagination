@@ -1,4 +1,4 @@
-import { SimplifiedRuleEngineFactory } from "react-jsonschema-form-conditionals";
+import Engine from "json-rules-engine-simplified";
 
 const schema = {
   type: "object",
@@ -50,6 +50,10 @@ const uiSchema = {
     "ui:autofocus": true,
     "ui:emptyValue": "",
   },
+  firstNameAlias: {
+    classNames: "col-md-8 col-xs-4 success",
+    "ui:tabID": ["0", "lastName"],
+  },
   lastName: {
     classNames: "col-md-4 col-xs-4",
     "ui:tabID": ["0", "lastName"],
@@ -82,6 +86,9 @@ const uiSchema = {
       inputType: "tel",
     },
     "ui:tabID": "2",
+  },
+  "ui:tabAlias": {
+    firstName: "firstNameAlias",
   },
 };
 
@@ -144,5 +151,5 @@ export default {
   tabData,
   rules,
   extraActions,
-  rulesEngine: SimplifiedRuleEngineFactory,
+  rulesEngine: Engine,
 };
