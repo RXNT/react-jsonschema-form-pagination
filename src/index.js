@@ -25,22 +25,21 @@ export default function applyPagination(FormComponent) {
       );
     };
 
-    componentWillReceiveProps({ tabData, schema, uiSchema, formData }) {
-      if (
-        !deepequal(
-          { tabData, schema, uiSchema },
-          {
-            tabData: this.props.tabData,
-            schema: this.props.schema,
-            uiSchema: this.props.uiSchema,
-          }
-        )
-      ) {
+    sameLayers = nextProps => {
+      const toComparable = ({ tabData, schema, uiSchema }) => {
+        return { tabData, schema, uiSchema };
+      };
+      return deepequal(toComparable(nextProps), toComparable(this.props));
+    };
+
+    componentWillReceiveProps(nextProps) {
+      if (!this.sameLayers(nextProps)) {
+        let { schema, uiSchema, tabData } = nextProps;
         this.layers = splitInLayers(schema, uiSchema, tabData);
       }
-      if (!this.sameData(formData)) {
-        this.formData = formData;
-        this.setState({ formData });
+      if (!this.sameData(nextProps.formData)) {
+        this.formData = nextProps.formData;
+        this.setState({ formData: nextProps.formData });
       }
     }
 

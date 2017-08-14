@@ -163,30 +163,36 @@ function doSplitInLayers(origSchema, origUiSchema, tabData) {
   );
 }
 
-function normalizeUiSchema(uiSchema) {
-  let normUiSchema = deepcopy(uiSchema);
-  Object.keys(normUiSchema).forEach(field => {
-    if (
-      normUiSchema[field] &&
-      normUiSchema[field][UI_TAB_ID] &&
-      !Array.isArray(normUiSchema[field][UI_TAB_ID])
-    ) {
-      normUiSchema[field][UI_TAB_ID] = [normUiSchema[field][UI_TAB_ID]];
-    }
-  });
-  if (!normUiSchema[UI_TAB_ALIAS]) {
-    normUiSchema[UI_TAB_ALIAS] = {};
+export function normalizeUiSchema(uiSchema) {
+  function normalizeTabs(uiSchema) {
+    Object.keys(uiSchema).forEach(field => {
+      if (
+        uiSchema[field] &&
+        uiSchema[field][UI_TAB_ID] &&
+        !Array.isArray(uiSchema[field][UI_TAB_ID])
+      ) {
+        uiSchema[field][UI_TAB_ID] = [uiSchema[field][UI_TAB_ID]];
+      }
+    });
   }
-  Object.keys(normUiSchema[UI_TAB_ALIAS]).forEach(field => {
-    let fieldAliases = normUiSchema[UI_TAB_ALIAS][field];
-    if (!Array.isArray(fieldAliases)) {
-      normUiSchema[UI_TAB_ALIAS][field] = [fieldAliases];
+  function normalizeAliases(uiSchema) {
+    if (!uiSchema[UI_TAB_ALIAS]) {
+      uiSchema[UI_TAB_ALIAS] = {};
     }
-  });
+    Object.keys(uiSchema[UI_TAB_ALIAS]).forEach(field => {
+      let fieldAliases = uiSchema[UI_TAB_ALIAS][field];
+      if (!Array.isArray(fieldAliases)) {
+        uiSchema[UI_TAB_ALIAS][field] = [fieldAliases];
+      }
+    });
+  }
+  let normUiSchema = deepcopy(uiSchema);
+  normalizeTabs(normUiSchema);
+  normalizeAliases(normUiSchema);
   return normUiSchema;
 }
 
-function normalizeSchema(schema) {
+export function normalizeSchema(schema) {
   let normSchema = deepcopy(schema);
   if (!normSchema.required) {
     normSchema.required = [];
