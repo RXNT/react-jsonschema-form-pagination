@@ -9,11 +9,10 @@ export function isDevelopment() {
 }
 
 class Layer {
-  constructor(tabs, uiSchema, conf) {
+  constructor(tabs, conf) {
     this.tabs = tabs;
-    this.uiSchema = uiSchema;
     this.conf = conf;
-    this.defaultTab = { tabs, schema: conf[GENERIC_TAB], uiSchema };
+    this.defaultTab = Object.assign({}, { tabs }, conf[GENERIC_TAB]);
     this.activeTab = this.chooseActive(tabs);
   }
 
@@ -54,87 +53,97 @@ class Layer {
   };
 }
 
-function isAliasFieldPartOfLayer(field, uiSchema, layer) {
-  return (
-    uiSchema[UI_TAB_ALIAS][field] &&
-    uiSchema[UI_TAB_ALIAS][field].some(
-      alias => findLayer(alias, uiSchema) === layer
-    )
-  );
-}
-
-function isFieldPartOfLayer(field, uiSchema, layer) {
-  return (
-    findLayer(field, uiSchema) === layer ||
-    isAliasFieldPartOfLayer(field, uiSchema, layer)
-  );
-}
-
 function findLayer(field, uiSchema) {
   return uiSchema && uiSchema[field] && uiSchema[field][UI_TAB_ID]
     ? uiSchema[field][UI_TAB_ID][0]
     : GENERIC_TAB;
 }
 
-function listLayers(schema, uiSchema) {
-  let layers = Object.keys(schema.properties).map(field =>
+export function listLayers(schema, uiSchema = {}) {
+  let schemaLayers = Object.keys(schema.properties).map(field =>
     findLayer(field, uiSchema)
   );
-  return Array.from(new Set(layers));
+
+  let uiSchemaLayers = Object.keys(uiSchema).map(uiField =>
+    findLayer(uiField, uiSchema)
+  );
+
+  let allLayers = schemaLayers.concat(uiSchemaLayers);
+  return Array.from(new Set(allLayers));
 }
 
-function removeLayerFromUi(uiSchema) {
-  let cleanedUiSchema = deepcopy(uiSchema);
-  Object.keys(cleanedUiSchema).forEach(field => {
-    let uiTab = cleanedUiSchema[field][UI_TAB_ID];
-    if (uiTab && uiTab.length > 1) {
-      uiTab.shift();
-    } else {
-      delete cleanedUiSchema[field][UI_TAB_ID];
-    }
-  });
-  return cleanedUiSchema;
-}
-
-function replaceFieldUiWithAliases(layer, uiSchema) {
-  let layerUISchema = deepcopy(uiSchema);
-  Object.keys(uiSchema[UI_TAB_ALIAS]).forEach(field => {
-    let aliases = uiSchema[UI_TAB_ALIAS][field];
-    let aliasesInLayer = aliases.filter(
-      aliasField => findLayer(aliasField, uiSchema) === layer
-    );
-    aliasesInLayer.forEach(alias => {
-      layerUISchema[field] = layerUISchema[alias];
-      delete layerUISchema[alias];
+export function extractUiSchemaForLayer(layer, origUiSchema) {
+  function removeNextLayer(uiSchema) {
+    Object.keys(uiSchema).forEach(field => {
+      let uiTab = uiSchema[field][UI_TAB_ID];
+      if (uiTab && uiTab.length > 1) {
+        uiTab.shift();
+      } else {
+        delete uiSchema[field][UI_TAB_ID];
+      }
     });
-    layerUISchema[UI_TAB_ALIAS][field] = aliases.filter(
-      alias => !aliasesInLayer.includes(alias)
-    );
-  });
-  return layerUISchema;
-}
-
-function copyField(schema, field, origSchema) {
-  if (origSchema.required.includes(field)) {
-    schema.required.push(field);
   }
-  schema.properties[field] = origSchema.properties[field];
+
+  function replaceAliases(layer, uiSchema) {
+    function replaceUiFieldWithAlias(field, alias, uiSchema) {
+      uiSchema[field] = uiSchema[alias];
+      delete uiSchema[alias];
+    }
+
+    Object.keys(uiSchema[UI_TAB_ALIAS]).forEach(field => {
+      let aliases = uiSchema[UI_TAB_ALIAS][field];
+
+      let aliasesInLayer = aliases.filter(
+        alias => findLayer(alias, uiSchema) === layer
+      );
+      aliasesInLayer.forEach(alias => {
+        replaceUiFieldWithAlias(field, alias, uiSchema);
+      });
+    });
+    uiSchema[UI_TAB_ALIAS] = {};
+  }
+
+  let uiSchema = deepcopy(origUiSchema);
+  replaceAliases(layer, uiSchema);
+  removeNextLayer(uiSchema);
+  return uiSchema;
 }
 
-function extractSchemaForLayer(layer, origSchema, uiSchema) {
+export function extractSchemaForLayer(layer, origSchema, origUiSchema) {
+  function isAliasFieldPartOfLayer(field, uiSchema, layer) {
+    return (
+      uiSchema[UI_TAB_ALIAS][field] &&
+      uiSchema[UI_TAB_ALIAS][field].some(
+        alias => findLayer(alias, uiSchema) === layer
+      )
+    );
+  }
+
+  function isFieldPartOfLayer(field, uiSchema, layer) {
+    return (
+      findLayer(field, uiSchema) === layer ||
+      isAliasFieldPartOfLayer(field, uiSchema, layer)
+    );
+  }
+
+  function copyField(schema, field, origSchema) {
+    if (origSchema.required.includes(field)) {
+      schema.required.push(field);
+    }
+    schema.properties[field] = origSchema.properties[field];
+  }
+
   let schema = Object.assign({}, deepcopy(origSchema), {
     required: [],
     properties: {},
   });
-  Object.keys(origSchema.properties)
-    .filter(field => isFieldPartOfLayer(field, uiSchema, layer))
-    .forEach(field => copyField(schema, field, origSchema));
-  return schema;
-}
 
-function extractUiSchemaForLayer(layer, origUiSchema) {
-  let uiSchema = deepcopy(origUiSchema);
-  return removeLayerFromUi(replaceFieldUiWithAliases(layer, uiSchema));
+  let layerFields = Object.keys(origSchema.properties).filter(field =>
+    isFieldPartOfLayer(field, origUiSchema, layer)
+  );
+
+  layerFields.forEach(field => copyField(schema, field, origSchema));
+  return schema;
 }
 
 function doSplitInLayers(origSchema, origUiSchema, tabData) {
@@ -143,10 +152,10 @@ function doSplitInLayers(origSchema, origUiSchema, tabData) {
   let conf = layers.reduce((conf, layer) => {
     let schema = extractSchemaForLayer(layer, origSchema, origUiSchema);
     let uiSchema = extractUiSchemaForLayer(layer, origUiSchema);
-    if (layer !== GENERIC_TAB) {
-      conf[layer] = doSplitInLayers(schema, uiSchema, tabData);
+    if (layer === GENERIC_TAB) {
+      conf[layer] = { schema, uiSchema };
     } else {
-      conf[layer] = schema;
+      conf[layer] = doSplitInLayers(schema, uiSchema, tabData);
     }
     return conf;
   }, {});
@@ -156,11 +165,7 @@ function doSplitInLayers(origSchema, origUiSchema, tabData) {
     return tab ? tab : { tabID: layer, name: layer };
   });
 
-  return new Layer(
-    tabs,
-    extractUiSchemaForLayer(GENERIC_TAB, origUiSchema),
-    conf
-  );
+  return new Layer(tabs, conf);
 }
 
 export function normalizeUiSchema(uiSchema) {
@@ -175,6 +180,7 @@ export function normalizeUiSchema(uiSchema) {
       }
     });
   }
+
   function normalizeAliases(uiSchema) {
     if (!uiSchema[UI_TAB_ALIAS]) {
       uiSchema[UI_TAB_ALIAS] = {};
@@ -186,6 +192,7 @@ export function normalizeUiSchema(uiSchema) {
       }
     });
   }
+
   let normUiSchema = deepcopy(uiSchema);
   normalizeTabs(normUiSchema);
   normalizeAliases(normUiSchema);
@@ -193,10 +200,14 @@ export function normalizeUiSchema(uiSchema) {
 }
 
 export function normalizeSchema(schema) {
-  let normSchema = deepcopy(schema);
-  if (!normSchema.required) {
-    normSchema.required = [];
+  function normalizeRequired(schema) {
+    if (!schema.required) {
+      schema.required = [];
+    }
   }
+
+  let normSchema = deepcopy(schema);
+  normalizeRequired(normSchema);
   return normSchema;
 }
 
