@@ -3,6 +3,7 @@ import {
   listLayers,
   normalizeUiSchema,
   normalizeSchema,
+  isEmptySchema,
 } from "../utils";
 import extractUiSchemaForLayer from "./extractUiSchemaForLayer";
 import extractSchemaForLayer from "./extractSchemaForLayer";
@@ -16,13 +17,13 @@ function doSplitInLayers(origSchema, origUiSchema, tabData) {
     let uiSchema = extractUiSchemaForLayer(layer, origUiSchema);
     if (layer === GENERIC_TAB) {
       conf[layer] = { schema, uiSchema };
-    } else {
+    } else if (!isEmptySchema(schema)) {
       conf[layer] = doSplitInLayers(schema, uiSchema, tabData);
     }
     return conf;
   }, {});
 
-  let tabs = layers.map(layer => {
+  let tabs = Object.keys(conf).map(layer => {
     let tab = tabData.find(({ tabID }) => tabID === layer);
     return tab ? tab : { tabID: layer, name: layer };
   });

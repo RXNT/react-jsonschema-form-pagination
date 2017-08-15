@@ -8,6 +8,12 @@ export function isDevelopment() {
   return process.env.NODE_ENV !== "production";
 }
 
+export function isEmptySchema(schema) {
+  return (
+    !schema || !schema.properties || Object.keys(schema.properties).length === 0
+  );
+}
+
 export function findLayer(field, uiSchema) {
   return uiSchema && uiSchema[field] && uiSchema[field][UI_TAB_ID]
     ? uiSchema[field][UI_TAB_ID][0]
