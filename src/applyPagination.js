@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import deepequal from "deep-equal";
 import formWithTabs from "./FormWithTabs";
-import { isDevelopment, splitInLayers } from "./utils";
+import { isDevelopment } from "./utils";
+import splitInLayers from "./splitter/splitInLayers";
 
 export default function applyPagination(FormComponent) {
   const FormWithTabs = formWithTabs(FormComponent);

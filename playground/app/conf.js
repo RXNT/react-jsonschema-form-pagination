@@ -92,20 +92,7 @@ const uiSchema = {
   },
 };
 
-const tabData = [
-  {
-    tabID: "0",
-    name: "Tab 1",
-  },
-  {
-    tabID: "1",
-    name: "Tab 2",
-  },
-  {
-    tabID: "2",
-    name: "Tab 3",
-  },
-];
+const tabData = [];
 
 const formData = {
   lastName: "",
