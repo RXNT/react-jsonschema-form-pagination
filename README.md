@@ -4,6 +4,21 @@
 [![Coverage Status](https://coveralls.io/repos/github/RxNT/react-jsonschema-form-pagination/badge.svg)](https://coveralls.io/github/RxNT/react-jsonschema-form-pagination)
 [![npm version](https://badge.fury.io/js/react-jsonschema-form-pagination.svg)](https://badge.fury.io/js/react-jsonschema-form-pagination)
 
+## Features
+
+- Separation of huge schemas into tabs
+- Nested tabs - you can have any number of tabs nested inside your form 
+- Repeated fields - you can use the same field in multiple tabs, filling it only once 
+- Does not conflict with other extensions of Mozilla project 
+
+## Installation
+
+Install `react-jsonschema-form-pagination` by running:
+
+```bash
+npm install --s react-jsonschema-form-pagination
+```
+
 ## Usage
 
 FormWithPagination is a wrapper for Mozilla's JSON Schema Form that allows a schema to be displayed into multiple Bootstrap tabs. This allows users to see a subset of the schema on each tab.
@@ -65,19 +80,12 @@ let schema = {
 
 const uiSchema = {
   firstName: {
-    classNames: "col-md-4 col-xs-4 success",
-    "ui:autofocus": true,
-    "ui:emptyValue": "",
     "ui:tabID": "0"
   },
   lastName: {
-    classNames: "col-md-4 col-xs-4",
     "ui:tabID": "1"
   },
   age: {
-    classNames: "col-md-4 col-xs-4",
-    "ui:widget": "updown",
-    "ui:title": "Age of person",
     "ui:tabID": "2"
   }
 };
@@ -105,3 +113,24 @@ render((
   />
 ), document.getElementById("app"));
 ```
+
+### One level of tabs
+
+### Multi tabs levels
+
+### Field aliases in different tabs
+
+## Contribute
+
+- Issue Tracker: github.com/RxNT/react-jsonschema-form-pagination/issues
+- Source Code: github.com/RxNT/react-jsonschema-form-pagination
+
+## Support
+
+If you are having issues, please let us know.
+
+## License
+
+The project is licensed under the Apache-2.0 license.
+
+
