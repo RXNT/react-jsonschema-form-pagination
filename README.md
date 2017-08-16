@@ -1,5 +1,9 @@
 # react-jsonschema-form-pagination
 
+[![Build Status](https://travis-ci.org/RxNT/react-jsonschema-form-pagination.svg?branch=master)](https://travis-ci.org/RxNT/react-jsonschema-form-pagination)
+[![Coverage Status](https://coveralls.io/repos/github/RxNT/react-jsonschema-form-pagination/badge.svg)](https://coveralls.io/github/RxNT/react-jsonschema-form-pagination)
+[![npm version](https://badge.fury.io/js/react-jsonschema-form-pagination.svg)](https://badge.fury.io/js/react-jsonschema-form-pagination)
+
 ## Usage
 
 FormWithPagination is a wrapper for Mozilla's JSON Schema Form that allows a schema to be displayed into multiple Bootstrap tabs. This allows users to see a subset of the schema on each tab.

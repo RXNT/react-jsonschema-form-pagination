@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import deepequal from "deep-equal";
 import PropTypes from "prop-types";
 import { isDevelopment } from "./utils";
-import Tabs from "./components/tabs";
+import Tabs from "./Tabs";
 
 const formWithTabs = FormComponent => {
   class FormWithTabs extends Component {

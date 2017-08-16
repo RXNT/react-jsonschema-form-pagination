@@ -1,6 +1,15 @@
 import React from "react";
-import Tab from "./tab";
-import { GENERIC_TAB } from "../utils";
+import { GENERIC_TAB } from "./utils";
+
+function Tab({ handleClick, isActive, data: { name } }) {
+  return (
+    <li onClick={handleClick} className={isActive ? "active" : null}>
+      <a>
+        {name}
+      </a>
+    </li>
+  );
+}
 
 function Tabs({ activeTab, tabs, onTabChange }) {
   let relTabs = tabs.filter(({ tabID }) => tabID !== GENERIC_TAB);

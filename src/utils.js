@@ -8,6 +8,14 @@ export function isDevelopment() {
   return process.env.NODE_ENV !== "production";
 }
 
+export const toError = message => {
+  if (isDevelopment()) {
+    throw new ReferenceError(message);
+  } else {
+    console.error(message);
+  }
+};
+
 export function isEmptySchema(schema) {
   return (
     !schema || !schema.properties || Object.keys(schema.properties).length === 0
@@ -20,7 +28,7 @@ export function findLayer(field, uiSchema) {
     : GENERIC_TAB;
 }
 
-export function listLayers(schema, uiSchema = {}) {
+export function listLayers(schema, uiSchema) {
   let schemaLayers = Object.keys(schema.properties).map(field =>
     findLayer(field, uiSchema)
   );
@@ -57,7 +65,7 @@ function normalizeAliases(uiSchema) {
   });
 }
 
-export function normalizeUiSchema(uiSchema) {
+export function normalizeUiSchema(uiSchema = {}) {
   let normUiSchema = deepcopy(uiSchema);
   normalizeTabs(normUiSchema);
   normalizeAliases(normUiSchema);

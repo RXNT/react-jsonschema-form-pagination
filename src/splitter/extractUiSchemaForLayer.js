@@ -1,5 +1,5 @@
 import deepcopy from "deepcopy";
-import { UI_TAB_ID, UI_TAB_ALIAS, findLayer } from "../utils";
+import { UI_TAB_ID, UI_TAB_ALIAS, findLayer, toError } from "../utils";
 
 function removeNextLayer(uiSchema) {
   Object.keys(uiSchema).forEach(field => {
@@ -21,9 +21,7 @@ function findFieldAliasesInLayer(layer, uiSchema) {
     if (aliases.length == 1) {
       agg.push({ field, alias: aliases[0] });
     } else if (aliases.length !== 0) {
-      throw new ReferenceError(
-        "More than one alias for the same layer not supported!!!"
-      );
+      toError(`${field} has too many aliases ${aliases} for the ${layer}`);
     }
 
     return agg;
