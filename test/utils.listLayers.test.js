@@ -1,4 +1,5 @@
-import { listLayers, UI_TAB_ID } from "../src/utils";
+import { listLayers, UI_TAB_ALIAS, UI_TAB_ID } from "../src/utils";
+import { withTab } from "./utils";
 
 test("list schema layers", () => {
   let schema = {
@@ -11,7 +12,7 @@ test("list schema layers", () => {
       [UI_TAB_ID]: ["firstNameTab"],
     },
   };
-  expect(listLayers(schema, uiSchema)).toEqual(["firstNameTab"]);
+  expect(listLayers(schema, uiSchema)).toEqual(["firstNameTab", "default"]);
 });
 
 test("list UI schema layers", () => {
@@ -23,7 +24,7 @@ test("list UI schema layers", () => {
       [UI_TAB_ID]: ["lastNameTab"],
     },
   };
-  expect(listLayers(schema, uiSchema)).toEqual(["lastNameTab"]);
+  expect(listLayers(schema, uiSchema)).toEqual(["lastNameTab", "default"]);
 });
 
 test("list all schema layers", () => {
@@ -41,5 +42,42 @@ test("list all schema layers", () => {
     },
   };
   let layers = listLayers(schema, uiSchema);
-  expect(layers).toEqual(["firstNameTab", "lastNameTab"]);
+  expect(layers).toEqual(["firstNameTab", "lastNameTab", "default"]);
+});
+
+test("list layers ", () => {
+  let schema = {
+    properties: {
+      firstName: { type: "string" },
+      age: { type: "string" },
+      phone: { type: "string" },
+      lastName: { type: "string" },
+      nickName: { type: "string" },
+      other: { type: "string" },
+    },
+  };
+
+  let uiSchema = {
+    firstName: withTab("first"),
+    age: withTab("last"),
+    phone: withTab(["first", "phone"]),
+    lastName: withTab("last"),
+    nickName: withTab("last"),
+    other: withTab("nick"),
+    ageAlias: withTab(["first", "other"]),
+    phoneAlias: withTab(["first", "other"]),
+    nickNameAlias: withTab(["first", "other"]),
+    [UI_TAB_ALIAS]: {
+      nickName: ["nickNameAlias"],
+      age: ["ageAlias"],
+      phone: ["phoneAlias"],
+    },
+  };
+
+  expect(listLayers(schema, uiSchema)).toEqual([
+    "first",
+    "last",
+    "nick",
+    "default",
+  ]);
 });

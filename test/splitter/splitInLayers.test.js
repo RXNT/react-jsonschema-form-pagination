@@ -34,7 +34,7 @@ let uiSchema = {
 };
 
 test("select active in layer", () => {
-  let layers = splitInLayers(schema, uiSchema);
+  let layers = splitInLayers(schema, uiSchema, [{ tabID: "nick" }]);
 
   expect(layers.updateActiveTabs([])).toEqual(["first", "age"]);
 });

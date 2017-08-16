@@ -37,7 +37,7 @@ export function listLayers(schema, uiSchema) {
     findLayer(uiField, uiSchema)
   );
 
-  let allLayers = schemaLayers.concat(uiSchemaLayers);
+  let allLayers = schemaLayers.concat(uiSchemaLayers).concat([GENERIC_TAB]);
   return Array.from(new Set(allLayers));
 }
 
