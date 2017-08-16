@@ -1,7 +1,7 @@
 import React from "react";
 import { GENERIC_TAB } from "./utils";
 
-function Tab({ handleClick, isActive, data: { name } }) {
+function Tab({ handleClick, isActive, name }) {
   return (
     <li onClick={handleClick} className={isActive ? "active" : null}>
       <a>
@@ -16,12 +16,12 @@ function Tabs({ activeTab, tabs, onTabChange }) {
   if (relTabs.length > 0) {
     return (
       <ul className="nav nav-pills">
-        {relTabs.map((tab, i) =>
+        {relTabs.map(({ tabID, name }, i) =>
           <Tab
             key={i}
-            data={tab}
-            isActive={activeTab === tab.tabID}
-            handleClick={() => onTabChange(tab)}
+            name={name ? name : tabID}
+            isActive={activeTab === tabID}
+            handleClick={() => onTabChange(tabID)}
           />
         )}
       </ul>

@@ -25,13 +25,13 @@ function doSplitInLayers(origSchema, origUiSchema, tabData) {
 
   let tabs = Object.keys(conf).map(layer => {
     let tab = tabData.find(({ tabID }) => tabID === layer);
-    return tab ? tab : { tabID: layer, name: layer };
+    return tab ? tab : { tabID: layer };
   });
 
   return new Layer(tabs, conf);
 }
 
-export default function splitInLayers(schema, uiSchema = {}, tabData) {
+export default function splitInLayers(schema, uiSchema, tabData = []) {
   return doSplitInLayers(
     normalizeSchema(schema),
     normalizeUiSchema(uiSchema),

@@ -30,17 +30,16 @@ export default class Layer {
 
   toSubForms = activeTabs => {
     let agg = [];
-    let tab = activeTabs[0];
+    let tab = activeTabs[0] ? activeTabs[0] : GENERIC_TAB;
     agg.push(Object.assign({}, this.defaultTab, { activeTab: tab }));
-    if (activeTabs.length === 0) {
+    if (tab === GENERIC_TAB) {
       return agg;
     }
-    if (tab !== GENERIC_TAB) {
-      let nextConf = this.conf[tab];
-      let nextTabs = activeTabs.slice(1);
-      let nestedTabs = nextConf.toSubForms(nextTabs);
-      nestedTabs.forEach(conf => agg.push(conf));
-    }
+
+    let nextConf = this.conf[tab];
+    let nextTabs = activeTabs.slice(1);
+    let nestedTabs = nextConf.toSubForms(nextTabs);
+    nestedTabs.forEach(conf => agg.push(conf));
     return agg;
   };
 }
