@@ -25,100 +25,165 @@ FormWithPagination is a wrapper for Mozilla's JSON Schema Form that allows a sch
 
 Use this project as you would use Mozilla's JSON Schema Form (see their documentation), but to leverage the tab features just provide these extra parameters:
 
-- In the uiSchema object, use the new ui:tabID property to associate each field with a tab.
+- In the `uiSchema` object, use the new `ui:tabID` and `ui:tabAliases` property to associate each field with a tab
+- Pass in an additional `tabData` array in props, if you want to customize tab naming
 
-```jsx
-const uiSchema = {
-  "ui:tabID": "TAB_ID_HERE",
-};
-```
-- Pass in an additional tabData array in props, alongside uiSchema, schema, etc.
-
+To show case use of the pagination project, we'll be using following `schema` as a base
 ```js
-const tabData = [
-  {
-    tabID: "0",
-    name: "Tab 1",
-  },
-  {
-    tabID: "1",
-    name: "Tab 2",
-  },
-  {
-    tabID: "2",
-    name: "Tab 3",
-  },
-];
-```
-### Example:
-
-In this example each field is placed into a separate tab.
-
-```jsx
-
-import FormWithPagination from "react-jsonschema-form-pagination";
-
-let schema = {
+const schema = {
   title: "A registration form",
   description: "A simple form example.",
   type: "object",
   properties: {
-    firstName: {
-      type: "string",
-      title: "First name"
-    },
-    lastName: {
-      type: "string",
-      title: "Last name"
-    },
-    age: {
-      type: "integer",
-      title: "Age",
-    }
+    firstName: { type: "string" },
+    lastName: { type: "string" },
+    age: { type: "integer" },
+    phone: { type: "string" },
+    nickName: { type: "string" }
   }
-}
+};
+```
+
+### One level of tabs
+
+Let's say we have only 1 level of tabs `main` and `other`. We can do it like this: 
+
+```js
+import applyPagination from "react-jsonschema-form-pagination";
+import Form from "react-jsonschema-form";
 
 const uiSchema = {
   firstName: {
-    "ui:tabID": "0"
+    "ui:tabID": "main"
   },
   lastName: {
-    "ui:tabID": "1"
+    "ui:tabID": "main"
   },
   age: {
-    "ui:tabID": "2"
-  }
+    "ui:tabID": "main"
+  },
+  phone: {
+    "ui:tabID": "main"
+  },
+  nickName: {
+    "ui:tabID": "other"
+  },
 };
 
-let tabData = [
-  {
-    tabID: "0",
-    name: "Tab 1",
-  },
-  {
-    tabID: "1",
-    name: "Tab 2",
-  },
-  {
-    tabID: "2",
-    name: "Tab 3",
-  },
-];
+let FormWithPagination = applyPagination(Form);
 
 render((
   <FormWithPagination
     schema={schema}
     uiSchema={uiSchema}
-    tabData={tabData}
   />
 ), document.getElementById("app"));
 ```
 
-### One level of tabs
+When rendered this configuration will show 2 tabs 
+- `main` tab with `firstName`, `lastName`, `age` and `phone` fields
+- `other` tab with `nickName` field
 
 ### Multi tabs levels
 
+Let's say we now want to have `main` tab divided in 2 more tabs `general`(`lastName` and `age`) and `other` ( with `phone`). 
+This is how `uiSchema` should look like in order to do that :
+```js
+const uiSchema = {
+  firstName: {
+    "ui:tabID": "main"
+  },
+  lastName: {
+    "ui:tabID": [ "main", "general" ]
+  },
+  age: {
+    "ui:tabID": [ "main", "general" ]
+  },
+  phone: {
+    "ui:tabID": [ "main", "other" ]
+  },
+  nickName: {
+    "ui:tabID": "other"
+  }
+};
+```
+
+When rendered this configuration will show 2 tabs 
+- `main` tab with `firstName`, and 2 sub tabs
+    - `general` with `lastName` and `age` fields
+    - `other` with `phone` field
+- `other` tab with `nickName` field
+
+### Default level
+
+When you don't specify `ui:tabID`, the field will be shown above the tabs.
+
+For example, if we go back to single level example, but we want to always see `firstName` shown above the tab navigation.
+Here is how we can do this:
+
+```js
+const uiSchema = {
+  firstName: {},
+  lastName: {
+    "ui:tabID": "main"
+  },
+  age: {
+    "ui:tabID": "main"
+  },
+  phone: {
+    "ui:tabID": "main"
+  },
+  nickName: {
+    "ui:tabID": "other"
+  },
+};
+```
+
+When rendered this configuration will show 2 tabs and `firstName` above the fields  
+- `main` tab with `lastName`, `age` and `phone` fields
+- `other` tab with `nickName` field
+
 ### Field aliases in different tabs
+
+One of the requirements for this project was to support same field on different tabs, in order to do that you can specify field alias 
+in `uiSchema`. Field `alias` is basically a field UI configuration, that will be used instead of original field in specified tab. 
+Aliases can be nested as regular fields. 
+
+For example, if we want to show `firstName` in both tabs `main` and `other`.  
+
+```js
+const uiSchema = {
+  firstName: {
+    "ui:tabID": "main"
+  },
+  firsNameAlias: {
+    "ui:tabID": "other"
+  },
+  lastName: {
+    "ui:tabID": "main"
+  },
+  age: {
+    "ui:tabID": "main"
+  },
+  phone: {
+    "ui:tabID": "main"
+  },
+  nickName: {
+    "ui:tabID": "other"
+  },
+  "ui:tabAlias": {
+    firstName: "firsNameAlias"
+  }
+};
+```
+
+With this configuration pagination will put `firstName` in both `main` and `other` tabs.
+
+`ui:tabAlias` is a simple object with 
+- keys - as original schema field names
+- values - an alias name or an array of alias names
+
+You can specify either single alias or as many aliases as you want with an array.
 
 ## Contribute
 
