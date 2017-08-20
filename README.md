@@ -185,8 +185,49 @@ With this configuration pagination will put `firstName` in both `main` and `othe
 
 You can specify either single alias or as many aliases as you want with an array.
 
-## Configure tab naming
+## Configuring tab names
 
+By default tab names are the same as tabID, since it's a string and you can use any string as tab name.
+
+If you want to override this and use custom names instead, you can do this, by providing `tabData` as a form property. 
+`tabData` consists of an array of objects with `tabID` and `name`, `name` will be used as tab name instead of tabID, for example: 
+
+```js
+const tabData = [
+  {
+    tabID: "first",
+    name: "First tab"
+  }
+]
+```
+
+## Custom tabs
+
+If you want to have a custom tabs instead of `nav-pills` used by default, you can provide `Tabs` component, when you call 
+`applyPagination`
+
+```js
+import applyPagination from "react-jsonschema-form-pagination";
+import Form from "react-jsonschema-form";
+import CustomTabs from "./CustomTabs";
+
+...
+
+let FormWithPagination = applyPagination(Form, CustomTabs);
+
+render((
+  <FormWithPagination
+    ...
+  />
+), document.getElementById("app"));
+```
+
+CustomTabs will receive 3 properties 
+- `activeTab` - currently active tab
+- `tabs` - list of tabs (generated from tabID and tabData)
+- `onTabChange` - callback on tab selection  
+
+Look at pagination for more details.
 
 ## Contribute
 
