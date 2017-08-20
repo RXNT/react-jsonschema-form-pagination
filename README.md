@@ -185,6 +185,9 @@ With this configuration pagination will put `firstName` in both `main` and `othe
 
 You can specify either single alias or as many aliases as you want with an array.
 
+## Configure tab naming
+
+
 ## Contribute
 
 - Issue Tracker: github.com/RxNT/react-jsonschema-form-pagination/issues

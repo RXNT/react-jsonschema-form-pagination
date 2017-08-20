@@ -7,28 +7,30 @@ import {
 } from "../utils";
 import extractUiSchemaForLayer from "./extractUiSchemaForLayer";
 import extractSchemaForLayer from "./extractSchemaForLayer";
+import extractTabsForLayer from "./extractTabsForLayer";
 import Layer from "./Layer";
 
 function doSplitInLayers(origSchema, origUiSchema, tabData) {
-  let layers = listLayers(origSchema, origUiSchema);
+  let layerTabs = listLayers(origSchema, origUiSchema);
 
-  let conf = layers.reduce((conf, layer) => {
-    let schema = extractSchemaForLayer(layer, origSchema, origUiSchema);
-    let uiSchema = extractUiSchemaForLayer(layer, origUiSchema);
-    if (layer === GENERIC_TAB) {
-      conf[layer] = { schema, uiSchema };
-    } else if (!isEmptySchema(schema)) {
-      conf[layer] = doSplitInLayers(schema, uiSchema, tabData);
-    }
-    return conf;
-  }, {});
+  let layers = layerTabs
+    .filter(layer => layer !== GENERIC_TAB)
+    .reduce((tabs, layer) => {
+      let schema = extractSchemaForLayer(layer, origSchema, origUiSchema);
+      let uiSchema = extractUiSchemaForLayer(layer, origUiSchema);
+      if (!isEmptySchema(schema)) {
+        tabs[layer] = doSplitInLayers(schema, uiSchema, tabData);
+      }
+      return tabs;
+    }, {});
 
-  let tabs = Object.keys(conf).map(layer => {
-    let tab = tabData.find(({ tabID }) => tabID === layer);
-    return tab ? tab : { tabID: layer };
-  });
+  let schema = extractSchemaForLayer(GENERIC_TAB, origSchema, origUiSchema);
+  let uiSchema = extractUiSchemaForLayer(GENERIC_TAB, origUiSchema);
+  let tabs = extractTabsForLayer(layers, tabData);
 
-  return new Layer(tabs, conf);
+  let conf = { schema, uiSchema, tabs };
+
+  return new Layer(conf, layers);
 }
 
 export default function splitInLayers(schema, uiSchema, tabData = []) {

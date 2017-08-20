@@ -90,7 +90,13 @@ const uiSchema = {
   },
 };
 
-const tabData = [];
+const tabData = [
+  {
+    tabID: "0",
+    name: "First",
+    classNames: "danger",
+  },
+];
 
 const formData = {
   lastName: "",
