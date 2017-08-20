@@ -48,6 +48,9 @@ export default function applyPagination(FormComponent) {
       let activeTabs = this.state.activeTabs.slice(0, index + 1);
       activeTabs[index] = tabID;
       this.layers.updateActiveTabs(activeTabs);
+      if (this.props.onTabChange) {
+        this.props.onTabChange(activeTabs, this.state.activeTabs);
+      }
       this.setState({ activeTabs });
     };
 

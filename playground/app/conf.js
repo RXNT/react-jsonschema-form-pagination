@@ -1,5 +1,3 @@
-import Engine from "json-rules-engine-simplified";
-
 const schema = {
   type: "object",
   required: [],
@@ -100,43 +98,9 @@ const formData = {
   age: 20,
 };
 
-let rules = [
-  {
-    conditions: {
-      firstName: { not: "empty" },
-    },
-    event: {
-      type: "require",
-      params: {
-        field: "encounter",
-      },
-    },
-  },
-  {
-    conditions: {
-      firstName: { not: "empty" },
-    },
-    event: {
-      type: "incAge",
-    },
-  },
-];
-
-const extraActions = {
-  incAge: function(params, schema, uiSchema, formData) {
-    if (!formData.age) {
-      formData.age = 0;
-    }
-    formData.age = formData.age + 1;
-  },
-};
-
 export default {
   schema,
   uiSchema,
   formData,
   tabData,
-  rules,
-  extraActions,
-  rulesEngine: Engine,
 };
