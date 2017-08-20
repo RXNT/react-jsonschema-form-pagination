@@ -78,7 +78,7 @@ const formWithTabs = (FormComponent, TabComponent = Tabs) => {
 
     render() {
       return (
-        <div className="col-md-12">
+        <div>
           {this.renderForm()}
           {this.renderTabs()}
         </div>

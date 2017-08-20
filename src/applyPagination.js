@@ -103,6 +103,7 @@ export default function applyPagination(FormComponent, TabComponent = Tabs) {
               />
             );
           })}
+          {this.props.children}
         </div>
       );
     }

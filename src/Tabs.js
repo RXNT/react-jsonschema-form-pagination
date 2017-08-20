@@ -15,8 +15,8 @@ function Tabs({ activeTab, tabs, onTabChange }) {
   let relTabs = tabs.filter(({ tabID }) => tabID !== GENERIC_TAB);
   if (relTabs.length > 0) {
     return (
-      <div className="form-group field field-object">
-        <div className="form-group field field-object col-md-12">
+      <fieldset>
+        <div className="form-group col-md-12">
           <ul className="nav nav-pills">
             {relTabs.map(({ tabID, name }, i) =>
               <Tab
@@ -28,7 +28,7 @@ function Tabs({ activeTab, tabs, onTabChange }) {
             )}
           </ul>
         </div>
-      </div>
+      </fieldset>
     );
   } else {
     return <div />;

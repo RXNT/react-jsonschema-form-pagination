@@ -23,8 +23,13 @@ export class App extends Component {
       <FormWithPagination
         {...fullConf}
         onChange={this.handleChange}
-        onTabChange={this.handleTabChange}
-      />
+        onTabChange={this.handleTabChange}>
+        <div className="col-md-12">
+          <div className="form-group pull-right">
+            <div className="btn btn-success">Save</div>
+          </div>
+        </div>
+      </FormWithPagination>
     );
   }
 }
