@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { isDevelopment } from "./utils";
 import Tabs from "./Tabs";
 
-const formWithTabs = FormComponent => {
+const formWithTabs = (FormComponent, TabComponent = Tabs) => {
   class FormWithTabs extends Component {
     constructor(props) {
       super(props);
@@ -68,21 +68,19 @@ const formWithTabs = FormComponent => {
     renderTabs = () => {
       let { tabs, activeTab, onTabChange } = this.props;
       return (
-        <Tabs tabs={tabs} activeTab={activeTab} onTabChange={onTabChange} />
+        <TabComponent
+          tabs={tabs}
+          activeTab={activeTab}
+          onTabChange={onTabChange}
+        />
       );
     };
 
     render() {
       return (
-        <div>
-          <div className="row">
-            {this.renderForm()}
-          </div>
-          <div className="row">
-            <div className="col-md-12 form-group field field-object">
-              {this.renderTabs()}
-            </div>
-          </div>
+        <div className="col-md-12">
+          {this.renderForm()}
+          {this.renderTabs()}
         </div>
       );
     }

@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import applyPagination from "../../src/index";
 import Form from "react-jsonschema-form";
+import CustomTabs from "./CustomTabs";
 import conf from "./conf";
 
-let FormWithPagination = applyPagination(Form);
+let FormWithPagination = applyPagination(Form, CustomTabs);
 
 export class App extends Component {
   handleChange = ({ formData }) => {

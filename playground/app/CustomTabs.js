@@ -1,5 +1,5 @@
+import { GENERIC_TAB } from "../../src/utils";
 import React from "react";
-import { GENERIC_TAB } from "./utils";
 
 function Tab({ handleClick, isActive, name }) {
   return (
@@ -17,7 +17,7 @@ function Tabs({ activeTab, tabs, onTabChange }) {
     return (
       <div className="form-group field field-object">
         <div className="form-group field field-object col-md-12">
-          <ul className="nav nav-pills">
+          <ul className="nav nav-tabs">
             {relTabs.map(({ tabID, name }, i) =>
               <Tab
                 key={i}

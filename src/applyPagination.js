@@ -4,9 +4,10 @@ import deepequal from "deep-equal";
 import formWithTabs from "./FormWithTabs";
 import { isDevelopment } from "./utils";
 import splitInLayers from "./splitter/splitInLayers";
+import Tabs from "./Tabs";
 
-export default function applyPagination(FormComponent) {
-  const FormWithTabs = formWithTabs(FormComponent);
+export default function applyPagination(FormComponent, TabComponent = Tabs) {
+  const FormWithTabs = formWithTabs(FormComponent, TabComponent);
 
   class FormWithPagination extends Component {
     constructor(props) {
