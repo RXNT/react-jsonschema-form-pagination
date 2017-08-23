@@ -40,6 +40,7 @@ const schema = {
 };
 
 const uiSchema = {
+  "ui:tabOrder": ["2", "0", "1", "firstName", "lastName", "age", "nickName"],
   encounter: {
     classNames: "col-md-12",
   },

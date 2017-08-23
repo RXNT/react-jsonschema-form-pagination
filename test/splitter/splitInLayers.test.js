@@ -1,5 +1,5 @@
 import splitInLayers from "../../src/splitter/splitInLayers";
-import { UI_TAB_ALIAS, UI_TAB_ID } from "../../src/utils";
+import { UI_TAB_ALIAS, UI_TAB_ID, UI_TAB_ORDER } from "../../src/utils";
 
 let schema = {
   properties: {
@@ -75,13 +75,9 @@ test("return subforms", () => {
       nickName: {},
       other: {},
       [UI_TAB_ALIAS]: {},
+      [UI_TAB_ORDER]: [],
     },
-    tabs: [
-      { tabID: "first" },
-      { tabID: "last" },
-      { tabID: "nick" },
-      { tabID: "default" },
-    ],
+    tabs: [{ tabID: "first" }, { tabID: "last" }, { tabID: "nick" }],
   });
   expect(subForms[1]).toEqual({
     activeTab: "age",
@@ -99,8 +95,9 @@ test("return subforms", () => {
       nickName: {},
       other: {},
       [UI_TAB_ALIAS]: {},
+      [UI_TAB_ORDER]: [],
     },
-    tabs: [{ tabID: "default" }, { tabID: "age" }, { tabID: "phone" }],
+    tabs: [{ tabID: "age" }, { tabID: "phone" }],
   });
   expect(subForms[2]).toEqual({
     activeTab: "default",
@@ -118,7 +115,8 @@ test("return subforms", () => {
       nickName: {},
       other: {},
       [UI_TAB_ALIAS]: {},
+      [UI_TAB_ORDER]: [],
     },
-    tabs: [{ tabID: "default" }],
+    tabs: [],
   });
 });

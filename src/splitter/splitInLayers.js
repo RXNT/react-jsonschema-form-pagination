@@ -26,7 +26,7 @@ function doSplitInLayers(origSchema, origUiSchema, tabData) {
 
   let schema = extractSchemaForLayer(GENERIC_TAB, origSchema, origUiSchema);
   let uiSchema = extractUiSchemaForLayer(GENERIC_TAB, origUiSchema);
-  let tabs = extractTabsForLayer(layers, tabData);
+  let tabs = extractTabsForLayer(layers, origUiSchema, tabData);
 
   let conf = { schema, uiSchema, tabs };
 

@@ -6,6 +6,7 @@ import {
   isEmptySchema,
   isDevelopment,
   toError,
+  UI_TAB_ORDER,
 } from "../src/utils";
 import { testInProd } from "./utils";
 
@@ -19,6 +20,7 @@ test("normalize schema", () => {
 test("normalize empty UI schema", () => {
   let normEmptyUiSchema = {
     [UI_TAB_ALIAS]: {},
+    [UI_TAB_ORDER]: [],
   };
   expect(normalizeUiSchema({})).toEqual(normEmptyUiSchema);
   expect(normalizeUiSchema()).toEqual(normEmptyUiSchema);
@@ -36,6 +38,7 @@ test("normalize UI schema tabs", () => {
       [UI_TAB_ID]: ["lastName"],
     },
     [UI_TAB_ALIAS]: {},
+    [UI_TAB_ORDER]: [],
   };
   expect(normalizeUiSchema(tabAsString)).toEqual(normTabAsString);
 });
@@ -52,6 +55,7 @@ test("normalize UI schema aliases with original field", () => {
     [UI_TAB_ALIAS]: {
       firstName: ["lastNameAlias"],
     },
+    [UI_TAB_ORDER]: [],
   };
   expect(normalizeUiSchema(aliasAsString)).toEqual(normAliasAsString);
 });
@@ -66,6 +70,7 @@ test("normalize UI schema aliases without original field", () => {
     [UI_TAB_ALIAS]: {
       firstName: ["lastNameAlias"],
     },
+    [UI_TAB_ORDER]: [],
   };
   expect(normalizeUiSchema(aliasAsString)).toEqual(normAliasAsString);
 });
@@ -75,6 +80,7 @@ test("keep normalized UI schema", () => {
     [UI_TAB_ALIAS]: {
       firstName: ["lastNameAlias"],
     },
+    [UI_TAB_ORDER]: [],
   };
   expect(normalizeUiSchema(aliasAsString)).toEqual(aliasAsString);
 });

@@ -3,6 +3,7 @@ import deepcopy from "deepcopy";
 export const GENERIC_TAB = "default";
 export const UI_TAB_ID = "ui:tabID";
 export const UI_TAB_ALIAS = "ui:tabAlias";
+export const UI_TAB_ORDER = "ui:tabOrder";
 
 export function isDevelopment() {
   return process.env.NODE_ENV !== "production";
@@ -65,10 +66,17 @@ function normalizeAliases(uiSchema) {
   });
 }
 
+function normalizeOrdering(uiSchema) {
+  if (!uiSchema[UI_TAB_ORDER]) {
+    uiSchema[UI_TAB_ORDER] = [];
+  }
+}
+
 export function normalizeUiSchema(uiSchema = {}) {
   let normUiSchema = deepcopy(uiSchema);
   normalizeTabs(normUiSchema);
   normalizeAliases(normUiSchema);
+  normalizeOrdering(normUiSchema);
   return normUiSchema;
 }
 

@@ -1,5 +1,5 @@
 import splitInLayers from "../../src/splitter/splitInLayers";
-import { UI_TAB_ALIAS } from "../../src/utils";
+import { UI_TAB_ALIAS, UI_TAB_ORDER } from "../../src/utils";
 import { withTab } from "../utils";
 
 let schema = {
@@ -28,6 +28,7 @@ let uiSchema = {
     age: "ageAlias",
     phone: "phoneAlias",
   },
+  [UI_TAB_ORDER]: [],
 };
 
 test("return subforms", () => {
@@ -58,50 +59,8 @@ test("return subforms", () => {
         age: ["ageAlias"],
         phone: ["phoneAlias"],
       },
+      [UI_TAB_ORDER]: [],
     },
-    tabs: [
-      { tabID: "first" },
-      { tabID: "last" },
-      { tabID: "nick" },
-      { tabID: "default" },
-    ],
+    tabs: [{ tabID: "first" }, { tabID: "last" }, { tabID: "nick" }],
   });
-  // expect(subForms[1]).toEqual({
-  //   activeTab: "other",
-  //   schema: {
-  //     required: [],
-  //     properties: {
-  //       firstName: { type: "string" },
-  //     },
-  //   },
-  //   uiSchema: {
-  //     firstName: {},
-  //     age: {},
-  //     phone: {},
-  //     lastName: {},
-  //     nickName: {},
-  //     other: {},
-  //     [UI_TAB_ALIAS]: {},
-  //   },
-  //   tabs: [{ tabID: "default" }, { tabID: "other" }],
-  // });
-  // expect(subForms[2]).toEqual({
-  //   activeTab: "default",
-  //   schema: {
-  //     required: [],
-  //     properties: {
-  //       age: { type: "string" },
-  //     },
-  //   },
-  //   uiSchema: {
-  //     firstName: {},
-  //     age: {},
-  //     phone: {},
-  //     lastName: {},
-  //     nickName: {},
-  //     other: {},
-  //     [UI_TAB_ALIAS]: {},
-  //   },
-  //   tabs: [{ tabID: "default" }],
-  // });
 });
