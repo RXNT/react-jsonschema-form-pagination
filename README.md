@@ -229,6 +229,37 @@ CustomTabs will receive 3 properties
 
 Look at pagination for more details.
 
+## Tab ordering
+
+By default all tabs rendered in order they appear in uiSchema, since it's a primary source of layer reference, 
+however it's not reliable way to do so. You can override natural ordering with `ui:tabOrder` property in `uiSchema`, consisting of ordered array of tabID's.
+It works the same way as [`ui:order`](https://github.com/mozilla-services/react-jsonschema-form#object-fields-ordering) in mozilla project.
+
+
+For example, in order to have 
+```js
+const uiSchema = {
+  "ui:tabOrder": [ "main", "sub", "other" ]
+  age: {
+    "ui:tabID": "sub"
+  },
+  phone: {
+    "ui:tabID": "main"
+  },
+  firstName: {
+    "ui:tabID": "main"
+  },
+  lastName: {
+    "ui:tabID": "main"
+  },
+  nickName: {
+    "ui:tabID": "other"
+  },
+};
+```
+
+In this configuration, although `sub` tab appears first in `uiSchema`, `main` will be the first tab available for selection.  
+
 ## Contribute
 
 - Issue Tracker: github.com/RxNT/react-jsonschema-form-pagination/issues
