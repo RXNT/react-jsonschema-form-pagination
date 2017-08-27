@@ -17,7 +17,7 @@ function doSplitInLayers(origSchema, origUiSchema, tabData) {
     .filter(layer => layer !== GENERIC_TAB)
     .reduce((tabs, layer) => {
       let schema = extractSchemaForLayer(layer, origSchema, origUiSchema);
-      let uiSchema = extractUiSchemaForLayer(layer, origUiSchema);
+      let uiSchema = extractUiSchemaForLayer(layer, schema, origUiSchema);
       if (!isEmptySchema(schema)) {
         tabs[layer] = doSplitInLayers(schema, uiSchema, tabData);
       }
@@ -25,7 +25,7 @@ function doSplitInLayers(origSchema, origUiSchema, tabData) {
     }, {});
 
   let schema = extractSchemaForLayer(GENERIC_TAB, origSchema, origUiSchema);
-  let uiSchema = extractUiSchemaForLayer(GENERIC_TAB, origUiSchema);
+  let uiSchema = extractUiSchemaForLayer(GENERIC_TAB, schema, origUiSchema);
   let tabs = extractTabsForLayer(layers, origUiSchema, tabData);
 
   let conf = { schema, uiSchema, tabs };

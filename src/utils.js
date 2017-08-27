@@ -1,6 +1,7 @@
 import deepcopy from "deepcopy";
 
 export const GENERIC_TAB = "default";
+export const UI_ORDER = "ui:order";
 export const UI_TAB_ID = "ui:tabID";
 export const UI_TAB_ALIAS = "ui:tabAlias";
 export const UI_TAB_ORDER = "ui:tabOrder";
@@ -66,9 +67,15 @@ function normalizeAliases(uiSchema) {
   });
 }
 
-function normalizeOrdering(uiSchema) {
+function normalizeTabOrdering(uiSchema) {
   if (!uiSchema[UI_TAB_ORDER]) {
     uiSchema[UI_TAB_ORDER] = [];
+  }
+}
+
+function normalizeUiOrdering(uiSchema) {
+  if (!uiSchema[UI_ORDER]) {
+    uiSchema[UI_ORDER] = [];
   }
 }
 
@@ -76,7 +83,8 @@ export function normalizeUiSchema(uiSchema = {}) {
   let normUiSchema = deepcopy(uiSchema);
   normalizeTabs(normUiSchema);
   normalizeAliases(normUiSchema);
-  normalizeOrdering(normUiSchema);
+  normalizeTabOrdering(normUiSchema);
+  normalizeUiOrdering(normUiSchema);
   return normUiSchema;
 }
 

@@ -1,5 +1,12 @@
 import deepcopy from "deepcopy";
-import { UI_TAB_ID, UI_TAB_ALIAS, findLayer, toError } from "../utils";
+import {
+  UI_TAB_ID,
+  UI_TAB_ALIAS,
+  UI_ORDER,
+  GENERIC_TAB,
+  findLayer,
+  toError,
+} from "../utils";
 
 function removeNextLayer(uiSchema) {
   Object.keys(uiSchema).forEach(field => {
@@ -35,9 +42,19 @@ function replaceAliases(layer, uiSchema) {
   });
 }
 
-export default function extractUiSchemaForLayer(layer, origUiSchema) {
+function keepOrdering(layer, schema, uiSchema) {
+  if (layer === GENERIC_TAB) {
+    let layerFields = Object.keys(schema.properties);
+    uiSchema[UI_ORDER] = uiSchema[UI_ORDER].filter(field =>
+      layerFields.includes(field)
+    );
+  }
+}
+
+export default function extractUiSchemaForLayer(layer, schema, origUiSchema) {
   let uiSchema = deepcopy(origUiSchema);
   replaceAliases(layer, uiSchema);
   removeNextLayer(uiSchema);
+  keepOrdering(layer, schema, uiSchema);
   return uiSchema;
 }
