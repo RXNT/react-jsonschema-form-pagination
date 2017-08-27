@@ -1,14 +1,29 @@
 import extractUiSchemaForLayer from "../../src/splitter/extractUiSchemaForLayer";
-import { GENERIC_TAB, UI_TAB_ALIAS, UI_TAB_ID } from "../../src/utils";
+import {
+  GENERIC_TAB,
+  UI_TAB_ALIAS,
+  UI_TAB_ID,
+  UI_ORDER,
+} from "../../src/utils";
 import { testInProd } from "../utils";
+
+const schema = {
+  properties: {
+    firstName: { type: "string" },
+    lastName: { type: "string" },
+  },
+};
 
 test("extract default uiSchema", () => {
   let uiSchema = {
     firstName: {},
     lastName: {},
     [UI_TAB_ALIAS]: {},
+    [UI_ORDER]: [],
   };
-  expect(extractUiSchemaForLayer(GENERIC_TAB, uiSchema)).toEqual(uiSchema);
+  expect(extractUiSchemaForLayer(GENERIC_TAB, schema, uiSchema)).toEqual(
+    uiSchema
+  );
 });
 
 test("extract layer from simple uiSchema", () => {
@@ -20,16 +35,19 @@ test("extract layer from simple uiSchema", () => {
       [UI_TAB_ID]: ["last"],
     },
     [UI_TAB_ALIAS]: {},
+    [UI_ORDER]: [],
   };
-  expect(extractUiSchemaForLayer("first", uiSchema)).toEqual({
+  expect(extractUiSchemaForLayer("first", schema, uiSchema)).toEqual({
     firstName: {},
     lastName: {},
     [UI_TAB_ALIAS]: {},
+    [UI_ORDER]: [],
   });
-  expect(extractUiSchemaForLayer("last", uiSchema)).toEqual({
+  expect(extractUiSchemaForLayer("last", schema, uiSchema)).toEqual({
     firstName: {},
     lastName: {},
     [UI_TAB_ALIAS]: {},
+    [UI_ORDER]: [],
   });
 });
 
@@ -39,12 +57,14 @@ test("extract nested layer from simple uiSchema", () => {
       [UI_TAB_ID]: ["first", "last"],
     },
     [UI_TAB_ALIAS]: {},
+    [UI_ORDER]: [],
   };
-  expect(extractUiSchemaForLayer("first", uiSchema)).toEqual({
+  expect(extractUiSchemaForLayer("first", schema, uiSchema)).toEqual({
     firstName: {
       [UI_TAB_ID]: ["last"],
     },
     [UI_TAB_ALIAS]: {},
+    [UI_ORDER]: [],
   });
 });
 
@@ -61,8 +81,9 @@ test("extract with aliases", () => {
     [UI_TAB_ALIAS]: {
       firstName: ["firstNameAlias"],
     },
+    [UI_ORDER]: [],
   };
-  expect(extractUiSchemaForLayer("original", uiSchema)).toEqual({
+  expect(extractUiSchemaForLayer("original", schema, uiSchema)).toEqual({
     firstName: {
       classNames: "col-md-5",
     },
@@ -72,9 +93,10 @@ test("extract with aliases", () => {
     [UI_TAB_ALIAS]: {
       firstName: ["firstNameAlias"],
     },
+    [UI_ORDER]: [],
   });
 
-  expect(extractUiSchemaForLayer("first", uiSchema)).toEqual({
+  expect(extractUiSchemaForLayer("first", schema, uiSchema)).toEqual({
     firstName: {
       classNames: "col-md-10",
     },
@@ -84,6 +106,7 @@ test("extract with aliases", () => {
     [UI_TAB_ALIAS]: {
       firstName: ["firstNameAlias"],
     },
+    [UI_ORDER]: [],
   });
 });
 
@@ -104,9 +127,10 @@ test("extract with aliases error", () => {
     [UI_TAB_ALIAS]: {
       firstName: ["firstNameAlias", "firstNameAnotherAlias"],
     },
+    [UI_ORDER]: [],
   };
-  expect(() => extractUiSchemaForLayer("first", uiSchema)).toThrow();
+  expect(() => extractUiSchemaForLayer("first", schema, uiSchema)).toThrow();
   expect(
-    testInProd(() => extractUiSchemaForLayer("first", uiSchema))
+    testInProd(() => extractUiSchemaForLayer("first", schema, uiSchema))
   ).not.toBeUndefined();
 });

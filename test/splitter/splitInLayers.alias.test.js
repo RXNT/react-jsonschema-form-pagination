@@ -1,5 +1,5 @@
 import splitInLayers from "../../src/splitter/splitInLayers";
-import { UI_TAB_ALIAS, UI_TAB_ORDER } from "../../src/utils";
+import { UI_ORDER, UI_TAB_ALIAS, UI_TAB_ORDER } from "../../src/utils";
 import { withTab } from "../utils";
 
 let schema = {
@@ -60,6 +60,7 @@ test("return subforms", () => {
         phone: ["phoneAlias"],
       },
       [UI_TAB_ORDER]: [],
+      [UI_ORDER]: [],
     },
     tabs: [{ tabID: "first" }, { tabID: "last" }, { tabID: "nick" }],
   });
