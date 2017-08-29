@@ -48,6 +48,9 @@ function keepOrdering(layer, schema, uiSchema) {
     uiSchema[UI_ORDER] = uiSchema[UI_ORDER].filter(field =>
       layerFields.includes(field)
     );
+    if (uiSchema[UI_ORDER].length === 0) {
+      delete uiSchema[UI_ORDER];
+    }
   }
 }
 
