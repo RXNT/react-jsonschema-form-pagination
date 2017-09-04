@@ -4,9 +4,7 @@ import { GENERIC_TAB } from "./utils";
 function Tab({ handleClick, isActive, name }) {
   return (
     <li onClick={handleClick} className={isActive ? "active" : null}>
-      <a>
-        {name}
-      </a>
+      <a>{name}</a>
     </li>
   );
 }
@@ -18,14 +16,14 @@ function Tabs({ activeTab, tabs, onTabChange }) {
       <fieldset>
         <div className="form-group col-md-12">
           <ul className="nav nav-pills">
-            {relTabs.map(({ tabID, name }, i) =>
+            {relTabs.map(({ tabID, name }, i) => (
               <Tab
                 key={i}
                 name={name ? name : tabID}
                 isActive={activeTab === tabID}
                 handleClick={() => onTabChange(tabID)}
               />
-            )}
+            ))}
           </ul>
         </div>
       </fieldset>
