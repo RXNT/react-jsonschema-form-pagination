@@ -73,18 +73,11 @@ function normalizeTabOrdering(uiSchema) {
   }
 }
 
-function normalizeUiOrdering(uiSchema) {
-  if (!uiSchema[UI_ORDER]) {
-    uiSchema[UI_ORDER] = [];
-  }
-}
-
 export function normalizeUiSchema(uiSchema = {}) {
   let normUiSchema = deepcopy(uiSchema);
   normalizeTabs(normUiSchema);
   normalizeAliases(normUiSchema);
   normalizeTabOrdering(normUiSchema);
-  normalizeUiOrdering(normUiSchema);
   return normUiSchema;
 }
 

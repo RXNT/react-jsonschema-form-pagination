@@ -43,11 +43,9 @@ function replaceAliases(layer, uiSchema) {
 }
 
 function keepOrdering(layer, schema, uiSchema) {
-  if (layer === GENERIC_TAB) {
+  if (layer === GENERIC_TAB && uiSchema[UI_ORDER]) {
     let layerFields = Object.keys(schema.properties);
-    uiSchema[UI_ORDER] = uiSchema[UI_ORDER].filter(field =>
-      layerFields.includes(field)
-    );
+    uiSchema[UI_ORDER] = uiSchema[UI_ORDER].filter(layerFields.includes);
     if (uiSchema[UI_ORDER].length === 0) {
       delete uiSchema[UI_ORDER];
     }
