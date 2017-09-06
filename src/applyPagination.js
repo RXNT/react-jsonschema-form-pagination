@@ -15,6 +15,7 @@ export default function applyPagination(FormComponent, TabComponent = Tabs) {
 
       let { formData, tabData, schema, uiSchema } = this.props;
 
+      this.formData = formData;
       this.layers = splitInLayers(schema, uiSchema, tabData);
       let activeTabs = this.layers.updateActiveTabs([], 0);
       this.state = { formData, activeTabs };
@@ -88,12 +89,11 @@ export default function applyPagination(FormComponent, TabComponent = Tabs) {
 
     render() {
       let subForms = this.layers.toSubForms(this.state.activeTabs);
+      let formData = this.formData;
       return (
         <div>
           {subForms.map((conf, i) => {
-            let allConf = Object.assign({}, this.props, conf, {
-              formData: this.formData,
-            });
+            let allConf = Object.assign({}, this.props, conf, { formData });
             return (
               <FormWithTabs
                 key={i}

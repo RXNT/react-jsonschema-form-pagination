@@ -110,6 +110,7 @@ const tabData = [
 ];
 
 const formData = {
+  encounter: "Some",
   lastName: "",
   firstName: "",
   age: 20,
