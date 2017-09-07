@@ -15,7 +15,8 @@ export default function applyPagination(FormComponent, TabComponent = Tabs) {
 
       let { formData, tabData, schema, uiSchema } = this.props;
 
-      this.formData = formData;
+      this.formData = formData ? formData : {};
+
       this.layers = splitInLayers(schema, uiSchema, tabData);
       let activeTabs = this.layers.updateActiveTabs([], 0);
       this.state = { formData, activeTabs };
@@ -111,7 +112,16 @@ export default function applyPagination(FormComponent, TabComponent = Tabs) {
 
   if (isDevelopment()) {
     FormWithPagination.propTypes = {
-      tabData: PropTypes.array.isRequired,
+      schema: PropTypes.shape({
+        type: function(props, propName, componentName) {
+          if (props[propName] !== "object") {
+            return new Error(
+              `Only "object" schemas supported by pagination for ${componentName}.`
+            );
+          }
+        },
+      }),
+      tabData: PropTypes.array,
     };
   }
 
