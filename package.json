@@ -44,14 +44,12 @@
     "npm": "^2.14.7",
     "node": ">=6"
   },
-  "peerDependencies": {
-    "react": "^15.0.0",
-    "prop-types": "^15.5.10"
-  },
   "dependencies": {
     "deep-equal": "1.0.1",
     "deepcopy": "0.6.3",
-    "react-jsonschema-form": "0.49.0"
+    "prop-types": "15.5.10",
+    "react": "15.6.1",
+    "react-jsonschema-form": "0.50.1"
   },
   "devDependencies": {
     "atob": "^2.0.3",
@@ -86,13 +84,12 @@
     "husky": "^0.14.3",
     "jest": "^21.0.1",
     "jsdom": "^11.2.0",
-    "lint-staged": "^4.1.2",
+    "lint-staged": "^4.1.3",
     "prettier": "^1.6.1",
-    "react": "^15.6.1",
     "react-addons-test-utils": "^15.6.0",
     "react-codemirror": "^1.0.0",
     "react-dom": "^15.6.1",
-    "react-jsonschema-form-conditionals": "^0.2.16",
+    "react-jsonschema-form-conditionals": "^0.2.17",
     "react-test-renderer": "^15.6.1",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
@@ -100,9 +97,9 @@
     "rimraf": "^2.6.1",
     "sinon": "^3.2.1",
     "style-loader": "^0.18.2",
-    "webpack": "^3.5.5",
+    "webpack": "^3.5.6",
     "webpack-dev-server": "^2.7.1",
-    "webpack-hot-middleware": "^2.19.0"
+    "webpack-hot-middleware": "^2.19.1"
   },
   "directories": {
     "test": "test"
