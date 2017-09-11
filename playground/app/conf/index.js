@@ -1,5 +1,6 @@
 const schema = {
   type: "object",
+  title: "Encounter",
   required: [],
   properties: {
     encounter: {
