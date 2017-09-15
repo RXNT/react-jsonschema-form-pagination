@@ -1,7 +1,7 @@
-import { UI_TAB_ORDER } from "../utils";
+import { GENERIC_TAB, UI_TAB_ORDER } from "../utils";
 
 export function order(tabs, ordering) {
-  if (ordering.length === 0) {
+  if (!ordering || ordering.length === 0) {
     return tabs;
   }
   let orderedTabs = ordering
@@ -20,7 +20,9 @@ export function findTab(layer, tabData) {
 }
 
 export default function extractTabsForLayer(conf, uiSchema, tabData) {
-  let tabs = Object.keys(conf).map(layer => findTab(layer, tabData));
+  let tabs = Object.keys(conf)
+    .filter(layer => layer !== GENERIC_TAB)
+    .map(layer => findTab(layer, tabData));
   let orderedTabs = order(tabs, uiSchema[UI_TAB_ORDER]);
   return orderedTabs;
 }

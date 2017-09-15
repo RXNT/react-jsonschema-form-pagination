@@ -139,36 +139,7 @@ exports[`encounter title only once 1`] = `
       <div
         className="form-group field field-object"
       >
-        <fieldset>
-          <div
-            className="form-group field field-string"
-          >
-            <label
-              className="control-label"
-              htmlFor="root_firstName"
-            >
-              firstName
-            </label>
-            <div />
-            <input
-              autoFocus={false}
-              className="form-control"
-              disabled={false}
-              id="root_firstName"
-              label="firstName"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              placeholder=""
-              readOnly={false}
-              required={false}
-              type="text"
-              value=""
-            />
-            <div />
-            <div />
-          </div>
-        </fieldset>
+        <fieldset />
         <div />
         <div />
       </div>
@@ -235,6 +206,34 @@ exports[`encounter title only once 1`] = `
               disabled={false}
               id="root_lastName"
               label="lastName"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder=""
+              readOnly={false}
+              required={false}
+              type="text"
+              value=""
+            />
+            <div />
+            <div />
+          </div>
+          <div
+            className="form-group field field-string"
+          >
+            <label
+              className="control-label"
+              htmlFor="root_firstName"
+            >
+              firstName
+            </label>
+            <div />
+            <input
+              autoFocus={false}
+              className="form-control"
+              disabled={false}
+              id="root_firstName"
+              label="firstName"
               onBlur={[Function]}
               onChange={[Function]}
               onFocus={[Function]}

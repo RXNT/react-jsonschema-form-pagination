@@ -18,7 +18,8 @@ export default function applyPagination(FormComponent, TabComponent = Tabs) {
       this.formData = formData ? formData : {};
 
       this.layers = splitInLayers(schema, uiSchema, tabData);
-      let activeTabs = this.layers.updateActiveTabs([], 0);
+      let activeTabs = [];
+      this.layers.updateActiveTabs(activeTabs, 0);
       this.state = { formData, activeTabs };
     }
 

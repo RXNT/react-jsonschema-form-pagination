@@ -46,10 +46,10 @@
   },
   "dependencies": {
     "deep-equal": "1.0.1",
-    "deepcopy": "0.6.3",
     "prop-types": "15.5.10",
     "react": "15.6.1",
-    "react-jsonschema-form": "0.50.1"
+    "react-jsonschema-form": "0.50.1",
+    "thunky": "^1.0.2"
   },
   "devDependencies": {
     "atob": "^2.0.3",

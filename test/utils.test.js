@@ -11,10 +11,19 @@ import {
 import { testInProd } from "./utils";
 
 test("normalize schema", () => {
-  expect(normalizeSchema({})).toEqual({ required: [] });
-  expect(normalizeSchema({ required: undefined })).toEqual({ required: [] });
-  expect(normalizeSchema({ required: null })).toEqual({ required: [] });
-  expect(normalizeSchema({ required: [] })).toEqual({ required: [] });
+  expect(normalizeSchema({})).toEqual({ required: [], properties: {} });
+  expect(normalizeSchema({ required: undefined })).toEqual({
+    required: [],
+    properties: {},
+  });
+  expect(normalizeSchema({ required: null })).toEqual({
+    required: [],
+    properties: {},
+  });
+  expect(normalizeSchema({ required: [] })).toEqual({
+    required: [],
+    properties: {},
+  });
 });
 
 test("normalize empty UI schema", () => {

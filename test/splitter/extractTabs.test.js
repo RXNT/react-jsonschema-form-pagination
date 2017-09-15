@@ -1,4 +1,4 @@
-import { order } from "../../src/splitter/extractTabsForLayer";
+import { order } from "../../src/splitter/extractTabs";
 
 test("simple ordering", () => {
   let tabs = [{ tabID: "Second" }, { tabID: "First" }];

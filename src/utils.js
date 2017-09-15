@@ -1,5 +1,3 @@
-import deepcopy from "deepcopy";
-
 export const GENERIC_TAB = "default";
 export const UI_ORDER = "ui:order";
 export const UI_TAB_ID = "ui:tabID";
@@ -74,7 +72,7 @@ function normalizeTabOrdering(uiSchema) {
 }
 
 export function normalizeUiSchema(uiSchema = {}) {
-  let normUiSchema = deepcopy(uiSchema);
+  let normUiSchema = Object.assign(uiSchema);
   normalizeTabs(normUiSchema);
   normalizeAliases(normUiSchema);
   normalizeTabOrdering(normUiSchema);
@@ -88,7 +86,9 @@ function normalizeRequired(schema) {
 }
 
 export function normalizeSchema(schema) {
-  let normSchema = deepcopy(schema);
+  let normSchema = Object.assign({}, schema, {
+    properties: Object.assign({}, schema.properties),
+  });
   normalizeRequired(normSchema);
   return normSchema;
 }

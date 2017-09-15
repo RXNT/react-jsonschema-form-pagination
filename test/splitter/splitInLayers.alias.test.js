@@ -34,33 +34,18 @@ let uiSchema = {
 test("return subforms", () => {
   let layers = splitInLayers(schema, uiSchema);
 
-  let activeTabs = layers.updateActiveTabs([]);
+  let activeTabs = [];
+  layers.updateActiveTabs(activeTabs);
   // expect(activeTabs).toEqual([ "first", "other" ]);
 
   let subForms = layers.toSubForms(activeTabs);
   expect(subForms[0]).toEqual({
     activeTab: "first",
     schema: {
-      required: [],
+      type: "object",
       properties: {},
     },
-    uiSchema: {
-      firstName: {},
-      age: {},
-      ageAlias: withTab("other"),
-      phone: withTab("phone"),
-      phoneAlias: withTab("other"),
-      nickName: {},
-      nickNameAlias: withTab("other"),
-      lastName: {},
-      other: {},
-      [UI_TAB_ALIAS]: {
-        nickName: ["nickNameAlias"],
-        age: ["ageAlias"],
-        phone: ["phoneAlias"],
-      },
-      [UI_TAB_ORDER]: [],
-    },
+    uiSchema: {},
     tabs: [{ tabID: "first" }, { tabID: "last" }, { tabID: "nick" }],
   });
 });
