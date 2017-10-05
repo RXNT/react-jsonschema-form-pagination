@@ -9,7 +9,7 @@ function Nav({ handleClick, isActive, name }) {
   );
 }
 
-function Navs({ navs: { links }, onTabChange }) {
+function Navs({ navs: { links }, onNavChange }) {
   let relLinks = links.filter(({ tabID }) => tabID !== GENERIC_TAB);
   if (relLinks.length > 0) {
     return (
@@ -21,7 +21,7 @@ function Navs({ navs: { links }, onTabChange }) {
                 key={i}
                 name={name ? name : tabID}
                 isActive={isActive}
-                handleClick={() => onTabChange(tabID)}
+                handleClick={() => onNavChange(tabID)}
               />
             ))}
           </ul>

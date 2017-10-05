@@ -5,6 +5,7 @@ import { extractTree, findRelTree } from "./extractTree";
 export default class NavTree {
   constructor(schema, uiSchema, navData = []) {
     this.tree = extractTree(schema, uiSchema);
+    console.dir(this.tree);
     this.schema = schema;
     this.uiSchema = uiSchema;
     this.navData = navData;
@@ -23,23 +24,17 @@ export default class NavTree {
     this.pushToTabFromTree(relTree, activeNavs);
   };
 
-  getNav = (navs, i) => {
-    let relTabs = navs.slice(0, i);
-    let activeNav = navs.length > i ? navs[i] : GENERIC_TAB;
-    return extractSubConf(
-      relTabs,
-      this.tree,
-      this.schema,
-      this.uiSchema,
-      this.navData,
-      activeNav
-    );
-  };
-
   toSubForms = activeNav => {
     let agg = [];
     for (let i = 0; i <= activeNav.length; i++) {
-      agg.push(this.getNav(activeNav, i));
+      let subConf = extractSubConf(
+        activeNav.slice(0, i),
+        this.tree,
+        this.schema,
+        this.uiSchema,
+        this.navData
+      );
+      agg.push(subConf);
     }
     return agg;
   };

@@ -66,8 +66,8 @@ const formWithTabs = (FormComponent, NavComponent = Navs) => {
     };
 
     renderTabs = () => {
-      let { navs, onTabChange } = this.props;
-      return <NavComponent navs={navs} onTabChange={onTabChange} />;
+      let { navs, onNavChange } = this.props;
+      return <NavComponent navs={navs} onNavChange={onNavChange} />;
     };
 
     render() {
@@ -85,8 +85,8 @@ const formWithTabs = (FormComponent, NavComponent = Navs) => {
         default: {
           return (
             <div>
-              {this.renderForm()}
               {this.renderTabs()}
+              {this.renderForm()}
             </div>
           );
         }

@@ -48,7 +48,7 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
       }
     }
 
-    handleTabChange = index => tabID => {
+    handleNavChange = index => tabID => {
       let activeNav = this.state.activeNav.slice(0, index + 1);
       activeNav[index] = tabID;
       this.navTree.updateActiveNav(activeNav);
@@ -98,10 +98,10 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
             let allConf = Object.assign({}, this.props, conf, { formData });
             return (
               <FormWithNavs
-                key={i}
+                key={`${i}-${conf.navs.tabID}`}
                 {...allConf}
                 onChange={this.handleOnChange}
-                onTabChange={this.handleTabChange(i)}
+                onNavChange={this.handleNavChange(i - 1)}
               />
             );
           })}

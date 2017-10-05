@@ -9,28 +9,27 @@ const EMPTY_CONF = {
   uiSchema: {},
 };
 
-const extractSubConf = (
-  navPath,
-  tree,
-  schema,
-  uiSchema,
-  navData,
-  activeNav
-) => {
-  let relTree = findRelTree(tree, navPath);
-  let subTree = relTree[GENERIC_TAB];
+const extractNavs = (navPath, tree, uiSchema, navData) => {
+  if (navPath.length == 0) {
+    let relConf = navData.find(({ tabID }) => tabID === GENERIC_TAB);
+    return Object.assign({}, { relConf }, { links: [] });
+  }
 
-  let navs = extractSubNavs(relTree, uiSchema, navData, activeNav);
-  if (subTree === undefined) {
+  let activeNav = navPath[navPath.length - 1];
+  let parentTree = findRelTree(tree, navPath.slice(0, navPath.length - 1));
+  return extractSubNavs(parentTree, uiSchema, navData, activeNav);
+};
+
+const extractSubConf = (navPath, tree, schema, uiSchema, navData) => {
+  let relTree = findRelTree(tree, navPath);
+  let navs = extractNavs(navPath, tree, uiSchema, navData);
+  if (relTree[GENERIC_TAB] === undefined) {
     return Object.assign({}, { navs }, EMPTY_CONF);
   }
 
-  let subSchema = extractSubSchema(subTree.fields, schema);
-  let subUiSchema = extractSubUiSchema(
-    subTree.fields,
-    uiSchema,
-    subTree.aliases
-  );
+  let { fields, aliases } = relTree[GENERIC_TAB];
+  let subSchema = extractSubSchema(fields, schema);
+  let subUiSchema = extractSubUiSchema(fields, uiSchema, aliases);
 
   if (navPath.length === 0) {
     subSchema.title = schema.title;

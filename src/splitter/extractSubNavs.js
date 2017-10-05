@@ -25,5 +25,6 @@ export default function extractNavs(conf, uiSchema, navData, activeNav) {
     .map(nav => findNav(nav, navData))
     .map(nav => Object.assign(nav, { isActive: nav.tabID === activeNav }));
   let orderedNavs = order(navs, uiSchema[UI_TAB_ORDER]);
-  return { links: orderedNavs };
+  let relConf = findNav(activeNav, navData);
+  return Object.assign({}, relConf, { links: orderedNavs });
 }
