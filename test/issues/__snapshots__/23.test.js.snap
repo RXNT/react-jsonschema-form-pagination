@@ -3,6 +3,13 @@
 exports[`Initial formData rendered 1`] = `
 <div>
   <div>
+    <fieldset>
+      <div
+        className="form-group col-md-12"
+      >
+        <div />
+      </div>
+    </fieldset>
     <form
       acceptCharset={undefined}
       action={undefined}
@@ -82,7 +89,6 @@ exports[`Initial formData rendered 1`] = `
       </div>
       <div />
     </form>
-    <div />
   </div>
 </div>
 `;

@@ -46,11 +46,7 @@ test("return subforms", () => {
     },
     uiSchema: {},
     navs: {
-      links: [
-        { tabID: "first", isActive: true },
-        { tabID: "last", isActive: false },
-        { tabID: "nick", isActive: false },
-      ],
+      links: [],
     },
   });
 });

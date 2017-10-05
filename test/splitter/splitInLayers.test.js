@@ -51,11 +51,7 @@ test("return subforms", () => {
     },
     uiSchema: {},
     navs: {
-      links: [
-        { tabID: "first", isActive: true },
-        { tabID: "last", isActive: false },
-        { tabID: "nick", isActive: false },
-      ],
+      links: [],
     },
   });
   expect(subForms[1]).toEqual({
@@ -72,8 +68,9 @@ test("return subforms", () => {
     },
     navs: {
       links: [
-        { tabID: "age", isActive: true },
-        { tabID: "phone", isActive: false },
+        { tabID: "first", isActive: true },
+        { tabID: "last", isActive: false },
+        { tabID: "nick", isActive: false },
       ],
     },
   });
@@ -89,6 +86,11 @@ test("return subforms", () => {
         [UI_TAB_ID]: ["first", "age"],
       },
     },
-    navs: { links: [] },
+    navs: {
+      links: [
+        { tabID: "age", isActive: true },
+        { tabID: "phone", isActive: false },
+      ],
+    },
   });
 });

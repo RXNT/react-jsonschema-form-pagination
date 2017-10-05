@@ -65,7 +65,7 @@ const formWithTabs = (FormComponent, NavComponent = Navs) => {
       }
     };
 
-    renderTabs = () => {
+    renderNavs = () => {
       let { navs, onNavChange } = this.props;
       return <NavComponent navs={navs} onNavChange={onNavChange} />;
     };
@@ -76,8 +76,8 @@ const formWithTabs = (FormComponent, NavComponent = Navs) => {
       switch (orientation) {
         case "vertical": {
           return (
-            <div>
-              <div className="col-md-3">{this.renderTabs()}</div>
+            <div className="row">
+              <div className="col-md-3">{this.renderNavs()}</div>
               <div className="col-md-9">{this.renderForm()}</div>
             </div>
           );
@@ -85,7 +85,9 @@ const formWithTabs = (FormComponent, NavComponent = Navs) => {
         default: {
           return (
             <div>
-              {this.renderTabs()}
+              <fieldset>
+                <div className="form-group col-md-12">{this.renderNavs()}</div>
+              </fieldset>
               {this.renderForm()}
             </div>
           );

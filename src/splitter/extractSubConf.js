@@ -12,12 +12,19 @@ const EMPTY_CONF = {
 const extractNavs = (navPath, tree, uiSchema, navData) => {
   if (navPath.length == 0) {
     let relConf = navData.find(({ tabID }) => tabID === GENERIC_TAB);
-    return Object.assign({}, { relConf }, { links: [] });
+    return Object.assign({}, relConf, { links: [] });
   }
 
   let activeNav = navPath[navPath.length - 1];
   let parentTree = findRelTree(tree, navPath.slice(0, navPath.length - 1));
-  return extractSubNavs(parentTree, uiSchema, navData, activeNav);
+  let navWithLinks = extractSubNavs(parentTree, uiSchema, navData, activeNav);
+  if (navPath.length == 1) {
+    return navWithLinks;
+  }
+
+  let parentNav = navPath[navPath.length - 2];
+  let parentConf = navData.find(({ tabID }) => tabID === parentNav);
+  return Object.assign({}, parentConf, navWithLinks);
 };
 
 const extractSubConf = (navPath, tree, schema, uiSchema, navData) => {

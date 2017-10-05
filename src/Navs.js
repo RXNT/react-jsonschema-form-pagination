@@ -9,24 +9,22 @@ function Nav({ handleClick, isActive, name }) {
   );
 }
 
-function Navs({ navs: { links }, onNavChange }) {
+function Navs({ navs: { orientation = "horizontal", links }, onNavChange }) {
   let relLinks = links.filter(({ tabID }) => tabID !== GENERIC_TAB);
+  let className =
+    orientation === "vertical" ? "nav nav-pills nav-stacked" : "nav nav-pills";
   if (relLinks.length > 0) {
     return (
-      <fieldset>
-        <div className="form-group col-md-12">
-          <ul className="nav nav-pills">
-            {relLinks.map(({ tabID, name, isActive }, i) => (
-              <Nav
-                key={i}
-                name={name ? name : tabID}
-                isActive={isActive}
-                handleClick={() => onNavChange(tabID)}
-              />
-            ))}
-          </ul>
-        </div>
-      </fieldset>
+      <ul className={className}>
+        {relLinks.map(({ tabID, name, isActive }, i) => (
+          <Nav
+            key={i}
+            name={name ? name : tabID}
+            isActive={isActive}
+            handleClick={() => onNavChange(tabID)}
+          />
+        ))}
+      </ul>
     );
   } else {
     return <div />;

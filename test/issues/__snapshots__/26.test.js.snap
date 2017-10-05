@@ -3,6 +3,13 @@
 exports[`encounter title only once 1`] = `
 <div>
   <div>
+    <fieldset>
+      <div
+        className="form-group col-md-12"
+      >
+        <div />
+      </div>
+    </fieldset>
     <form
       acceptCharset={undefined}
       action={undefined}
@@ -87,6 +94,8 @@ exports[`encounter title only once 1`] = `
       </div>
       <div />
     </form>
+  </div>
+  <div>
     <fieldset>
       <div
         className="form-group col-md-12"
@@ -121,8 +130,6 @@ exports[`encounter title only once 1`] = `
         </ul>
       </div>
     </fieldset>
-  </div>
-  <div>
     <form
       acceptCharset={undefined}
       action={undefined}
@@ -145,6 +152,8 @@ exports[`encounter title only once 1`] = `
       </div>
       <div />
     </form>
+  </div>
+  <div>
     <fieldset>
       <div
         className="form-group col-md-12"
@@ -171,8 +180,6 @@ exports[`encounter title only once 1`] = `
         </ul>
       </div>
     </fieldset>
-  </div>
-  <div>
     <form
       acceptCharset={undefined}
       action={undefined}
@@ -252,7 +259,6 @@ exports[`encounter title only once 1`] = `
       </div>
       <div />
     </form>
-    <div />
   </div>
 </div>
 `;

@@ -106,6 +106,7 @@ const tabData = [
   {
     tabID: "0-tab",
     classNames: "danger",
+    orientation: "vertical",
   },
 ];
 

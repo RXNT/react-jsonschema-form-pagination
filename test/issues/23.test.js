@@ -31,7 +31,7 @@ test("Initial formData rendered", () => {
   expect(tree).toMatchSnapshot();
 
   let firstNameInp =
-    tree.children[0].children[0].children[0].children[0].children[0]
+    tree.children[0].children[1].children[0].children[0].children[0]
       .children[2];
   expect(firstNameInp.props.value).toEqual("Bill");
 });
