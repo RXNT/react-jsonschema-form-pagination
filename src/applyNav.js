@@ -17,10 +17,10 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
 
       this.formData = formData ? formData : {};
 
-      this.layers = splitter(schema, uiSchema, tabData);
-      let activeTabs = [];
-      this.layers.updateActiveTabs(activeTabs, 0);
-      this.state = { formData, activeTabs };
+      this.navTree = splitter(schema, uiSchema, tabData);
+      let activeNav = [];
+      this.navTree.updateActiveNav(activeNav, 0);
+      this.state = { formData, activeNav };
     }
 
     sameData = formData => {
@@ -32,7 +32,7 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
 
     sameLayers = nextProps => {
       const toComparable = ({ tabData, schema, uiSchema }) => {
-        return { tabData, schema, uiSchema };
+        return { navData: tabData, schema, uiSchema };
       };
       return deepequal(toComparable(nextProps), toComparable(this.props));
     };
@@ -40,7 +40,7 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
     componentWillReceiveProps(nextProps) {
       if (!this.sameLayers(nextProps)) {
         let { schema, uiSchema, tabData } = nextProps;
-        this.layers = splitter(schema, uiSchema, tabData);
+        this.navTree = splitter(schema, uiSchema, tabData);
       }
       if (!this.sameData(nextProps.formData)) {
         this.formData = nextProps.formData;
@@ -49,13 +49,13 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
     }
 
     handleTabChange = index => tabID => {
-      let activeTabs = this.state.activeTabs.slice(0, index + 1);
-      activeTabs[index] = tabID;
-      this.layers.updateActiveTabs(activeTabs);
+      let activeNav = this.state.activeNav.slice(0, index + 1);
+      activeNav[index] = tabID;
+      this.navTree.updateActiveNav(activeNav);
       if (this.props.onTabChange) {
-        this.props.onTabChange(activeTabs, this.state.activeTabs);
+        this.props.onTabChange(activeNav, this.state.activeNav);
       }
-      this.setState({ activeTabs });
+      this.setState({ activeNav });
     };
 
     handleOnChange = state => {
@@ -67,7 +67,7 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
     };
 
     shouldComponentUpdate(nextProps, nextState) {
-      let sameActive = deepequal(nextState.activeTabs, this.state.activeTabs);
+      let sameActive = deepequal(nextState.activeNav, this.state.activeNav);
       if (!sameActive) {
         return true;
       }
@@ -90,7 +90,7 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
     }
 
     render() {
-      let subForms = this.layers.toSubForms(this.state.activeTabs);
+      let subForms = this.navTree.toSubForms(this.state.activeNav);
       let formData = this.formData;
       return (
         <div>

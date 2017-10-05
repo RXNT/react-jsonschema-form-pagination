@@ -66,10 +66,10 @@ const formWithTabs = (FormComponent, NavComponent = Navs) => {
     };
 
     renderTabs = () => {
-      let { tabs, activeTab, onTabChange } = this.props;
+      let { navs, activeTab, onTabChange } = this.props;
       return (
         <NavComponent
-          tabs={tabs}
+          navs={navs}
           activeTab={activeTab}
           onTabChange={onTabChange}
         />
@@ -88,7 +88,7 @@ const formWithTabs = (FormComponent, NavComponent = Navs) => {
 
   if (isDevelopment()) {
     FormWithTabs.propTypes = {
-      tabs: PropTypes.array,
+      navs: PropTypes.array,
     };
   }
 

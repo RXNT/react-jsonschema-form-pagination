@@ -121,5 +121,5 @@ export default {
   schema,
   uiSchema,
   formData,
-  tabData,
+  navData: tabData,
 };

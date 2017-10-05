@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import applyPagination from "../../src";
+import applyNav from "../../src";
 import Form from "react-jsonschema-form";
-import CustomTabs from "./CustomTabs";
+import CustomNav from "./CustomNav";
 import conf from "./conf";
 
-let FormWithPagination = applyPagination(Form, CustomTabs);
+let FormWithNav = applyNav(Form, CustomNav);
 
 export class App extends Component {
   handleChange = ({ formData }) => {
@@ -20,7 +20,7 @@ export class App extends Component {
   render() {
     let fullConf = Object.assign({}, conf, this.state);
     return (
-      <FormWithPagination
+      <FormWithNav
         {...fullConf}
         liveValidation={true}
         onSubmit={() => console.log("Submitting form data")}
@@ -33,7 +33,7 @@ export class App extends Component {
             </button>
           </div>
         </div>
-      </FormWithPagination>
+      </FormWithNav>
     );
   }
 }

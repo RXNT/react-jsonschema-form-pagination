@@ -209,7 +209,7 @@ If you want to have a custom tabs instead of `nav-pills` used by default, you ca
 ```js
 import applyPagination from "react-jsonschema-form-pagination";
 import Form from "react-jsonschema-form";
-import CustomTabs from "./CustomTabs";
+import CustomTabs from CustomNav;
 
 ...
 

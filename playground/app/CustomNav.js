@@ -1,7 +1,7 @@
 import { GENERIC_TAB } from "../../src/utils";
 import React from "react";
 
-function Tab({ handleClick, isActive, name }) {
+function Nav({ handleClick, isActive, name }) {
   return (
     <li onClick={handleClick} className={isActive ? "active" : null}>
       <a>{name}</a>
@@ -9,15 +9,15 @@ function Tab({ handleClick, isActive, name }) {
   );
 }
 
-function Tabs({ activeTab, tabs, onTabChange }) {
-  let relTabs = tabs.filter(({ tabID }) => tabID !== GENERIC_TAB);
+function Navs({ activeTab, navs, onTabChange }) {
+  let relTabs = navs.filter(({ tabID }) => tabID !== GENERIC_TAB);
   if (relTabs.length > 0) {
     return (
       <fieldset>
         <div className="form-group col-md-12">
           <ul className="nav nav-tabs">
             {relTabs.map(({ tabID, name }, i) => (
-              <Tab
+              <Nav
                 key={i}
                 name={name ? name : tabID}
                 isActive={activeTab === tabID}
@@ -33,4 +33,4 @@ function Tabs({ activeTab, tabs, onTabChange }) {
   }
 }
 
-export default Tabs;
+export default Navs;

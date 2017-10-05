@@ -37,7 +37,7 @@ test("select active in layer", () => {
   let layers = splitter(schema, uiSchema, [{ tabID: "nick" }]);
 
   let activeTabs = [];
-  layers.updateActiveTabs(activeTabs);
+  layers.updateActiveNav(activeTabs);
   expect(activeTabs).toEqual(["first", "age"]);
 });
 
@@ -51,7 +51,7 @@ test("return subforms", () => {
       properties: {},
     },
     uiSchema: {},
-    tabs: [{ tabID: "first" }, { tabID: "last" }, { tabID: "nick" }],
+    navs: [{ tabID: "first" }, { tabID: "last" }, { tabID: "nick" }],
   });
   expect(subForms[1]).toEqual({
     activeTab: "age",
@@ -66,7 +66,7 @@ test("return subforms", () => {
         [UI_TAB_ID]: "first",
       },
     },
-    tabs: [{ tabID: "age" }, { tabID: "phone" }],
+    navs: [{ tabID: "age" }, { tabID: "phone" }],
   });
   expect(subForms[2]).toEqual({
     activeTab: "default",
@@ -81,6 +81,6 @@ test("return subforms", () => {
         [UI_TAB_ID]: ["first", "age"],
       },
     },
-    tabs: [],
+    navs: [],
   });
 });

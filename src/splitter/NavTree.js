@@ -1,78 +1,46 @@
 import { GENERIC_TAB } from "../utils";
-import { findRelTree } from "./extractTree";
-import extractUiSchemaForTree from "./extractUiSchema";
-import extractSchemaForTree from "./extractSchema";
-import extractTabsForTree from "./extractNavs";
-import { extractTree } from "./extractTree";
-
-const EMPTY_CONF = {
-  schema: { type: "object", properties: {} },
-  uiSchema: {},
-};
-
-const getNavConf = (tabPath, tree, schema, uiSchema, tabData) => {
-  let relTree = findRelTree(tree, tabPath);
-  let tabConf = relTree[GENERIC_TAB];
-
-  let tabs = extractTabsForTree(relTree, uiSchema, tabData);
-  if (tabConf === undefined) {
-    return Object.assign({}, { tabs }, EMPTY_CONF);
-  }
-
-  let tabSchema = extractSchemaForTree(tabConf.fields, schema);
-  let tabUiSchema = extractUiSchemaForTree(
-    tabConf.fields,
-    uiSchema,
-    tabConf.aliases
-  );
-
-  if (tabPath.length === 0) {
-    tabSchema.title = schema.title;
-    tabSchema.description = schema.description;
-  }
-
-  return { schema: tabSchema, uiSchema: tabUiSchema, tabs };
-};
+import extractSubConf from "./extractSubConf";
+import { extractTree, findRelTree } from "./extractTree";
 
 export default class NavTree {
-  constructor(schema, uiSchema, tabData = []) {
+  constructor(schema, uiSchema, navData = []) {
     this.tree = extractTree(schema, uiSchema);
     this.schema = schema;
     this.uiSchema = uiSchema;
-    this.tabData = tabData;
+    this.navData = navData;
   }
 
-  pushToTabFromTree = (relTree, activeTabs) => {
-    let nextTab = Object.keys(relTree).find(tab => tab !== GENERIC_TAB);
-    if (nextTab) {
-      activeTabs.push(nextTab);
-      this.pushToTabFromTree(relTree[nextTab], activeTabs);
+  pushToTabFromTree = (relTree, activeNavs) => {
+    let nextNav = Object.keys(relTree).find(nav => nav !== GENERIC_TAB);
+    if (nextNav) {
+      activeNavs.push(nextNav);
+      this.pushToTabFromTree(relTree[nextNav], activeNavs);
     }
   };
 
-  updateActiveTabs = activeTabs => {
-    let relTree = findRelTree(this.tree, activeTabs);
-    this.pushToTabFromTree(relTree, activeTabs);
+  updateActiveNav = activeNavs => {
+    let relTree = findRelTree(this.tree, activeNavs);
+    this.pushToTabFromTree(relTree, activeNavs);
   };
 
-  getNav = (tabs, i) => {
-    let relTabs = tabs.slice(0, i);
-    let activeTab = tabs.length > i ? tabs[i] : GENERIC_TAB;
-    let conf = getNavConf(
+  getNav = (navs, i) => {
+    let relTabs = navs.slice(0, i);
+    let activeTab = navs.length > i ? navs[i] : GENERIC_TAB;
+    let conf = extractSubConf(
       relTabs,
       this.tree,
       this.schema,
       this.uiSchema,
-      this.tabData
+      this.navData
     );
     conf.activeTab = activeTab;
     return conf;
   };
 
-  toSubForms = activeTabs => {
+  toSubForms = activeNav => {
     let agg = [];
-    for (let i = 0; i <= activeTabs.length; i++) {
-      agg.push(this.getNav(activeTabs, i));
+    for (let i = 0; i <= activeNav.length; i++) {
+      agg.push(this.getNav(activeNav, i));
     }
     return agg;
   };

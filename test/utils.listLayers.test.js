@@ -1,7 +1,7 @@
 import { listLayers, UI_TAB_ALIAS, UI_TAB_ID } from "../src/utils";
 import { withTab } from "./utils";
 
-test("list schema layers", () => {
+test("list schema navTree", () => {
   let schema = {
     properties: {
       firstName: { type: "string" },
@@ -15,7 +15,7 @@ test("list schema layers", () => {
   expect(listLayers(schema, uiSchema)).toEqual(["firstNameTab", "default"]);
 });
 
-test("list UI schema layers", () => {
+test("list UI schema navTree", () => {
   let schema = {
     properties: {},
   };
@@ -27,7 +27,7 @@ test("list UI schema layers", () => {
   expect(listLayers(schema, uiSchema)).toEqual(["lastNameTab", "default"]);
 });
 
-test("list all schema layers", () => {
+test("list all schema navTree", () => {
   let schema = {
     properties: {
       firstName: { type: "string" },
@@ -45,7 +45,7 @@ test("list all schema layers", () => {
   expect(layers).toEqual(["firstNameTab", "lastNameTab", "default"]);
 });
 
-test("list layers ", () => {
+test("list navTree ", () => {
   let schema = {
     properties: {
       firstName: { type: "string" },

@@ -9,8 +9,8 @@ function Nav({ handleClick, isActive, name }) {
   );
 }
 
-function Navs({ activeTab, tabs, onTabChange }) {
-  let relTabs = tabs.filter(({ tabID }) => tabID !== GENERIC_TAB);
+function Navs({ activeTab, navs, onTabChange }) {
+  let relTabs = navs.filter(({ tabID }) => tabID !== GENERIC_TAB);
   if (relTabs.length > 0) {
     return (
       <fieldset>

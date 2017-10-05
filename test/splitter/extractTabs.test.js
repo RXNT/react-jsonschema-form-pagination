@@ -1,12 +1,12 @@
-import { order } from "../../src/splitter/extractTabs";
+import { order } from "../../src/splitter/extractSubNavs";
 
 test("simple ordering", () => {
-  let tabs = [{ tabID: "Second" }, { tabID: "First" }];
-  expect(order(tabs, ["First", "Second"])).toEqual([
+  let navs = [{ tabID: "Second" }, { tabID: "First" }];
+  expect(order(navs, ["First", "Second"])).toEqual([
     { tabID: "First" },
     { tabID: "Second" },
   ]);
-  expect(order(tabs, ["First"])).toEqual([
+  expect(order(navs, ["First"])).toEqual([
     { tabID: "First" },
     { tabID: "Second" },
   ]);

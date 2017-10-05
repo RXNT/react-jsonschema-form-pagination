@@ -30,11 +30,7 @@ function replaceAliases(uiSchema, subUiSchema, aliases) {
   });
 }
 
-export default function extractSubUiSchemaWithAliases(
-  fields,
-  uiSchema,
-  aliases
-) {
+export default function getSubUiSchema(fields, uiSchema, aliases) {
   let subUiSchema = extractSubUiSchema(fields, uiSchema);
   replaceAliases(uiSchema, subUiSchema, aliases);
   return subUiSchema;
