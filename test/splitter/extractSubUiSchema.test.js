@@ -1,4 +1,4 @@
-import extractUiSchema from "../../src/splitter/extractUiSchema";
+import extractSubUiSchema from "../../src/splitter/extractSubUiSchema";
 import { UI_TAB_ALIAS } from "../../src/utils";
 
 test("extract default uiSchema", () => {
@@ -7,7 +7,7 @@ test("extract default uiSchema", () => {
     lastName: {},
     [UI_TAB_ALIAS]: {},
   };
-  expect(extractUiSchema(["firstName", "lastName"], uiSchema, [])).toEqual({
+  expect(extractSubUiSchema(["firstName", "lastName"], uiSchema, [])).toEqual({
     firstName: {},
     lastName: {},
   });
@@ -22,12 +22,12 @@ test("extract with aliases", () => {
       classNames: "col-md-10",
     },
   };
-  expect(extractUiSchema(["firstName"], uiSchema, {})).toEqual({
+  expect(extractSubUiSchema(["firstName"], uiSchema, {})).toEqual({
     firstName: { classNames: "col-md-5" },
   });
 
   expect(
-    extractUiSchema(["firstName"], uiSchema, { firstName: "firstNameAlias" })
+    extractSubUiSchema(["firstName"], uiSchema, { firstName: "firstNameAlias" })
   ).toEqual({
     firstName: { classNames: "col-md-10" },
   });

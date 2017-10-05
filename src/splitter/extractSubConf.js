@@ -9,11 +9,18 @@ const EMPTY_CONF = {
   uiSchema: {},
 };
 
-const extractSubConf = (navPath, tree, schema, uiSchema, navData) => {
+const extractSubConf = (
+  navPath,
+  tree,
+  schema,
+  uiSchema,
+  navData,
+  activeNav
+) => {
   let relTree = findRelTree(tree, navPath);
   let subTree = relTree[GENERIC_TAB];
 
-  let navs = extractSubNavs(relTree, uiSchema, navData);
+  let navs = extractSubNavs(relTree, uiSchema, navData, activeNav);
   if (subTree === undefined) {
     return Object.assign({}, { navs }, EMPTY_CONF);
   }

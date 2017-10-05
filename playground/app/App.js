@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import applyNav from "../../src";
 import Form from "react-jsonschema-form";
-import CustomNav from "./CustomNav";
 import conf from "./conf";
 
-let FormWithNav = applyNav(Form, CustomNav);
+let FormWithNav = applyNav(Form);
 
 export class App extends Component {
   handleChange = ({ formData }) => {

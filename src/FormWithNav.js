@@ -66,29 +66,39 @@ const formWithTabs = (FormComponent, NavComponent = Navs) => {
     };
 
     renderTabs = () => {
-      let { navs, activeTab, onTabChange } = this.props;
-      return (
-        <NavComponent
-          navs={navs}
-          activeTab={activeTab}
-          onTabChange={onTabChange}
-        />
-      );
+      let { navs, onTabChange } = this.props;
+      return <NavComponent navs={navs} onTabChange={onTabChange} />;
     };
 
     render() {
-      return (
-        <div>
-          {this.renderForm()}
-          {this.renderTabs()}
-        </div>
-      );
+      let { navs: { orientation = "horizontal" } } = this.props;
+
+      switch (orientation) {
+        case "vertical": {
+          return (
+            <div>
+              <div className="col-md-3">{this.renderTabs()}</div>
+              <div className="col-md-9">{this.renderForm()}</div>
+            </div>
+          );
+        }
+        default: {
+          return (
+            <div>
+              {this.renderForm()}
+              {this.renderTabs()}
+            </div>
+          );
+        }
+      }
     }
   }
 
   if (isDevelopment()) {
     FormWithTabs.propTypes = {
-      navs: PropTypes.array,
+      navs: PropTypes.shape({
+        links: PropTypes.array,
+      }),
     };
   }
 

@@ -19,10 +19,11 @@ export function findNav(layer, navData) {
   return tab ? tab : { tabID: layer };
 }
 
-export default function extractNavs(conf, uiSchema, navData) {
+export default function extractNavs(conf, uiSchema, navData, activeNav) {
   let navs = Object.keys(conf)
     .filter(nav => nav !== GENERIC_TAB)
-    .map(nav => findNav(nav, navData));
+    .map(nav => findNav(nav, navData))
+    .map(nav => Object.assign(nav, { isActive: nav.tabID === activeNav }));
   let orderedNavs = order(navs, uiSchema[UI_TAB_ORDER]);
-  return orderedNavs;
+  return { links: orderedNavs };
 }

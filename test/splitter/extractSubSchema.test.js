@@ -1,4 +1,4 @@
-import extractSchema from "../../src/splitter/extractSchema";
+import extractSubSchema from "../../src/splitter/extractSubSchema";
 
 test("extract layer from simple schema", () => {
   let schema = {
@@ -8,14 +8,14 @@ test("extract layer from simple schema", () => {
       lastName: { type: "string" },
     },
   };
-  expect(extractSchema(["lastName"], schema)).toEqual({
+  expect(extractSubSchema(["lastName"], schema)).toEqual({
     type: "object",
     required: [],
     properties: {
       lastName: { type: "string" },
     },
   });
-  expect(extractSchema(["firstName"], schema)).toEqual({
+  expect(extractSubSchema(["firstName"], schema)).toEqual({
     type: "object",
     required: ["firstName"],
     properties: {
@@ -32,7 +32,7 @@ test("extract with proper required", () => {
       lastName: { type: "string" },
     },
   };
-  expect(extractSchema(["firstName"], schema)).toEqual({
+  expect(extractSubSchema(["firstName"], schema)).toEqual({
     type: "object",
     required: ["firstName"],
     properties: {

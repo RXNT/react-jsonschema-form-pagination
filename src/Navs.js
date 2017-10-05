@@ -9,18 +9,18 @@ function Nav({ handleClick, isActive, name }) {
   );
 }
 
-function Navs({ activeTab, navs, onTabChange }) {
-  let relTabs = navs.filter(({ tabID }) => tabID !== GENERIC_TAB);
-  if (relTabs.length > 0) {
+function Navs({ navs: { links }, onTabChange }) {
+  let relLinks = links.filter(({ tabID }) => tabID !== GENERIC_TAB);
+  if (relLinks.length > 0) {
     return (
       <fieldset>
         <div className="form-group col-md-12">
           <ul className="nav nav-pills">
-            {relTabs.map(({ tabID, name }, i) => (
+            {relLinks.map(({ tabID, name, isActive }, i) => (
               <Nav
                 key={i}
                 name={name ? name : tabID}
-                isActive={activeTab === tabID}
+                isActive={isActive}
                 handleClick={() => onTabChange(tabID)}
               />
             ))}

@@ -34,18 +34,23 @@ let uiSchema = {
 test("return subforms", () => {
   let layers = splitter(schema, uiSchema);
 
-  let activeTabs = [];
-  layers.updateActiveNav(activeTabs);
+  let activeNavs = [];
+  layers.updateActiveNav(activeNavs);
   // expect(activeTabs).toEqual([ "first", "other" ]);
 
-  let subForms = layers.toSubForms(activeTabs);
+  let subForms = layers.toSubForms(activeNavs);
   expect(subForms[0]).toEqual({
-    activeTab: "first",
     schema: {
       type: "object",
       properties: {},
     },
     uiSchema: {},
-    navs: [{ tabID: "first" }, { tabID: "last" }, { tabID: "nick" }],
+    navs: {
+      links: [
+        { tabID: "first", isActive: true },
+        { tabID: "last", isActive: false },
+        { tabID: "nick", isActive: false },
+      ],
+    },
   });
 });

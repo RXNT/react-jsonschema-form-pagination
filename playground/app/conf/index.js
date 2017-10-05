@@ -107,6 +107,7 @@ const tabData = [
     tabID: "0",
     name: "First",
     classNames: "danger",
+    orientation: "vertical",
   },
 ];
 
@@ -121,5 +122,5 @@ export default {
   schema,
   uiSchema,
   formData,
-  navData: tabData,
+  tabData,
 };

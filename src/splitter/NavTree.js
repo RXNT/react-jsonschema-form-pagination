@@ -25,16 +25,15 @@ export default class NavTree {
 
   getNav = (navs, i) => {
     let relTabs = navs.slice(0, i);
-    let activeTab = navs.length > i ? navs[i] : GENERIC_TAB;
-    let conf = extractSubConf(
+    let activeNav = navs.length > i ? navs[i] : GENERIC_TAB;
+    return extractSubConf(
       relTabs,
       this.tree,
       this.schema,
       this.uiSchema,
-      this.navData
+      this.navData,
+      activeNav
     );
-    conf.activeTab = activeTab;
-    return conf;
   };
 
   toSubForms = activeNav => {
