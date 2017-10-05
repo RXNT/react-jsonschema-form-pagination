@@ -108,6 +108,11 @@ const tabData = [
     classNames: "danger",
     orientation: "vertical",
   },
+  {
+    tabID: "firstName-tab",
+    classNames: "danger",
+    orientation: "vertical",
+  },
 ];
 
 const formData = {

@@ -13,98 +13,74 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
     constructor(props) {
       super(props);
 
-      let { formData, tabData, schema, uiSchema } = this.props;
+      let { formData = {}, tabData, schema, uiSchema } = this.props;
 
-      this.formData = formData ? formData : {};
-
-      this.navTree = splitter(schema, uiSchema, tabData);
       let activeNav = [];
+      this.navTree = splitter(schema, uiSchema, tabData);
       this.navTree.updateActiveNav(activeNav, 0);
-      this.state = { formData, activeNav };
+
+      this.formData = formData;
+      this.state = { activeNav };
     }
 
-    sameData = formData => {
-      return (
-        deepequal(this.props.formData, formData) ||
-        deepequal(this.formData, formData)
+    diffProps({ tabData, schema, uiSchema }) {
+      return !deepequal(
+        { tabData, schema, uiSchema },
+        {
+          tabData: this.props.tabData,
+          schema: this.props.schema,
+          uiSchema: this.props.uiSchema,
+        }
       );
-    };
-
-    sameLayers = nextProps => {
-      const toComparable = ({ tabData, schema, uiSchema }) => {
-        return { navData: tabData, schema, uiSchema };
-      };
-      return deepequal(toComparable(nextProps), toComparable(this.props));
-    };
+    }
 
     componentWillReceiveProps(nextProps) {
-      if (!this.sameLayers(nextProps)) {
-        let { schema, uiSchema, tabData } = nextProps;
+      let diffNav = this.diffProps(nextProps);
+      if (diffNav) {
+        let { tabData, schema, uiSchema } = nextProps;
         this.navTree = splitter(schema, uiSchema, tabData);
-      }
-      if (!this.sameData(nextProps.formData)) {
-        this.formData = nextProps.formData;
-        this.setState({ formData: nextProps.formData });
       }
     }
 
-    handleNavChange = index => tabID => {
-      let activeNav = this.state.activeNav.slice(0, index + 1);
-      activeNav[index] = tabID;
+    handleNavChange = activeNav => {
+      let oldNav = this.state.activeNav;
       this.navTree.updateActiveNav(activeNav);
-      if (this.props.onTabChange) {
-        this.props.onTabChange(activeNav, this.state.activeNav);
-      }
       this.setState({ activeNav });
+      if (this.props.onTabChange) {
+        this.props.onTabChange(activeNav, oldNav);
+      }
     };
 
     handleOnChange = state => {
       this.formData = state.formData;
-      this.setState({ formData: state.formData });
+
       if (this.props.onChange) {
         this.props.onChange(state);
       }
     };
 
     shouldComponentUpdate(nextProps, nextState) {
-      let sameActive = deepequal(nextState.activeNav, this.state.activeNav);
-      if (!sameActive) {
+      let diffActiveNav = !deepequal(nextState.activeNav, this.state.activeNav);
+      if (diffActiveNav) {
         return true;
       }
-      let sameProps = deepequal(
-        Object.assign({}, this.props, { formData: {} }),
-        Object.assign({}, nextProps, { formData: {} })
-      );
-      if (!sameProps) {
+      let diffProps = this.diffProps(nextProps);
+      if (diffProps) {
         return true;
       }
-      let sameState = deepequal(
-        Object.assign({}, this.state, { formData: this.formData }),
-        nextState
-      );
-      if (!sameState) {
-        return true;
-      }
-      let sameData = this.sameData(nextProps.formData);
-      return !sameProps || !sameState || !sameData;
+      return !deepequal(this.formData, nextProps.formData);
     }
 
     render() {
       let subForms = this.navTree.toSubForms(this.state.activeNav);
-      let formData = this.formData;
       return (
         <div>
-          {subForms.map((conf, i) => {
-            let allConf = Object.assign({}, this.props, conf, { formData });
-            return (
-              <FormWithNavs
-                key={`${i}-${conf.navs.tabID}`}
-                {...allConf}
-                onChange={this.handleOnChange}
-                onNavChange={this.handleNavChange(i - 1)}
-              />
-            );
-          })}
+          <FormWithNavs
+            confs={subForms}
+            formData={this.formData}
+            onChange={this.handleOnChange}
+            onNavChange={this.handleNavChange}
+          />
           {this.props.children}
         </div>
       );

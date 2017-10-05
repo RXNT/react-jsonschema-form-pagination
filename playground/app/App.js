@@ -6,7 +6,14 @@ import conf from "./conf";
 let FormWithNav = applyNav(Form);
 
 export class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { formData: conf.formData };
+  }
+
   handleChange = ({ formData }) => {
+    console.log(`Data changed ${JSON.stringify(formData)}`);
     this.setState({ formData });
   };
 

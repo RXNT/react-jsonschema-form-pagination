@@ -94,171 +94,151 @@ exports[`encounter title only once 1`] = `
       </div>
       <div />
     </form>
-  </div>
-  <div>
-    <fieldset>
-      <div
-        className="form-group col-md-12"
-      >
-        <ul
-          className="nav nav-pills"
+    <div>
+      <fieldset>
+        <div
+          className="form-group col-md-12"
         >
-          <li
-            className="active"
-            onClick={[Function]}
+          <ul
+            className="nav nav-pills"
           >
-            <a>
-              0
-            </a>
-          </li>
-          <li
-            className={null}
-            onClick={[Function]}
-          >
-            <a>
-              1
-            </a>
-          </li>
-          <li
-            className={null}
-            onClick={[Function]}
-          >
-            <a>
-              2
-            </a>
-          </li>
-        </ul>
-      </div>
-    </fieldset>
-    <form
-      acceptCharset={undefined}
-      action={undefined}
-      autoComplete={undefined}
-      className="rjsf"
-      encType={undefined}
-      id={undefined}
-      method={undefined}
-      name={undefined}
-      noValidate={false}
-      onSubmit={[Function]}
-      target={undefined}
-    >
-      <div
-        className="form-group field field-object"
-      >
-        <fieldset />
-        <div />
-        <div />
-      </div>
+            <li
+              className="active"
+              onClick={[Function]}
+            >
+              <a>
+                0
+              </a>
+            </li>
+            <li
+              className={null}
+              onClick={[Function]}
+            >
+              <a>
+                1
+              </a>
+            </li>
+            <li
+              className={null}
+              onClick={[Function]}
+            >
+              <a>
+                2
+              </a>
+            </li>
+          </ul>
+        </div>
+      </fieldset>
       <div />
-    </form>
-  </div>
-  <div>
-    <fieldset>
-      <div
-        className="form-group col-md-12"
-      >
-        <ul
-          className="nav nav-pills"
-        >
-          <li
-            className="active"
-            onClick={[Function]}
-          >
-            <a>
-              lastName
-            </a>
-          </li>
-          <li
-            className={null}
-            onClick={[Function]}
-          >
-            <a>
-              firstName
-            </a>
-          </li>
-        </ul>
-      </div>
-    </fieldset>
-    <form
-      acceptCharset={undefined}
-      action={undefined}
-      autoComplete={undefined}
-      className="rjsf"
-      encType={undefined}
-      id={undefined}
-      method={undefined}
-      name={undefined}
-      noValidate={false}
-      onSubmit={[Function]}
-      target={undefined}
-    >
-      <div
-        className="form-group field field-object"
-      >
+      <div>
         <fieldset>
           <div
-            className="form-group field field-string"
+            className="form-group col-md-12"
           >
-            <label
-              className="control-label"
-              htmlFor="root_lastName"
+            <ul
+              className="nav nav-pills"
             >
-              lastName
-            </label>
-            <div />
-            <input
-              autoFocus={false}
-              className="form-control"
-              disabled={false}
-              id="root_lastName"
-              label="lastName"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              placeholder=""
-              readOnly={false}
-              required={false}
-              type="text"
-              value=""
-            />
-            <div />
-            <div />
-          </div>
-          <div
-            className="form-group field field-string"
-          >
-            <label
-              className="control-label"
-              htmlFor="root_firstName"
-            >
-              firstName
-            </label>
-            <div />
-            <input
-              autoFocus={false}
-              className="form-control"
-              disabled={false}
-              id="root_firstName"
-              label="firstName"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              placeholder=""
-              readOnly={false}
-              required={false}
-              type="text"
-              value=""
-            />
-            <div />
-            <div />
+              <li
+                className="active"
+                onClick={[Function]}
+              >
+                <a>
+                  lastName
+                </a>
+              </li>
+              <li
+                className={null}
+                onClick={[Function]}
+              >
+                <a>
+                  firstName
+                </a>
+              </li>
+            </ul>
           </div>
         </fieldset>
-        <div />
+        <form
+          acceptCharset={undefined}
+          action={undefined}
+          autoComplete={undefined}
+          className="rjsf"
+          encType={undefined}
+          id={undefined}
+          method={undefined}
+          name={undefined}
+          noValidate={false}
+          onSubmit={[Function]}
+          target={undefined}
+        >
+          <div
+            className="form-group field field-object"
+          >
+            <fieldset>
+              <div
+                className="form-group field field-string"
+              >
+                <label
+                  className="control-label"
+                  htmlFor="root_lastName"
+                >
+                  lastName
+                </label>
+                <div />
+                <input
+                  autoFocus={false}
+                  className="form-control"
+                  disabled={false}
+                  id="root_lastName"
+                  label="lastName"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  placeholder=""
+                  readOnly={false}
+                  required={false}
+                  type="text"
+                  value=""
+                />
+                <div />
+                <div />
+              </div>
+              <div
+                className="form-group field field-string"
+              >
+                <label
+                  className="control-label"
+                  htmlFor="root_firstName"
+                >
+                  firstName
+                </label>
+                <div />
+                <input
+                  autoFocus={false}
+                  className="form-control"
+                  disabled={false}
+                  id="root_firstName"
+                  label="firstName"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  placeholder=""
+                  readOnly={false}
+                  required={false}
+                  type="text"
+                  value=""
+                />
+                <div />
+                <div />
+              </div>
+            </fieldset>
+            <div />
+            <div />
+          </div>
+          <div />
+        </form>
         <div />
       </div>
-      <div />
-    </form>
+    </div>
   </div>
 </div>
 `;
