@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import deepequal from "deep-equal";
-import formWithTabs from "./FormWithTabs";
+import formWithNav from "./FormWithNav";
 import { isDevelopment } from "./utils";
 import splitInLayers from "./splitter/splitInLayers";
-import Tabs from "./Tabs";
+import Navs from "./Navs";
 
-export default function applyPagination(FormComponent, TabComponent = Tabs) {
-  const FormWithTabs = formWithTabs(FormComponent, TabComponent);
+export default function applyPagination(FormComponent, NavComponent = Navs) {
+  const FormWithNavs = formWithNav(FormComponent, NavComponent);
 
   class FormWithPagination extends Component {
     constructor(props) {
@@ -97,7 +97,7 @@ export default function applyPagination(FormComponent, TabComponent = Tabs) {
           {subForms.map((conf, i) => {
             let allConf = Object.assign({}, this.props, conf, { formData });
             return (
-              <FormWithTabs
+              <FormWithNavs
                 key={i}
                 {...allConf}
                 onChange={this.handleOnChange}

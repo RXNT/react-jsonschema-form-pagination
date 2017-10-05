@@ -1,15 +1,15 @@
 import { GENERIC_TAB, UI_TAB_ALIAS, UI_TAB_ID } from "../utils";
 
-function findTabs(field, uiSchema) {
-  let tabs =
+function findNavs(field, uiSchema) {
+  let navs =
     uiSchema[field] && uiSchema[field][UI_TAB_ID]
       ? uiSchema[field][UI_TAB_ID]
       : [];
-  return Array.isArray(tabs) ? tabs : [tabs];
+  return Array.isArray(navs) ? navs : [navs];
 }
 
-export function findRelTree(tree, tabs) {
-  return tabs.reduce((pos, tab) => {
+export function findRelTree(tree, navs) {
+  return navs.reduce((pos, tab) => {
     if (pos[tab] === undefined) {
       pos[tab] = {};
     }
@@ -32,8 +32,8 @@ function pushField(tree, field, uiAlias) {
 
 function fillSchemaConf(schema, uiSchema, tree) {
   Object.keys(schema.properties).forEach(field => {
-    let tabs = findTabs(field, uiSchema);
-    let subTree = findRelTree(tree, tabs);
+    let navs = findNavs(field, uiSchema);
+    let subTree = findRelTree(tree, navs);
     pushField(subTree, field);
   }, {});
 }
@@ -47,8 +47,8 @@ function fillAliasesConf(uiSchema, tree) {
     let fieldAlias = aliases[field];
     let normFieldAlias = Array.isArray(fieldAlias) ? fieldAlias : [fieldAlias];
     normFieldAlias.forEach(alias => {
-      let tabs = findTabs(alias, uiSchema);
-      let subTree = findRelTree(tree, tabs);
+      let navs = findNavs(alias, uiSchema);
+      let subTree = findRelTree(tree, navs);
       pushField(subTree, field, alias);
     });
   });

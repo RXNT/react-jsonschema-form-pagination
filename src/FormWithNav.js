@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import deepequal from "deep-equal";
 import PropTypes from "prop-types";
 import { isDevelopment } from "./utils";
-import Tabs from "./Tabs";
+import Navs from "./Navs";
 
-const formWithTabs = (FormComponent, TabComponent = Tabs) => {
+const formWithTabs = (FormComponent, NavComponent = Navs) => {
   class FormWithTabs extends Component {
     constructor(props) {
       super(props);
@@ -68,7 +68,7 @@ const formWithTabs = (FormComponent, TabComponent = Tabs) => {
     renderTabs = () => {
       let { tabs, activeTab, onTabChange } = this.props;
       return (
-        <TabComponent
+        <NavComponent
           tabs={tabs}
           activeTab={activeTab}
           onTabChange={onTabChange}

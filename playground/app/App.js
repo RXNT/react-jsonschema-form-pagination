@@ -22,11 +22,15 @@ export class App extends Component {
     return (
       <FormWithPagination
         {...fullConf}
+        liveValidation={true}
+        onSubmit={() => console.log("Submitting form data")}
         onChange={this.handleChange}
         onTabChange={this.handleTabChange}>
         <div className="col-md-12">
           <div className="form-group pull-right">
-            <div className="btn btn-success">Save</div>
+            <button className="btn btn-success" type="submit">
+              Save
+            </button>
           </div>
         </div>
       </FormWithPagination>
