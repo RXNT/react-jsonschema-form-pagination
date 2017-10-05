@@ -3,6 +3,7 @@ import { findRelTree } from "./extractTree";
 import extractUiSchemaForTree from "./extractUiSchema";
 import extractSchemaForTree from "./extractSchema";
 import extractTabsForTree from "./extractNavs";
+import { extractTree } from "./extractTree";
 
 const EMPTY_CONF = {
   schema: { type: "object", properties: {} },
@@ -34,8 +35,8 @@ const getNavConf = (tabPath, tree, schema, uiSchema, tabData) => {
 };
 
 export default class NavTree {
-  constructor(tree, schema, uiSchema, tabData) {
-    this.tree = tree;
+  constructor(schema, uiSchema, tabData = []) {
+    this.tree = extractTree(schema, uiSchema);
     this.schema = schema;
     this.uiSchema = uiSchema;
     this.tabData = tabData;

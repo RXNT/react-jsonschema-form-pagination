@@ -1,6 +1,6 @@
-import splitInLayers from "../../src/splitter/splitInLayers";
 import { UI_TAB_ALIAS, UI_TAB_ORDER } from "../../src/utils";
 import { withTab } from "../utils";
+import splitter from "../../src/splitter";
 
 let schema = {
   properties: {
@@ -32,7 +32,7 @@ let uiSchema = {
 };
 
 test("return subforms", () => {
-  let layers = splitInLayers(schema, uiSchema);
+  let layers = splitter(schema, uiSchema);
 
   let activeTabs = [];
   layers.updateActiveTabs(activeTabs);

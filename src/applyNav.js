@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import deepequal from "deep-equal";
 import formWithNav from "./FormWithNav";
 import { isDevelopment } from "./utils";
-import splitInLayers from "./splitter/splitInLayers";
 import Navs from "./Navs";
+import splitter from "./splitter";
 
 export default function applyPagination(FormComponent, NavComponent = Navs) {
   const FormWithNavs = formWithNav(FormComponent, NavComponent);
@@ -17,7 +17,7 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
 
       this.formData = formData ? formData : {};
 
-      this.layers = splitInLayers(schema, uiSchema, tabData);
+      this.layers = splitter(schema, uiSchema, tabData);
       let activeTabs = [];
       this.layers.updateActiveTabs(activeTabs, 0);
       this.state = { formData, activeTabs };
@@ -40,7 +40,7 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
     componentWillReceiveProps(nextProps) {
       if (!this.sameLayers(nextProps)) {
         let { schema, uiSchema, tabData } = nextProps;
-        this.layers = splitInLayers(schema, uiSchema, tabData);
+        this.layers = splitter(schema, uiSchema, tabData);
       }
       if (!this.sameData(nextProps.formData)) {
         this.formData = nextProps.formData;

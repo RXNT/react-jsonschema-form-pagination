@@ -1,5 +1,5 @@
-import splitInLayers from "../../src/splitter/splitInLayers";
 import { UI_TAB_ID } from "../../src/utils";
+import splitter from "../../src/splitter";
 
 let schema = {
   properties: {
@@ -34,7 +34,7 @@ let uiSchema = {
 };
 
 test("select active in layer", () => {
-  let layers = splitInLayers(schema, uiSchema, [{ tabID: "nick" }]);
+  let layers = splitter(schema, uiSchema, [{ tabID: "nick" }]);
 
   let activeTabs = [];
   layers.updateActiveTabs(activeTabs);
@@ -42,7 +42,7 @@ test("select active in layer", () => {
 });
 
 test("return subforms", () => {
-  let layers = splitInLayers(schema, uiSchema);
+  let layers = splitter(schema, uiSchema);
   let subForms = layers.toSubForms(["first", "age"]);
   expect(subForms[0]).toEqual({
     activeTab: "first",

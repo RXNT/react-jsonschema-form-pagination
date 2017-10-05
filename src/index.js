@@ -1,3 +1,3 @@
-import applyPagination from "./applyPagination";
+import applyNav from "./applyNav";
 
-export default applyPagination;
+export default applyNav;

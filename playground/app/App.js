@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import applyPagination from "../../src/index";
+import applyPagination from "../../src";
 import Form from "react-jsonschema-form";
 import CustomTabs from "./CustomTabs";
 import conf from "./conf";
