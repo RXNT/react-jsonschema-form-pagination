@@ -36,6 +36,7 @@ test("create default configs", () => {
       { nav: "1", name: "Some", isActive: true },
       { nav: "2", isActive: false },
     ],
+    activeNav: "1",
   };
   expect(navs).toEqual(expectedNavs);
 });

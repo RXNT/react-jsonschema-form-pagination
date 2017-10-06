@@ -51,5 +51,5 @@ export default function extractSubNavs(tree, uiSchema, activeNav) {
     })
     .map(nav => Object.assign(nav, { isActive: nav.nav === activeNav }));
   let orderedNavs = orderNavs(navs, uiSchema);
-  return { links: orderedNavs };
+  return { links: orderedNavs, activeNav };
 }

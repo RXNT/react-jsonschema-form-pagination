@@ -1,23 +1,19 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { isEmptySchema } from "./utils";
+import { isEmptySchema, toArray } from "./utils";
 import Navs from "./Navs";
 
 const formWithTabs = (FormComponent, NavComponent = Navs) => {
   class FormWithTabs extends Component {
     handleNavChange = selNav => {
-      let { navs: { links } } = this.props.subForms[0];
-      let isRelNav = links.some(({ nav }) => nav === selNav);
-      if (isRelNav) {
-        this.props.onNavChange([selNav]);
-      } else {
-        let active = links.find(({ nav, isActive }) => isActive);
-        if (active !== undefined) {
-          this.props.onNavChange([active.nav].concat(selNav));
-        } else {
-          this.props.onNavChange(selNav);
-        }
-      }
+      let { navs: { activeNav } } = this.props.subForms[0];
+      // Black magic
+      // If this is an array, and there is an activeNav send selection, otherwise wrap it in array
+      let notif =
+        Array.isArray(selNav) && activeNav
+          ? [activeNav].concat(selNav)
+          : toArray(selNav);
+      this.props.onNavChange(notif);
     };
 
     renderNavs = () => {

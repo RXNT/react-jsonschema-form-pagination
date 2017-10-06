@@ -50,6 +50,7 @@ test("return subforms", () => {
       },
     },
     navs: {
+      activeNav: "first",
       links: [
         { nav: "first", isActive: true },
         { nav: "last", isActive: false },
@@ -74,6 +75,7 @@ test("return subforms", () => {
         { nav: "age", isActive: true },
         { nav: "phone", isActive: false },
       ],
+      activeNav: "age",
     },
   });
 });
