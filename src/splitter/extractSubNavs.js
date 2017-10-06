@@ -42,8 +42,8 @@ export function orderNavs(navs, uiSchema) {
   return orderedNavs.map(ordNav => navs.find(({ nav }) => nav === ordNav));
 }
 
-export default function extractSubNavs(conf, uiSchema, activeNav) {
-  let navs = Object.keys(conf)
+export default function extractSubNavs(tree, uiSchema, activeNav) {
+  let navs = Object.keys(tree)
     .filter(nav => nav !== GENERIC_NAV)
     .map(nav => {
       let navConf = toNavConf(nav, uiSchema);

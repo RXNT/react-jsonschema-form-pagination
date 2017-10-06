@@ -1,4 +1,4 @@
-import { GENERIC_NAV } from "../utils";
+import { GENERIC_NAV, toArray } from "../utils";
 import { getNavAliases, findFieldNavs } from "./extractSubNavs";
 
 export function findRelTree(tree, navs) {
@@ -33,12 +33,9 @@ function fillSchemaConf(schema, uiSchema, tree) {
 
 function fillAliasesConf(uiSchema, tree) {
   let aliases = getNavAliases(uiSchema);
-  if (!aliases) {
-    return;
-  }
   Object.keys(aliases).forEach(field => {
     let fieldAlias = aliases[field];
-    let normFieldAlias = Array.isArray(fieldAlias) ? fieldAlias : [fieldAlias];
+    let normFieldAlias = toArray(fieldAlias);
     normFieldAlias.forEach(alias => {
       let navs = findFieldNavs(alias, uiSchema);
       let subTree = findRelTree(tree, navs);

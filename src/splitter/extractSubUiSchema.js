@@ -5,9 +5,6 @@ function keepOrdering(fields, uiSchema, subUiSchema) {
     subUiSchema[UI_ORDER] = uiSchema[UI_ORDER].filter(field =>
       fields.includes(field)
     );
-    if (uiSchema[UI_ORDER].length === 0) {
-      delete uiSchema[UI_ORDER];
-    }
   }
 }
 
