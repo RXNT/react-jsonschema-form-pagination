@@ -1,10 +1,13 @@
 import React from "react";
 import { GENERIC_TAB } from "./utils";
 
-function Nav({ handleClick, isActive, name }) {
+function Nav({ handleClick, isActive, name, icon }) {
   return (
     <li onClick={handleClick} className={isActive ? "active" : null}>
-      <a>{name}</a>
+      <a>
+        {icon && <span className={icon} aria-hidden="true" />}
+        &nbsp;{name}
+      </a>
     </li>
   );
 }
@@ -16,10 +19,11 @@ function Navs({ navs: { orientation = "horizontal", links }, onNavChange }) {
   if (relLinks.length > 0) {
     return (
       <ul className={className}>
-        {relLinks.map(({ tabID, name, isActive }, i) => (
+        {relLinks.map(({ tabID, name, icon, isActive }, i) => (
           <Nav
             key={i}
             name={name ? name : tabID}
+            icon={icon}
             isActive={isActive}
             handleClick={() => onNavChange(tabID)}
           />

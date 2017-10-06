@@ -1,4 +1,4 @@
-import { orderNavs } from "../../src/splitter/utils";
+import { orderNavs } from "../../src/utils";
 
 test("simple ordering", () => {
   let navs = [{ tabID: "Second" }, { tabID: "First" }];

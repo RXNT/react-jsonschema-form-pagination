@@ -107,6 +107,7 @@ exports[`encounter title only once 1`] = `
               onClick={[Function]}
             >
               <a>
+                 
                 0
               </a>
             </li>
@@ -115,6 +116,7 @@ exports[`encounter title only once 1`] = `
               onClick={[Function]}
             >
               <a>
+                 
                 1
               </a>
             </li>
@@ -123,6 +125,7 @@ exports[`encounter title only once 1`] = `
               onClick={[Function]}
             >
               <a>
+                 
                 2
               </a>
             </li>
@@ -143,6 +146,7 @@ exports[`encounter title only once 1`] = `
                 onClick={[Function]}
               >
                 <a>
+                   
                   lastName
                 </a>
               </li>
@@ -151,6 +155,7 @@ exports[`encounter title only once 1`] = `
                 onClick={[Function]}
               >
                 <a>
+                   
                   firstName
                 </a>
               </li>

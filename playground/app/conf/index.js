@@ -106,11 +106,19 @@ const tabData = [
   {
     tabID: "0-tab",
     classNames: "danger",
+    icon: "fa fa-address-book",
     orientation: "vertical",
   },
   {
     tabID: "firstName-tab",
     classNames: "danger",
+    icon: "glyphicon glyphicon-align-left",
+    orientation: "vertical",
+  },
+  {
+    tabID: "lastName-tab",
+    classNames: "danger",
+    icon: "glyphicon glyphicon-align-right",
     orientation: "vertical",
   },
 ];
