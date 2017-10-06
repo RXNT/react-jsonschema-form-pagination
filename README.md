@@ -25,7 +25,7 @@ FormWithPagination is a wrapper for Mozilla's JSON Schema Form that allows a sch
 
 Use this project as you would use Mozilla's JSON Schema Form (see their documentation), but to leverage the tab features just provide these extra parameters:
 
-- In the `uiSchema` object, use the new `ui:tabID` and `ui:tabAliases` property to associate each field with a tab
+- In the `uiSchema` object, use the new `nav` and `ui:tabAliases` property to associate each field with a tab
 - Pass in an additional `tabData` array in props, if you want to customize tab naming
 
 To show case use of the pagination project, we'll be using following `schema` as a base
@@ -54,19 +54,19 @@ import Form from "react-jsonschema-form";
 
 const uiSchema = {
   firstName: {
-    "ui:tabID": "main"
+    "nav": "main"
   },
   lastName: {
-    "ui:tabID": "main"
+    "nav": "main"
   },
   age: {
-    "ui:tabID": "main"
+    "nav": "main"
   },
   phone: {
-    "ui:tabID": "main"
+    "nav": "main"
   },
   nickName: {
-    "ui:tabID": "other"
+    "nav": "other"
   },
 };
 
@@ -91,19 +91,19 @@ This is how `uiSchema` should look like in order to do that :
 ```js
 const uiSchema = {
   firstName: {
-    "ui:tabID": "main"
+    "nav": "main"
   },
   lastName: {
-    "ui:tabID": [ "main", "general" ]
+    "nav": [ "main", "general" ]
   },
   age: {
-    "ui:tabID": [ "main", "general" ]
+    "nav": [ "main", "general" ]
   },
   phone: {
-    "ui:tabID": [ "main", "other" ]
+    "nav": [ "main", "other" ]
   },
   nickName: {
-    "ui:tabID": "other"
+    "nav": "other"
   }
 };
 ```
@@ -116,7 +116,7 @@ When rendered this configuration will show 2 tabs
 
 ### Default level
 
-When you don't specify `ui:tabID`, the field will be shown above the tabs.
+When you don't specify `nav`, the field will be shown above the tabs.
 
 For example, if we go back to single level example, but we want to always see `firstName` shown above the tab navigation.
 Here is how we can do this:
@@ -125,16 +125,16 @@ Here is how we can do this:
 const uiSchema = {
   firstName: {},
   lastName: {
-    "ui:tabID": "main"
+    "nav": "main"
   },
   age: {
-    "ui:tabID": "main"
+    "nav": "main"
   },
   phone: {
-    "ui:tabID": "main"
+    "nav": "main"
   },
   nickName: {
-    "ui:tabID": "other"
+    "nav": "other"
   },
 };
 ```
@@ -154,22 +154,22 @@ For example, if we want to show `firstName` in both tabs `main` and `other`.
 ```js
 const uiSchema = {
   firstName: {
-    "ui:tabID": "main"
+    "nav": "main"
   },
   firsNameAlias: {
-    "ui:tabID": "other"
+    "nav": "other"
   },
   lastName: {
-    "ui:tabID": "main"
+    "nav": "main"
   },
   age: {
-    "ui:tabID": "main"
+    "nav": "main"
   },
   phone: {
-    "ui:tabID": "main"
+    "nav": "main"
   },
   nickName: {
-    "ui:tabID": "other"
+    "nav": "other"
   },
   "ui:tabAlias": {
     firstName: "firsNameAlias"
@@ -241,19 +241,19 @@ For example, in order to have
 const uiSchema = {
   "ui:tabOrder": [ "main", "sub", "other" ]
   age: {
-    "ui:tabID": "sub"
+    "nav": "sub"
   },
   phone: {
-    "ui:tabID": "main"
+    "nav": "main"
   },
   firstName: {
-    "ui:tabID": "main"
+    "nav": "main"
   },
   lastName: {
-    "ui:tabID": "main"
+    "nav": "main"
   },
   nickName: {
-    "ui:tabID": "other"
+    "nav": "other"
   },
 };
 ```

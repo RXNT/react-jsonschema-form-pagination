@@ -21,25 +21,25 @@ const schema = {
 
 const uiSchema = {
   firstNameAlias: {
-    "ui:tabID": ["0", "lastName"],
+    nav: ["0", "lastName"],
   },
   lastName: {
-    "ui:tabID": ["0", "lastName"],
+    nav: ["0", "lastName"],
   },
   age: {
-    "ui:tabID": ["0", "firstName", "age"],
+    nav: ["0", "firstName", "age"],
   },
   nickName: {
-    "ui:tabID": ["0", "firstName", "nickName"],
+    nav: ["0", "firstName", "nickName"],
   },
   bio: {
-    "ui:tabID": "1",
+    nav: "1",
   },
   password: {
-    "ui:tabID": ["2"],
+    nav: ["2"],
   },
   telephone: {
-    "ui:tabID": "2",
+    nav: "2",
   },
   "ui:tabAlias": {
     firstName: "firstNameAlias",

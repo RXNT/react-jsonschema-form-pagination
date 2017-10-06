@@ -1,6 +1,6 @@
 export const GENERIC_TAB = "default";
 export const UI_ORDER = "ui:order";
-export const UI_NAV_ID = "ui:tabID";
+export const UI_NAV_ID = "nav";
 export const UI_NAV_ALIAS = "ui:tabAlias";
 export const UI_NAV_ORDER = "ui:tabOrder";
 

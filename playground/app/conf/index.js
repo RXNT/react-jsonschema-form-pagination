@@ -62,44 +62,44 @@ const uiSchema = {
   },
   firstNameAlias: {
     classNames: "col-md-8 col-xs-4 success",
-    "ui:tabID": ["0-tab", "lastName-tab"],
+    nav: ["0-tab", "lastName-tab"],
   },
   firstNameOneAlias: {
     classNames: "col-md-8 col-xs-4 success",
-    "ui:tabID": ["0-tab"],
+    nav: ["0-tab"],
   },
   lastName: {
     classNames: "col-md-4 col-xs-4",
-    "ui:tabID": ["0-tab", "lastName-tab"],
+    nav: ["0-tab", "lastName-tab"],
   },
   age: {
     classNames: "col-md-4 col-xs-4",
     "ui:widget": "updown",
     "ui:title": "Age of person",
-    "ui:tabID": ["0-tab", "firstName-tab", "age-tab"],
+    nav: ["0-tab", "firstName-tab", "age-tab"],
   },
   nickName: {
     classNames: "col-md-4 col-xs-4",
     "ui:title": "nickname",
-    "ui:tabID": ["0-tab", "firstName-tab", "nickName-tab"],
+    nav: ["0-tab", "firstName-tab", "nickName-tab"],
   },
   bio: {
     "ui:widget": "textarea",
     classNames: "col-md-12",
-    "ui:tabID": "1-tab",
+    nav: "1-tab",
   },
   password: {
     classNames: "col-md-6 col-xs-6",
     "ui:widget": "password",
     "ui:help": "Hint: Make it strong!",
-    "ui:tabID": ["2-tab"],
+    nav: ["2-tab"],
   },
   telephone: {
     classNames: "col-md-6 col-xs-6",
     "ui:options": {
       inputType: "tel",
     },
-    "ui:tabID": "2-tab",
+    nav: "2-tab",
   },
   "ui:tabAlias": {
     firstName: ["firstNameAlias", "firstNameOneAlias"],
