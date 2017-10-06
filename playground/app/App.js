@@ -32,12 +32,10 @@ export class App extends Component {
         onSubmit={() => console.log("Submitting form data")}
         onChange={this.handleChange}
         onTabChange={this.handleTabChange}>
-        <div className="col-md-12">
-          <div className="form-group pull-right">
-            <button className="btn btn-success" type="submit">
-              Save
-            </button>
-          </div>
+        <div className="form-group col-md-12">
+          <button className="btn btn-success" type="submit">
+            Save
+          </button>
         </div>
       </FormWithNav>
     );

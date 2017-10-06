@@ -47,10 +47,11 @@ const formWithTabs = (FormComponent, NavComponent = Navs) => {
     renderNext = () => {
       let { confs } = this.props;
       if (confs.length > 1) {
-        let subConfs = confs.slice(1, confs.length);
+        let nextConfs = confs.slice(1, confs.length);
         let nextRecProps = Object.assign({}, this.props, {
-          confs: subConfs,
+          confs: nextConfs,
           onNavChange: this.handleNavChange,
+          children: undefined,
         });
         return <FormWithTabs {...nextRecProps} />;
       } else {
@@ -70,6 +71,7 @@ const formWithTabs = (FormComponent, NavComponent = Navs) => {
                 {this.renderForm()}
                 {this.renderNext()}
               </div>
+              {this.props.children}
             </div>
           );
         }
@@ -81,6 +83,7 @@ const formWithTabs = (FormComponent, NavComponent = Navs) => {
               </fieldset>
               {this.renderForm()}
               {this.renderNext()}
+              {this.props.children}
             </div>
           );
         }
