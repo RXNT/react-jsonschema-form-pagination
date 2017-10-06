@@ -1,4 +1,4 @@
-import { isEmptySchema, isDevelopment, toError } from "../src/utils";
+import { isEmptySchema, isDevelopment, toError, toArray } from "../src/utils";
 import { testInProd } from "./utils";
 
 test("Is empty schema", () => {
@@ -17,4 +17,9 @@ test("Is development", () => {
 test("To error", () => {
   expect(() => toError("message")).toThrow();
   expect(testInProd(() => toError("message"))).toBeUndefined();
+});
+
+test("To array", () => {
+  expect(toArray("v")).toEqual(["v"]);
+  expect(toArray(["v"])).toEqual(["v"]);
 });

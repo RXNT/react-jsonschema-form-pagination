@@ -135,4 +135,5 @@ export default {
   uiSchema,
   formData,
   tabData,
+  activeNav: "1-tab",
 };

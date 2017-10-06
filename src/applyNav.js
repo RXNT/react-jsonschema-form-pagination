@@ -4,6 +4,7 @@ import deepequal from "deep-equal";
 import formWithNav from "./FormWithNav";
 import Navs from "./Navs";
 import splitter from "./splitter";
+import { toArray } from "./utils";
 
 export default function applyPagination(FormComponent, NavComponent = Navs) {
   const FormWithNavs = formWithNav(FormComponent, NavComponent);
@@ -12,9 +13,9 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
     constructor(props) {
       super(props);
 
-      let { formData = {}, tabData, schema, uiSchema } = this.props;
+      let { formData = {}, tabData, schema, uiSchema, activeNav } = this.props;
 
-      let activeNav = [];
+      activeNav = activeNav ? toArray(activeNav) : [];
       this.navTree = splitter(schema, uiSchema, tabData);
       this.navTree.updateActiveNav(activeNav, 0);
 

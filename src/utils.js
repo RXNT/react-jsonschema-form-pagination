@@ -40,6 +40,14 @@ export const toError = message => {
   }
 };
 
+export function toArray(val) {
+  if (Array.isArray(val)) {
+    return val;
+  } else {
+    return [val];
+  }
+}
+
 export function isEmptySchema(schema) {
   return (
     !schema || !schema.properties || Object.keys(schema.properties).length === 0
