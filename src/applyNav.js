@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import deepequal from "deep-equal";
 import formWithNav from "./FormWithNav";
-import { isDevelopment } from "./utils";
 import Navs from "./Navs";
 import splitter from "./splitter";
 
@@ -72,35 +71,36 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
     }
 
     render() {
-      let confs = this.navTree.toSubForms(this.state.activeNav);
-      let formConfs = Object.assign({}, this.props, {
+      let subForms = this.navTree.toSubForms(this.state.activeNav);
+      let formProps = Object.assign({}, this.props, {
+        subForms,
         formData: this.formData,
-        confs,
         onChange: this.handleOnChange,
         onNavChange: this.handleNavChange,
       });
+      delete formProps.schema;
+      delete formProps.uiSchema;
+      delete formProps.tabData;
       return (
         <div>
-          <FormWithNavs {...formConfs}>{this.props.children}</FormWithNavs>
+          <FormWithNavs {...formProps}>{this.props.children}</FormWithNavs>
         </div>
       );
     }
   }
 
-  if (isDevelopment()) {
-    FormWithPagination.propTypes = {
-      schema: PropTypes.shape({
-        type: function(props, propName, componentName) {
-          if (props[propName] !== "object") {
-            return new Error(
-              `Only "object" schemas supported by pagination for ${componentName}.`
-            );
-          }
-        },
-      }),
-      tabData: PropTypes.array,
-    };
-  }
+  FormWithPagination.propTypes = {
+    schema: PropTypes.shape({
+      type: function(props, propName, componentName) {
+        if (props[propName] !== "object") {
+          return new Error(
+            `Only "object" schemas supported by pagination for ${componentName}.`
+          );
+        }
+      },
+    }),
+    tabData: PropTypes.array,
+  };
 
   return FormWithPagination;
 }

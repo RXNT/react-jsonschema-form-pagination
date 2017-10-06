@@ -1,4 +1,4 @@
-import { UI_TAB_ID } from "../src/utils";
+import { UI_NAV_ID } from "../src/utils";
 
 export function testInProd(f) {
   process.env.NODE_ENV = "production";
@@ -9,8 +9,8 @@ export function testInProd(f) {
 
 export function withTab(tabID) {
   if (Array.isArray(tabID)) {
-    return { [UI_TAB_ID]: tabID };
+    return { [UI_NAV_ID]: tabID };
   } else {
-    return { [UI_TAB_ID]: [tabID] };
+    return { [UI_NAV_ID]: [tabID] };
   }
 }

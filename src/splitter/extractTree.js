@@ -1,9 +1,9 @@
-import { GENERIC_TAB, UI_TAB_ALIAS, UI_TAB_ID } from "../utils";
+import { GENERIC_TAB, UI_NAV_ALIAS, UI_NAV_ID } from "../utils";
 
 function findNavs(field, uiSchema) {
   let navs =
-    uiSchema[field] && uiSchema[field][UI_TAB_ID]
-      ? uiSchema[field][UI_TAB_ID]
+    uiSchema[field] && uiSchema[field][UI_NAV_ID]
+      ? uiSchema[field][UI_NAV_ID]
       : [];
   return Array.isArray(navs) ? navs : [navs];
 }
@@ -39,7 +39,7 @@ function fillSchemaConf(schema, uiSchema, tree) {
 }
 
 function fillAliasesConf(uiSchema, tree) {
-  let aliases = uiSchema[UI_TAB_ALIAS];
+  let aliases = uiSchema[UI_NAV_ALIAS];
   if (!aliases) {
     return;
   }

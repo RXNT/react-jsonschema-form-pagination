@@ -1,11 +1,11 @@
 import extractSubUiSchema from "../../src/splitter/extractSubUiSchema";
-import { UI_TAB_ALIAS } from "../../src/utils";
+import { UI_NAV_ALIAS } from "../../src/utils";
 
 test("extract default uiSchema", () => {
   let uiSchema = {
     firstName: {},
     lastName: {},
-    [UI_TAB_ALIAS]: {},
+    [UI_NAV_ALIAS]: {},
   };
   expect(extractSubUiSchema(["firstName", "lastName"], uiSchema, [])).toEqual({
     firstName: {},

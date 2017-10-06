@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import applyNav from "../../src";
 import Form from "react-jsonschema-form";
-import conf from "./conf";
+import generic from "./conf";
+import fields from "react-jsonschema-form-extras";
+
+const conf = generic;
 
 let FormWithNav = applyNav(Form);
 
@@ -24,7 +27,7 @@ export class App extends Component {
   };
 
   render() {
-    let fullConf = Object.assign({}, conf, this.state);
+    let fullConf = Object.assign({ fields }, conf, this.state);
     return (
       <FormWithNav
         {...fullConf}

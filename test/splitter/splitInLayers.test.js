@@ -1,4 +1,4 @@
-import { UI_TAB_ID } from "../../src/utils";
+import { UI_NAV_ID } from "../../src/utils";
 import splitter from "../../src/splitter";
 
 let schema = {
@@ -14,22 +14,22 @@ let schema = {
 
 let uiSchema = {
   firstName: {
-    [UI_TAB_ID]: "first",
+    [UI_NAV_ID]: "first",
   },
   age: {
-    [UI_TAB_ID]: ["first", "age"],
+    [UI_NAV_ID]: ["first", "age"],
   },
   phone: {
-    [UI_TAB_ID]: ["first", "phone"],
+    [UI_NAV_ID]: ["first", "phone"],
   },
   lastName: {
-    [UI_TAB_ID]: "last",
+    [UI_NAV_ID]: "last",
   },
   nickName: {
-    [UI_TAB_ID]: "nick",
+    [UI_NAV_ID]: "nick",
   },
   other: {
-    [UI_TAB_ID]: "nick",
+    [UI_NAV_ID]: "nick",
   },
 };
 
@@ -63,7 +63,7 @@ test("return subforms", () => {
     },
     uiSchema: {
       firstName: {
-        [UI_TAB_ID]: "first",
+        [UI_NAV_ID]: "first",
       },
     },
     navs: {
@@ -83,7 +83,7 @@ test("return subforms", () => {
     },
     uiSchema: {
       age: {
-        [UI_TAB_ID]: ["first", "age"],
+        [UI_NAV_ID]: ["first", "age"],
       },
     },
     navs: {

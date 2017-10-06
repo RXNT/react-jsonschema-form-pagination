@@ -1,4 +1,4 @@
-import { GENERIC_TAB } from "../utils";
+import { GENERIC_TAB, orderNavByName, UI_NAV_ORDER } from "../utils";
 import extractSubConf from "./extractSubConf";
 import { extractTree, findRelTree } from "./extractTree";
 
@@ -12,7 +12,11 @@ export default class NavTree {
   }
 
   pushToTabFromTree = (relTree, activeNavs) => {
-    let nextNav = Object.keys(relTree).find(nav => nav !== GENERIC_TAB);
+    let orderedNavs = orderNavByName(
+      Object.keys(relTree),
+      this.uiSchema[UI_NAV_ORDER]
+    );
+    let nextNav = orderedNavs.find(nav => nav !== GENERIC_TAB);
     if (nextNav) {
       activeNavs.push(nextNav);
       this.pushToTabFromTree(relTree[nextNav], activeNavs);
