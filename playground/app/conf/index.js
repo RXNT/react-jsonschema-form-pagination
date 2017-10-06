@@ -64,6 +64,10 @@ const uiSchema = {
     classNames: "col-md-8 col-xs-4 success",
     "ui:tabID": ["0-tab", "lastName-tab"],
   },
+  firstNameOneAlias: {
+    classNames: "col-md-8 col-xs-4 success",
+    "ui:tabID": ["0-tab"],
+  },
   lastName: {
     classNames: "col-md-4 col-xs-4",
     "ui:tabID": ["0-tab", "lastName-tab"],
@@ -98,7 +102,7 @@ const uiSchema = {
     "ui:tabID": "2-tab",
   },
   "ui:tabAlias": {
-    firstName: "firstNameAlias",
+    firstName: ["firstNameAlias", "firstNameOneAlias"],
   },
 };
 
