@@ -1,4 +1,4 @@
-import { GENERIC_TAB } from "../utils";
+import { GENERIC_NAV } from "../utils";
 import { findRelTree } from "./extractTree";
 import extractSubUiSchema from "./extractSubUiSchema";
 import extractSubSchema from "./extractSubSchema";
@@ -6,7 +6,7 @@ import extractSubNavs, { toNavConf } from "./extractSubNavs";
 
 const extractNavs = (navPath, tree, uiSchema) => {
   if (navPath.length == 0) {
-    let relConf = toNavConf(GENERIC_TAB, uiSchema);
+    let relConf = toNavConf(GENERIC_NAV, uiSchema);
     return Object.assign({}, { links: [] }, relConf);
   }
 
@@ -25,11 +25,11 @@ const extractNavs = (navPath, tree, uiSchema) => {
 const extractSubConf = (navPath, tree, schema, uiSchema) => {
   let relTree = findRelTree(tree, navPath);
   let navs = extractNavs(navPath, tree, uiSchema);
-  if (relTree[GENERIC_TAB] === undefined) {
+  if (relTree[GENERIC_NAV] === undefined) {
     return Object.assign({}, { navs });
   }
 
-  let { fields, aliases } = relTree[GENERIC_TAB];
+  let { fields, aliases } = relTree[GENERIC_NAV];
   let subSchema = extractSubSchema(fields, schema);
   let subUiSchema = extractSubUiSchema(fields, uiSchema, aliases);
 

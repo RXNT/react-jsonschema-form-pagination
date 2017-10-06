@@ -1,24 +1,25 @@
-import { GENERIC_TAB, getNavAliases, findFieldNavs } from "../utils";
+import { GENERIC_NAV } from "../utils";
+import { getNavAliases, findFieldNavs } from "./extractSubNavs";
 
 export function findRelTree(tree, navs) {
-  return navs.reduce((pos, tab) => {
-    if (pos[tab] === undefined) {
-      pos[tab] = {};
+  return navs.reduce((pos, nav) => {
+    if (pos[nav] === undefined) {
+      pos[nav] = {};
     }
-    return pos[tab];
+    return pos[nav];
   }, tree);
 }
 
 function pushField(tree, field, uiAlias) {
-  if (tree[GENERIC_TAB] === undefined) {
-    tree[GENERIC_TAB] = {
+  if (tree[GENERIC_NAV] === undefined) {
+    tree[GENERIC_NAV] = {
       fields: [],
       aliases: {},
     };
   }
-  tree[GENERIC_TAB].fields.push(field);
+  tree[GENERIC_NAV].fields.push(field);
   if (uiAlias) {
-    tree[GENERIC_TAB].aliases[field] = uiAlias;
+    tree[GENERIC_NAV].aliases[field] = uiAlias;
   }
 }
 
@@ -47,8 +48,8 @@ function fillAliasesConf(uiSchema, tree) {
 }
 
 export function extractTree(schema, uiSchema) {
-  let tabTree = {};
-  fillSchemaConf(schema, uiSchema, tabTree);
-  fillAliasesConf(uiSchema, tabTree);
-  return tabTree;
+  let tree = {};
+  fillSchemaConf(schema, uiSchema, tree);
+  fillAliasesConf(uiSchema, tree);
+  return tree;
 }

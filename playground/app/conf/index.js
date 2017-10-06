@@ -51,15 +51,6 @@ const uiSchema = {
     "telephone",
     "password",
   ],
-  "ui:tabOrder": [
-    "2-tab",
-    "0-tab",
-    "1-tab",
-    "firstName-tab",
-    "lastName-tab",
-    "age-tab",
-    "nickName-tab",
-  ],
   encounter: {
     classNames: "col-md-12",
   },
@@ -113,6 +104,15 @@ const uiSchema = {
     aliases: {
       firstName: ["firstNameAlias", "firstNameOneAlias"],
     },
+    order: [
+      "2-tab",
+      "0-tab",
+      "1-tab",
+      "firstName-tab",
+      "lastName-tab",
+      "age-tab",
+      "nickName-tab",
+    ],
     navs: [
       {
         nav: "0-tab",
