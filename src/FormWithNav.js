@@ -7,6 +7,9 @@ const formWithTabs = (FormComponent, NavComponent = Navs) => {
   class FormWithTabs extends Component {
     handleNavChange = selNav => {
       let { navs: { activeNav } } = this.props.subForms[0];
+      if (selNav === activeNav) {
+        return;
+      }
       // Black magic
       // If this is an array, and there is an activeNav send selection, otherwise wrap it in array
       let notif =

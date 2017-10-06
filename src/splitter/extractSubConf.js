@@ -14,7 +14,8 @@ const extractNavs = (navPath, tree, uiSchema) => {
   let parentTree = findRelTree(tree, navPath.slice(0, navPath.length - 1));
   let navWithLinks = extractSubNavs(parentTree, uiSchema, activeNav);
   if (navPath.length == 1) {
-    return navWithLinks;
+    let relConf = toNavConf(GENERIC_NAV, uiSchema);
+    return Object.assign(navWithLinks, relConf);
   }
 
   let parentNav = navPath[navPath.length - 2];

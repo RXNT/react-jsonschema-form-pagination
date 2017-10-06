@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import applyNav from "../../src";
 import Form from "react-jsonschema-form";
-import generic from "./conf";
+import conf from "./conf";
 import fields from "react-jsonschema-form-extras";
-
-const conf = generic;
 
 let FormWithNav = applyNav(Form);
 

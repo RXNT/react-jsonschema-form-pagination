@@ -102,7 +102,7 @@ const uiSchema = {
   },
   navConf: {
     aliases: {
-      firstName: ["firstNameAlias", "firstNameOneAlias"],
+      firstName: ["firstNameAlias"],
     },
     order: [
       "2-tab",

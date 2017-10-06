@@ -33,11 +33,6 @@ test("return subforms", () => {
   let layers = splitter(schema, uiSchema);
   let subForms = layers.toSubForms(["first", "age"]);
   expect(subForms[0]).toEqual({
-    navs: {
-      links: [],
-    },
-  });
-  expect(subForms[1]).toEqual({
     schema: {
       type: "object",
       properties: {
@@ -58,7 +53,7 @@ test("return subforms", () => {
       ],
     },
   });
-  expect(subForms[2]).toEqual({
+  expect(subForms[1]).toEqual({
     schema: {
       type: "object",
       properties: {

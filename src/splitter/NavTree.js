@@ -34,7 +34,9 @@ export default class NavTree {
         this.schema,
         this.uiSchema
       );
-      agg.push(subConf);
+      if (subConf.schema || subConf.navs.links.length > 0) {
+        agg.push(subConf);
+      }
     }
     return agg;
   };

@@ -4,29 +4,17 @@ import splitter from "../../src/splitter";
 let schema = {
   properties: {
     firstName: { type: "string" },
-    age: { type: "string" },
-    phone: { type: "string" },
     lastName: { type: "string" },
-    nickName: { type: "string" },
-    other: { type: "string" },
   },
 };
 
 let uiSchema = {
   firstName: withNav("first"),
-  phone: withNav(["first", "phone"]),
-  ageAlias: withNav(["first", "other"]),
-  phoneAlias: withNav(["first", "other"]),
-  nickNameAlias: withNav(["first", "other"]),
-  age: withNav("last"),
-  nickName: withNav("last"),
-  lastName: withNav("last"),
-  other: withNav("nick"),
+  lastName: withNav(["last"]),
+  firstNameAlias: withNav(["last"]),
   navConf: {
     aliases: {
-      nickName: "nickNameAlias",
-      age: "ageAlias",
-      phone: "phoneAlias",
+      firstName: "firstNameAlias",
     },
   },
 };
@@ -38,10 +26,25 @@ test("return subforms", () => {
   layers.updateActiveNav(activeNavs);
   // expect(activeTabs).toEqual([ "first", "other" ]);
 
-  let subForms = layers.toSubForms(activeNavs);
+  let subForms = layers.toSubForms(["last"]);
   expect(subForms[0]).toEqual({
     navs: {
-      links: [],
+      activeNav: "last",
+      links: [
+        { isActive: false, nav: "first" },
+        { isActive: true, nav: "last" },
+      ],
+    },
+    schema: {
+      type: "object",
+      properties: {
+        firstName: { type: "string" },
+        lastName: { type: "string" },
+      },
+    },
+    uiSchema: {
+      firstName: withNav("last"),
+      lastName: withNav("last"),
     },
   });
 });
