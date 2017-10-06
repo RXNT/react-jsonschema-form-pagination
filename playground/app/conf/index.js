@@ -51,7 +51,15 @@ const uiSchema = {
     "telephone",
     "password",
   ],
-  "ui:tabOrder": ["2", "0", "1", "firstName", "lastName", "age", "nickName"],
+  "ui:tabOrder": [
+    "2-tab",
+    "0-tab",
+    "1-tab",
+    "firstName-tab",
+    "lastName-tab",
+    "age-tab",
+    "nickName-tab",
+  ],
   encounter: {
     classNames: "col-md-12",
   },
@@ -101,31 +109,32 @@ const uiSchema = {
     },
     nav: "2-tab",
   },
-  "ui:tabAlias": {
-    firstName: ["firstNameAlias", "firstNameOneAlias"],
+  navConf: {
+    aliases: {
+      firstName: ["firstNameAlias", "firstNameOneAlias"],
+    },
+    navs: [
+      {
+        nav: "0-tab",
+        classNames: "danger",
+        icon: "fa fa-address-book",
+        orientation: "vertical",
+      },
+      {
+        nav: "firstName-tab",
+        classNames: "danger",
+        icon: "glyphicon glyphicon-align-left",
+        orientation: "vertical",
+      },
+      {
+        nav: "lastName-tab",
+        classNames: "danger",
+        icon: "glyphicon glyphicon-align-right",
+        orientation: "vertical",
+      },
+    ],
   },
 };
-
-const tabData = [
-  {
-    tabID: "0-tab",
-    classNames: "danger",
-    icon: "fa fa-address-book",
-    orientation: "vertical",
-  },
-  {
-    tabID: "firstName-tab",
-    classNames: "danger",
-    icon: "glyphicon glyphicon-align-left",
-    orientation: "vertical",
-  },
-  {
-    tabID: "lastName-tab",
-    classNames: "danger",
-    icon: "glyphicon glyphicon-align-right",
-    orientation: "vertical",
-  },
-];
 
 const formData = {
   encounter: "Some",
@@ -138,6 +147,5 @@ export default {
   schema,
   uiSchema,
   formData,
-  tabData,
   activeNav: "1-tab",
 };

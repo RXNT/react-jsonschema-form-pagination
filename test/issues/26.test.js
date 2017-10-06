@@ -41,8 +41,10 @@ const uiSchema = {
   telephone: {
     nav: "2",
   },
-  "ui:tabAlias": {
-    firstName: "firstNameAlias",
+  navConf: {
+    aliases: {
+      firstName: "firstNameAlias",
+    },
   },
 };
 

@@ -1,4 +1,4 @@
-import { UI_NAV_ID } from "../../src/utils";
+import { withNav } from "../utils";
 import splitter from "../../src/splitter";
 
 let schema = {
@@ -13,28 +13,16 @@ let schema = {
 };
 
 let uiSchema = {
-  firstName: {
-    [UI_NAV_ID]: "first",
-  },
-  age: {
-    [UI_NAV_ID]: ["first", "age"],
-  },
-  phone: {
-    [UI_NAV_ID]: ["first", "phone"],
-  },
-  lastName: {
-    [UI_NAV_ID]: "last",
-  },
-  nickName: {
-    [UI_NAV_ID]: "nick",
-  },
-  other: {
-    [UI_NAV_ID]: "nick",
-  },
+  firstName: withNav("first"),
+  age: withNav(["first", "age"]),
+  phone: withNav(["first", "phone"]),
+  lastName: withNav("last"),
+  nickName: withNav("nick"),
+  other: withNav("nick"),
 };
 
 test("select active in layer", () => {
-  let layers = splitter(schema, uiSchema, [{ tabID: "nick" }]);
+  let layers = splitter(schema, uiSchema, [{ nav: "nick" }]);
 
   let activeNavs = [];
   layers.updateActiveNav(activeNavs);
@@ -45,11 +33,6 @@ test("return subforms", () => {
   let layers = splitter(schema, uiSchema);
   let subForms = layers.toSubForms(["first", "age"]);
   expect(subForms[0]).toEqual({
-    schema: {
-      type: "object",
-      properties: {},
-    },
-    uiSchema: {},
     navs: {
       links: [],
     },
@@ -63,14 +46,14 @@ test("return subforms", () => {
     },
     uiSchema: {
       firstName: {
-        [UI_NAV_ID]: "first",
+        nav: ["first"],
       },
     },
     navs: {
       links: [
-        { tabID: "first", isActive: true },
-        { tabID: "last", isActive: false },
-        { tabID: "nick", isActive: false },
+        { nav: "first", isActive: true },
+        { nav: "last", isActive: false },
+        { nav: "nick", isActive: false },
       ],
     },
   });
@@ -83,13 +66,13 @@ test("return subforms", () => {
     },
     uiSchema: {
       age: {
-        [UI_NAV_ID]: ["first", "age"],
+        nav: ["first", "age"],
       },
     },
     navs: {
       links: [
-        { tabID: "age", isActive: true },
-        { tabID: "phone", isActive: false },
+        { nav: "age", isActive: true },
+        { nav: "phone", isActive: false },
       ],
     },
   });

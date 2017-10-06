@@ -5,17 +5,17 @@ import Navs from "./Navs";
 
 const formWithTabs = (FormComponent, NavComponent = Navs) => {
   class FormWithTabs extends Component {
-    handleNavChange = nav => {
+    handleNavChange = selNav => {
       let { navs: { links } } = this.props.subForms[0];
-      let isRelNav = links.some(({ tabID }) => tabID === nav);
+      let isRelNav = links.some(({ nav }) => nav === selNav);
       if (isRelNav) {
-        this.props.onNavChange([nav]);
+        this.props.onNavChange([selNav]);
       } else {
-        let active = links.find(({ tabID, isActive }) => isActive);
+        let active = links.find(({ nav, isActive }) => isActive);
         if (active !== undefined) {
-          this.props.onNavChange([active.tabID].concat(nav));
+          this.props.onNavChange([active.nav].concat(selNav));
         } else {
-          this.props.onNavChange(nav);
+          this.props.onNavChange(selNav);
         }
       }
     };

@@ -1,21 +1,17 @@
-import { GENERIC_TAB, orderNavByName, UI_NAV_ORDER } from "../utils";
+import { GENERIC_TAB, orderNavByName } from "../utils";
 import extractSubConf from "./extractSubConf";
 import { extractTree, findRelTree } from "./extractTree";
 
 export default class NavTree {
-  constructor(schema, uiSchema, navData = []) {
+  constructor(schema, uiSchema) {
     this.tree = extractTree(schema, uiSchema);
     console.dir(this.tree);
     this.schema = schema;
     this.uiSchema = uiSchema;
-    this.navData = navData;
   }
 
   pushToTabFromTree = (relTree, activeNavs) => {
-    let orderedNavs = orderNavByName(
-      Object.keys(relTree),
-      this.uiSchema[UI_NAV_ORDER]
-    );
+    let orderedNavs = orderNavByName(Object.keys(relTree), this.uiSchema);
     let nextNav = orderedNavs.find(nav => nav !== GENERIC_TAB);
     if (nextNav) {
       activeNavs.push(nextNav);
@@ -35,8 +31,7 @@ export default class NavTree {
         activeNav.slice(0, i),
         this.tree,
         this.schema,
-        this.uiSchema,
-        this.navData
+        this.uiSchema
       );
       agg.push(subConf);
     }

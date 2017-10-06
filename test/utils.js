@@ -1,5 +1,3 @@
-import { UI_NAV_ID } from "../src/utils";
-
 export function testInProd(f) {
   process.env.NODE_ENV = "production";
   let res = f();
@@ -7,10 +5,10 @@ export function testInProd(f) {
   return res;
 }
 
-export function withTab(tabID) {
-  if (Array.isArray(tabID)) {
-    return { [UI_NAV_ID]: tabID };
+export function withNav(val) {
+  if (Array.isArray(val)) {
+    return { nav: val };
   } else {
-    return { [UI_NAV_ID]: [tabID] };
+    return { nav: [val] };
   }
 }

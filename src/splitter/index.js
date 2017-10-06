@@ -1,5 +1,5 @@
 import NavTree from "./NavTree";
 
-export default function(schema, uiSchema, tabData = []) {
-  return new NavTree(schema, uiSchema, tabData);
+export default function(schema, uiSchema) {
+  return new NavTree(schema, uiSchema);
 }

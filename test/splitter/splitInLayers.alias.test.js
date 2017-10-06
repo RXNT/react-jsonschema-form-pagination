@@ -1,5 +1,4 @@
-import { UI_NAV_ALIAS, UI_NAV_ORDER } from "../../src/utils";
-import { withTab } from "../utils";
+import { withNav } from "../utils";
 import splitter from "../../src/splitter";
 
 let schema = {
@@ -14,21 +13,22 @@ let schema = {
 };
 
 let uiSchema = {
-  firstName: withTab("first"),
-  phone: withTab(["first", "phone"]),
-  ageAlias: withTab(["first", "other"]),
-  phoneAlias: withTab(["first", "other"]),
-  nickNameAlias: withTab(["first", "other"]),
-  age: withTab("last"),
-  nickName: withTab("last"),
-  lastName: withTab("last"),
-  other: withTab("nick"),
-  [UI_NAV_ALIAS]: {
-    nickName: "nickNameAlias",
-    age: "ageAlias",
-    phone: "phoneAlias",
+  firstName: withNav("first"),
+  phone: withNav(["first", "phone"]),
+  ageAlias: withNav(["first", "other"]),
+  phoneAlias: withNav(["first", "other"]),
+  nickNameAlias: withNav(["first", "other"]),
+  age: withNav("last"),
+  nickName: withNav("last"),
+  lastName: withNav("last"),
+  other: withNav("nick"),
+  navConf: {
+    aliases: {
+      nickName: "nickNameAlias",
+      age: "ageAlias",
+      phone: "phoneAlias",
+    },
   },
-  [UI_NAV_ORDER]: [],
 };
 
 test("return subforms", () => {
@@ -40,11 +40,6 @@ test("return subforms", () => {
 
   let subForms = layers.toSubForms(activeNavs);
   expect(subForms[0]).toEqual({
-    schema: {
-      type: "object",
-      properties: {},
-    },
-    uiSchema: {},
     navs: {
       links: [],
     },

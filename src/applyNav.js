@@ -13,21 +13,20 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
     constructor(props) {
       super(props);
 
-      let { formData = {}, tabData, schema, uiSchema, activeNav } = this.props;
+      let { formData = {}, schema, uiSchema, activeNav } = this.props;
 
       activeNav = activeNav ? toArray(activeNav) : [];
-      this.navTree = splitter(schema, uiSchema, tabData);
+      this.navTree = splitter(schema, uiSchema);
       this.navTree.updateActiveNav(activeNav, 0);
 
       this.formData = formData;
       this.state = { activeNav };
     }
 
-    diffProps({ tabData, schema, uiSchema }) {
+    diffProps({ schema, uiSchema }) {
       return !deepequal(
-        { tabData, schema, uiSchema },
+        { schema, uiSchema },
         {
-          tabData: this.props.tabData,
           schema: this.props.schema,
           uiSchema: this.props.uiSchema,
         }
@@ -37,8 +36,8 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
     componentWillReceiveProps(nextProps) {
       let diffNav = this.diffProps(nextProps);
       if (diffNav) {
-        let { tabData, schema, uiSchema } = nextProps;
-        this.navTree = splitter(schema, uiSchema, tabData);
+        let { schema, uiSchema } = nextProps;
+        this.navTree = splitter(schema, uiSchema);
       }
     }
 
@@ -81,7 +80,6 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
       });
       delete formProps.schema;
       delete formProps.uiSchema;
-      delete formProps.tabData;
       return (
         <div>
           <FormWithNavs {...formProps}>{this.props.children}</FormWithNavs>
@@ -100,7 +98,12 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
         }
       },
     }),
-    tabData: PropTypes.array,
+    uiSchema: PropTypes.shape({
+      navConf: PropTypes.shape({
+        aliases: PropTypes.object,
+        navs: PropTypes.array,
+      }),
+    }),
   };
 
   return FormWithPagination;

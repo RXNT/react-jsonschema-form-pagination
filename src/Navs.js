@@ -13,19 +13,19 @@ function Nav({ handleClick, isActive, name, icon }) {
 }
 
 function Navs({ navs: { orientation = "horizontal", links }, onNavChange }) {
-  let relLinks = links.filter(({ tabID }) => tabID !== GENERIC_TAB);
+  let relLinks = links.filter(({ nav }) => nav !== GENERIC_TAB);
   let className =
     orientation === "vertical" ? "nav nav-pills nav-stacked" : "nav nav-pills";
   if (relLinks.length > 0) {
     return (
       <ul className={className}>
-        {relLinks.map(({ tabID, name, icon, isActive }, i) => (
+        {relLinks.map(({ nav, name, icon, isActive }, i) => (
           <Nav
             key={i}
-            name={name ? name : tabID}
+            name={name ? name : nav}
             icon={icon}
             isActive={isActive}
-            handleClick={() => onNavChange(tabID)}
+            handleClick={() => onNavChange(nav)}
           />
         ))}
       </ul>

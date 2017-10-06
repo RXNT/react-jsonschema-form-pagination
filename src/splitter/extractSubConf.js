@@ -2,36 +2,31 @@ import { GENERIC_TAB } from "../utils";
 import { findRelTree } from "./extractTree";
 import extractSubUiSchema from "./extractSubUiSchema";
 import extractSubSchema from "./extractSubSchema";
-import extractSubNavs from "./extractSubNavs";
+import extractSubNavs, { toNavConf } from "./extractSubNavs";
 
-const EMPTY_CONF = {
-  schema: { type: "object", properties: {} },
-  uiSchema: {},
-};
-
-const extractNavs = (navPath, tree, uiSchema, navData) => {
+const extractNavs = (navPath, tree, uiSchema) => {
   if (navPath.length == 0) {
-    let relConf = navData.find(({ tabID }) => tabID === GENERIC_TAB);
-    return Object.assign({}, relConf, { links: [] });
+    let relConf = toNavConf(GENERIC_TAB, uiSchema);
+    return Object.assign({}, { links: [] }, relConf);
   }
 
   let activeNav = navPath[navPath.length - 1];
   let parentTree = findRelTree(tree, navPath.slice(0, navPath.length - 1));
-  let navWithLinks = extractSubNavs(parentTree, uiSchema, navData, activeNav);
+  let navWithLinks = extractSubNavs(parentTree, uiSchema, activeNav);
   if (navPath.length == 1) {
     return navWithLinks;
   }
 
   let parentNav = navPath[navPath.length - 2];
-  let parentConf = navData.find(({ tabID }) => tabID === parentNav);
-  return Object.assign({}, parentConf, navWithLinks);
+  let parentConf = toNavConf(parentNav, uiSchema);
+  return Object.assign({}, navWithLinks, parentConf);
 };
 
-const extractSubConf = (navPath, tree, schema, uiSchema, navData) => {
+const extractSubConf = (navPath, tree, schema, uiSchema) => {
   let relTree = findRelTree(tree, navPath);
-  let navs = extractNavs(navPath, tree, uiSchema, navData);
+  let navs = extractNavs(navPath, tree, uiSchema);
   if (relTree[GENERIC_TAB] === undefined) {
-    return Object.assign({}, { navs }, EMPTY_CONF);
+    return Object.assign({}, { navs });
   }
 
   let { fields, aliases } = relTree[GENERIC_TAB];
