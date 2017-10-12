@@ -6,7 +6,6 @@ import { extractTree, findRelTree } from "./extractTree";
 export default class NavTree {
   constructor(schema, uiSchema) {
     this.tree = extractTree(schema, uiSchema);
-    console.dir(this.tree);
     this.schema = schema;
     this.uiSchema = uiSchema;
   }

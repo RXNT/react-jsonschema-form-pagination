@@ -22,9 +22,10 @@ export function orderNavByName(navs, { navConf: { order = [] } = {} }) {
   if (!order || order.length === 0) {
     return navs;
   }
-  let orderedNavs = order.filter(orderedNav =>
-    navs.some(nav => nav === orderedNav)
-  );
+
+  let orderedNavs = navs
+    .filter(nav => order.includes(nav))
+    .sort((a, b) => order.indexOf(a) - order.indexOf(b));
   if (orderedNavs.length === 0) {
     return navs;
   }

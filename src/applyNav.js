@@ -45,8 +45,8 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
       let oldNav = this.state.activeNav;
       this.navTree.updateActiveNav(activeNav);
       this.setState({ activeNav });
-      if (this.props.onTabChange) {
-        this.props.onTabChange(activeNav, oldNav);
+      if (this.props.onNavChange) {
+        this.props.onNavChange(activeNav, oldNav);
       }
     };
 
@@ -98,10 +98,12 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
         }
       },
     }),
+    onNavChange: PropTypes.func,
     uiSchema: PropTypes.shape({
       navConf: PropTypes.shape({
         aliases: PropTypes.object,
         navs: PropTypes.array,
+        order: PropTypes.array,
       }),
     }),
   };

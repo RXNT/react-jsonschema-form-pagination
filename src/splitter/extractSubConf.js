@@ -5,7 +5,7 @@ import extractSubSchema from "./extractSubSchema";
 import extractSubNavs, { toNavConf } from "./extractSubNavs";
 
 const extractNavs = (navPath, tree, uiSchema) => {
-  if (navPath.length == 0) {
+  if (navPath.length === 0) {
     let relConf = toNavConf(GENERIC_NAV, uiSchema);
     return Object.assign({}, { links: [] }, relConf);
   }
@@ -13,7 +13,7 @@ const extractNavs = (navPath, tree, uiSchema) => {
   let activeNav = navPath[navPath.length - 1];
   let parentTree = findRelTree(tree, navPath.slice(0, navPath.length - 1));
   let navWithLinks = extractSubNavs(parentTree, uiSchema, activeNav);
-  if (navPath.length == 1) {
+  if (navPath.length === 1) {
     let relConf = toNavConf(GENERIC_NAV, uiSchema);
     return Object.assign(navWithLinks, relConf);
   }

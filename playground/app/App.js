@@ -18,7 +18,7 @@ export class App extends Component {
     this.setState({ formData });
   };
 
-  handleTabChange = (nextTabs, prevTabs) => {
+  handleNavChange = (nextTabs, prevTabs) => {
     console.log(`Tab changed`);
     console.log(`From ${prevTabs}`);
     console.log(`To ${nextTabs}`);
@@ -32,7 +32,7 @@ export class App extends Component {
         liveValidation={true}
         onSubmit={() => console.log("Submitting form data")}
         onChange={this.handleChange}
-        onTabChange={this.handleTabChange}>
+        onNavChange={this.handleNavChange}>
         <div className="form-group col-md-12">
           <button className="btn btn-success" type="submit">
             Save

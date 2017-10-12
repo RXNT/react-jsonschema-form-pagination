@@ -187,15 +187,15 @@ You can specify either single alias or as many aliases as you want with an array
 
 ## Configuring tab names
 
-By default tab names are the same as tabID, since it's a string and you can use any string as tab name.
+By default tab names are the same as nav, since it's a string and you can use any string as tab name.
 
 If you want to override this and use custom names instead, you can do this, by providing `tabData` as a form property. 
-`tabData` consists of an array of objects with `tabID` and `name`, `name` will be used as tab name instead of tabID, for example: 
+`tabData` consists of an array of objects with `nav` and `name`, `name` will be used as tab name instead of nav, for example: 
 
 ```js
 const tabData = [
   {
-    tabID: "first",
+    nav: "first",
     name: "First tab"
   }
 ]
@@ -224,15 +224,15 @@ render((
 
 CustomTabs will receive 3 properties 
 - `activeTab` - currently active tab
-- `tabs` - list of tabs (generated from tabID and tabData)
-- `onTabChange` - callback on tab selection  
+- `tabs` - list of tabs (generated from nav and tabData)
+- `onNavChange` - callback on nav selection change  
 
 Look at pagination for more details.
 
 ## Tab ordering
 
 By default all tabs rendered in order they appear in uiSchema, since it's a primary source of layer reference, 
-however it's not reliable way to do so. You can override natural ordering with `ui:tabOrder` property in `uiSchema`, consisting of ordered array of tabID's.
+however it's not reliable way to do so. You can override natural ordering with `ui:tabOrder` property in `uiSchema`, consisting of ordered array of nav's.
 It works the same way as [`ui:order`](https://github.com/mozilla-services/react-jsonschema-form#object-fields-ordering) in mozilla project.
 
 

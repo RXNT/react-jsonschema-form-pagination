@@ -27,31 +27,31 @@ let uiSchema = {
 };
 
 test("onTabChange ignored on clicking selected", () => {
-  const onTabChange = sinon.spy();
+  const onNavChange = sinon.spy();
   let ResForm = applyPagination(Form);
   const component = mount(
-    <ResForm schema={schema} uiSchema={uiSchema} onTabChange={onTabChange} />
+    <ResForm schema={schema} uiSchema={uiSchema} onNavChange={onNavChange} />
   );
 
   component
     .find("a")
     .first()
     .simulate("click");
-  expect(onTabChange.callCount).toEqual(0);
+  expect(onNavChange.callCount).toEqual(0);
 });
 
-test("onTabChange triggered on new selection", () => {
-  const onTabChange = sinon.spy();
+test("onNavChange triggered on new selection", () => {
+  const onNavChange = sinon.spy();
   let ResForm = applyPagination(Form);
   const component = mount(
-    <ResForm schema={schema} uiSchema={uiSchema} onTabChange={onTabChange} />
+    <ResForm schema={schema} uiSchema={uiSchema} onNavChange={onNavChange} />
   );
 
   component
     .find("a")
     .last()
     .simulate("click");
-  expect(onTabChange.callCount).toEqual(1);
-  expect(onTabChange.getCall(0).args[0]).toEqual(["nick"]);
-  expect(onTabChange.getCall(0).args[1]).toEqual(["first"]);
+  expect(onNavChange.callCount).toEqual(1);
+  expect(onNavChange.getCall(0).args[0]).toEqual(["nick"]);
+  expect(onNavChange.getCall(0).args[1]).toEqual(["first"]);
 });
