@@ -1,6 +1,6 @@
 {
   "name": "react-jsonschema-form-pagination",
-  "description": "Extension of react-jsonschema-form with support for multi-tab forms",
+  "description": "Extension of react-jsonschema-form with support for multi-nav forms",
   "private": false,
   "author": "zboldyga@gmail.com",
   "version": "0.2.1",

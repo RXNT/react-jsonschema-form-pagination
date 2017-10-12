@@ -6,9 +6,9 @@
 
 ## Features
 
-- Separation of huge schemas into tabs
-- Nested tabs - you can have any number of tabs nested inside your form 
-- Repeated fields - you can use the same field in multiple tabs, filling it only once 
+- Separation of huge schemas into navs
+- Nested nav - you can have any number of navs nested inside your form 
+- Repeated fields - you can use the same field in multiple navs, filling it only once 
 - Does not conflict with other extensions of Mozilla project 
 
 ## Installation
@@ -19,14 +19,18 @@ Install `react-jsonschema-form-pagination` by running:
 npm install --s react-jsonschema-form-pagination
 ```
 
+or 
+```bash
+yarn add react-jsonschema-form-pagination
+```
+
 ## Usage
 
-FormWithPagination is a wrapper for Mozilla's JSON Schema Form that allows a schema to be displayed into multiple Bootstrap tabs. This allows users to see a subset of the schema on each tab.
+FormWithPagination is a wrapper for Mozilla's JSON Schema Form that allows a schema to be displayed into multiple Bootstrap navs. This allows users to see a subset of the schema on each nav.
 
-Use this project as you would use Mozilla's JSON Schema Form (see their documentation), but to leverage the tab features just provide these extra parameters:
+Use this project as you would use Mozilla's JSON Schema Form (see their documentation), but to leverage the nav features just provide these extra parameters:
 
-- In the `uiSchema` object, use the new `nav` and `ui:tabAliases` property to associate each field with a tab
-- Pass in an additional `tabData` array in props, if you want to customize tab naming
+- In the `uiSchema` object, use the new `nav` and `navConf` property for additional nav customization
 
 To show case use of the pagination project, we'll be using following `schema` as a base
 ```js
@@ -44,12 +48,12 @@ const schema = {
 };
 ```
 
-### One level of tabs
+### Single level
 
 Let's say we have only 1 level of tabs `main` and `other`. We can do it like this: 
 
 ```js
-import applyPagination from "react-jsonschema-form-pagination";
+import applyNavs from "react-jsonschema-form-pagination";
 import Form from "react-jsonschema-form";
 
 const uiSchema = {
@@ -70,7 +74,7 @@ const uiSchema = {
   },
 };
 
-let FormWithPagination = applyPagination(Form);
+let FormWithPagination = applyNavs(Form);
 
 render((
   <FormWithPagination
@@ -81,12 +85,12 @@ render((
 ```
 
 When rendered this configuration will show 2 tabs 
-- `main` tab with `firstName`, `lastName`, `age` and `phone` fields
-- `other` tab with `nickName` field
+- `main` nav with `firstName`, `lastName`, `age` and `phone` fields
+- `other` nav with `nickName` field
 
-### Multi tabs levels
+### Multi nav levels
 
-Let's say we now want to have `main` tab divided in 2 more tabs `general`(`lastName` and `age`) and `other` ( with `phone`). 
+Let's say we now want to have `main` nav divided in 2 more tabs `general`(`lastName` and `age`) and `other` ( with `phone`). 
 This is how `uiSchema` should look like in order to do that :
 ```js
 const uiSchema = {
@@ -109,16 +113,16 @@ const uiSchema = {
 ```
 
 When rendered this configuration will show 2 tabs 
-- `main` tab with `firstName`, and 2 sub tabs
+- `main` nav with `firstName`, and 2 sub navs
     - `general` with `lastName` and `age` fields
     - `other` with `phone` field
-- `other` tab with `nickName` field
+- `other` nav with `nickName` field
 
 ### Default level
 
-When you don't specify `nav`, the field will be shown above the tabs.
+When you don't specify `nav`, the field will be shown above the navs.
 
-For example, if we go back to single level example, but we want to always see `firstName` shown above the tab navigation.
+For example, if we go back to single level example, but we want to always see `firstName` shown above the nav navigation.
 Here is how we can do this:
 
 ```js
@@ -139,14 +143,14 @@ const uiSchema = {
 };
 ```
 
-When rendered this configuration will show 2 tabs and `firstName` above the fields  
-- `main` tab with `lastName`, `age` and `phone` fields
-- `other` tab with `nickName` field
+When rendered this configuration will show 2 navs and `firstName` above the fields  
+- `main` nav with `lastName`, `age` and `phone` fields
+- `other` nav with `nickName` field
 
 ### Field aliases in different tabs
 
 One of the requirements for this project was to support same field on different tabs, in order to do that you can specify field alias 
-in `uiSchema`. Field `alias` is basically a field UI configuration, that will be used instead of original field in specified tab. 
+in `uiSchema`. Field `alias` is basically a field UI configuration, that will be used instead of original field in specified nav. 
 Aliases can be nested as regular fields. 
 
 For example, if we want to show `firstName` in both tabs `main` and `other`.  
@@ -171,75 +175,122 @@ const uiSchema = {
   nickName: {
     "nav": "other"
   },
-  "ui:tabAlias": {
-    firstName: "firsNameAlias"
+  navConf: {
+      aliases: {
+        firstName: "firsNameAlias"
+      }
   }
 };
 ```
 
 With this configuration pagination will put `firstName` in both `main` and `other` tabs.
 
-`ui:tabAlias` is a simple object with 
+`navConf.aliases` is a simple object with 
 - keys - as original schema field names
-- values - an alias name or an array of alias names
+- values - a string, or an array of strings, with uiSchema alias names
 
-You can specify either single alias or as many aliases as you want with an array.
+You can specify either single alias or as many aliases as you wish with an array.
 
-## Configuring tab names
+## Configuring nav presentation
 
-By default tab names are the same as nav, since it's a string and you can use any string as tab name.
+### Default presentation
 
-If you want to override this and use custom names instead, you can do this, by providing `tabData` as a form property. 
-`tabData` consists of an array of objects with `nav` and `name`, `name` will be used as tab name instead of nav, for example: 
+By default `nav` names are the same as `nav` in uiSchema.
 
+For example:
 ```js
-const tabData = [
-  {
-    nav: "first",
-    name: "First tab"
-  }
-]
+const uiSchema = {
+  firstName: {
+    "nav": "General"
+  },
+  lastName: {
+    "nav": "General"
+  },
+  age: {
+    "nav": "General"
+  },
+  phone: {
+    "nav": "General"
+  },
+  nickName: {
+    "nav": "General"
+  },
+};
 ```
 
-## Custom tabs
+This schema would have a single nav `General`, which might be good enough for your case.
 
-If you want to have a custom tabs instead of `nav-pills` used by default, you can provide `Tabs` component, when you call 
+Let's say you want different name and also add an icon to the `nav`, here is how you can do that 
+
+```js
+const uiSchema = {
+    firstName: {
+      "nav": "g"
+    },
+    lastName: {
+      "nav": "General"
+    },
+    age: {
+      "nav": "General"
+    },
+    phone: {
+      "nav": "General"
+    },
+    nickName: {
+      "nav": "General"
+    },
+    navConf:{
+        navs: [
+          {
+            nav: "General",
+            name: "User",
+            icon: "glyphicons glyphicons-users"
+          } 
+        ]
+    }
+}
+```
+
+In this case there will be a `User` nav with `glyphicons-users` icon.
+
+By default name and icon are the only configuration for nav presentation, but you can customize Nav presentation as you wish with CustomNavs.
+
+You can also 
+
+## Custom navs
+
+If you want to have a custom navs instead of `nav-pills` used by default, you can provide `Navs` component, when you call 
 `applyPagination`
 
 ```js
 import applyPagination from "react-jsonschema-form-pagination";
 import Form from "react-jsonschema-form";
-import CustomTabs from CustomNav;
+import CustomNavs from "./CustomNavs";
 
-...
 
-let FormWithPagination = applyPagination(Form, CustomTabs);
-
-render((
-  <FormWithPagination
-    ...
-  />
-), document.getElementById("app"));
+let FormWithPagination = applyPagination(Form, CustomNavs);
 ```
 
-CustomTabs will receive 3 properties 
-- `activeTab` - currently active tab
-- `tabs` - list of tabs (generated from nav and tabData)
+CustomNavs will receive 3 properties 
+- `navs` available navs at the layer
+    - `orientation` how tabs should be oriented (it can be either `vertical` or `horizotal`)
+    - `links` all available nav links (which is `navConf.navs` configurations and `isActive` flag)
 - `onNavChange` - callback on nav selection change  
 
 Look at pagination for more details.
 
-## Tab ordering
+## Nav ordering
 
 By default all tabs rendered in order they appear in uiSchema, since it's a primary source of layer reference, 
-however it's not reliable way to do so. You can override natural ordering with `ui:tabOrder` property in `uiSchema`, consisting of ordered array of nav's.
+however it's not reliable way to do so. You can override natural ordering with `navConf.order` property in `uiSchema`, consisting of ordered array of nav's.
 It works the same way as [`ui:order`](https://github.com/mozilla-services/react-jsonschema-form#object-fields-ordering) in mozilla project.
-
 
 For example, in order to have 
 ```js
 const uiSchema = {
-  "ui:tabOrder": [ "main", "sub", "other" ]
+  navConf: {
+    order: [ "main", "sub", "other" ]
+  },
   age: {
     "nav": "sub"
   },
@@ -258,7 +309,7 @@ const uiSchema = {
 };
 ```
 
-In this configuration, although `sub` tab appears first in `uiSchema`, `main` will be the first tab available for selection.  
+In this configuration, although `sub` nav appears first in `uiSchema`, `main` will be the first nav available for selection.  
 
 ## Contribute
 
