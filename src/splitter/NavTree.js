@@ -1,6 +1,6 @@
 import { GENERIC_NAV } from "../utils";
 import extractSubConf from "./extractSubConf";
-import { orderNavByName } from "./extractSubNavs";
+import { findFieldNavs, orderNavByName, toNavConf } from "./extractSubNavs";
 import { extractTree, findRelTree } from "./extractTree";
 
 export default class NavTree {
@@ -22,6 +22,13 @@ export default class NavTree {
   updateActiveNav = activeNavs => {
     let relTree = findRelTree(this.tree, activeNavs);
     this.pushToTabFromTree(relTree, activeNavs);
+  };
+
+  findActiveNav = field => {
+    return findFieldNavs(field, this.uiSchema).map(nav => {
+      let navConf = toNavConf(nav, this.uiSchema);
+      return navConf && navConf.name ? navConf.name : nav;
+    });
   };
 
   toSubForms = activeNav => {

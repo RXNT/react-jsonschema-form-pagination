@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import applyNav from "../../src";
 import Form from "react-jsonschema-form";
-import conf from "./conf/encounter.json";
+import conf from "./conf";
 import fields from "react-jsonschema-rxnt-extras";
 
 let FormWithNav = applyNav(Form);
@@ -11,6 +11,10 @@ export class App extends Component {
     super(props);
 
     this.state = { formData: conf.formData };
+  }
+
+  handleError(errors) {
+    console.log(errors);
   }
 
   handleChange = ({ formData }) => {
@@ -33,6 +37,7 @@ export class App extends Component {
         noHtml5Validate={true}
         onSubmit={() => console.log("Submitting form data")}
         onChange={this.handleChange}
+        onError={this.handleError}
         onNavChange={this.handleNavChange}>
         <div className="form-group col-md-12">
           <button className="btn btn-success" type="submit">

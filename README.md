@@ -310,9 +310,17 @@ const uiSchema = {
 
 In this configuration, although `sub` nav appears first in `uiSchema`, `main` will be the first nav available for selection.  
 
+## Handling errors
+
+To allow proper error management navigation component adds `activeNav` to all the errors, so that you can add navigation to invalid data on validation errors.
+
+You can use activeNav in errors in 2 ways
+- `transformErrors`, that would append `activeNav` to error `message` or `stack` (by default it appends nav information to every message and )
+- `ErrorList` that will get `errors` after transformation. 
+
 ## Migration
 
-From 0.3 version navs can only be oriented horizontally
+     - From 0.3 - Navs can only be oriented horizontally, vertical orientation was removed to support better error handling
 
 ## Contribute
 

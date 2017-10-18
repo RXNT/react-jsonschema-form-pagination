@@ -76,11 +76,36 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
       return !deepequal(this.formData, nextProps.formData);
     }
 
+    transformErrors = errors => {
+      let errorsWithNav = errors.map(error => {
+        let activeNav = this.navTree.findActiveNav(error.argument);
+        if (activeNav && activeNav.length > 0) {
+          return Object.assign({ activeNav }, error);
+        } else {
+          return error;
+        }
+      });
+
+      if (this.props.transformErrors) {
+        return this.props.transformErrors(errorsWithNav);
+      } else {
+        return errorsWithNav.map(error => {
+          if (error.activeNav) {
+            let navPostfix = ` (${error.activeNav.join(" > ")})`;
+            error.message = `${error.message}${navPostfix}`;
+            error.stack = `${error.stack}${navPostfix}`;
+          }
+          return error;
+        });
+      }
+    };
+
     render() {
       let subForms = this.navTree.toSubForms(this.state.activeNav);
 
       let formProps = Object.assign({}, this.props, {
         subForms,
+        transformErrors: this.transformErrors,
         formData: this.formData,
         onChange: this.handleOnChange,
         onNavChange: this.handleNavChange,
