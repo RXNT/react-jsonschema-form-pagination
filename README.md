@@ -273,7 +273,6 @@ let FormWithPagination = applyPagination(Form, CustomNavs);
 
 CustomNavs will receive 3 properties 
 - `navs` available navs at the layer
-    - `orientation` how tabs should be oriented (it can be either `vertical` or `horizotal`)
     - `links` all available nav links (which is `navConf.navs` configurations and `isActive` flag)
 - `onNavChange` - callback on nav selection change  
 
@@ -310,6 +309,10 @@ const uiSchema = {
 ```
 
 In this configuration, although `sub` nav appears first in `uiSchema`, `main` will be the first nav available for selection.  
+
+## Migration
+
+From 0.3 version navs can only be oriented horizontally
 
 ## Contribute
 

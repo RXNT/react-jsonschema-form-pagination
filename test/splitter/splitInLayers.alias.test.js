@@ -28,6 +28,7 @@ test("return subforms", () => {
 
   let subForms = layers.toSubForms(["last"]);
   expect(subForms[0]).toEqual({
+    navPath: ["last"],
     navs: {
       activeNav: "last",
       links: [

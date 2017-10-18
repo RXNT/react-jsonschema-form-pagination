@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import deepequal from "deep-equal";
-import formWithNav from "./FormWithNav";
-import Navs from "./Navs";
+import formWithHiddenField from "./render";
+import Navs from "./render/Navs";
 import splitter from "./splitter";
 import { toArray } from "./utils";
 
 export default function applyPagination(FormComponent, NavComponent = Navs) {
-  const FormWithNavs = formWithNav(FormComponent, NavComponent);
+  const FormWithNavs = formWithHiddenField(FormComponent, NavComponent);
 
   class FormWithPagination extends Component {
     constructor(props) {
@@ -43,6 +43,12 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
 
     handleNavChange = activeNav => {
       let oldNav = this.state.activeNav;
+      if (
+        oldNav.length === activeNav.length &&
+        oldNav.every((el, i) => el === activeNav[i])
+      ) {
+        return;
+      }
       this.navTree.updateActiveNav(activeNav);
       this.setState({ activeNav });
       if (this.props.onNavChange) {
@@ -72,19 +78,14 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
 
     render() {
       let subForms = this.navTree.toSubForms(this.state.activeNav);
+
       let formProps = Object.assign({}, this.props, {
         subForms,
         formData: this.formData,
         onChange: this.handleOnChange,
         onNavChange: this.handleNavChange,
       });
-      delete formProps.schema;
-      delete formProps.uiSchema;
-      return (
-        <div>
-          <FormWithNavs {...formProps}>{this.props.children}</FormWithNavs>
-        </div>
-      );
+      return <FormWithNavs {...formProps}>{this.props.children}</FormWithNavs>;
     }
   }
 

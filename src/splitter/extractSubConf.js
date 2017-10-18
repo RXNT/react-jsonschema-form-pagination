@@ -27,7 +27,7 @@ const extractSubConf = (navPath, tree, schema, uiSchema) => {
   let relTree = findRelTree(tree, navPath);
   let navs = extractNavs(navPath, tree, uiSchema);
   if (relTree[GENERIC_NAV] === undefined) {
-    return Object.assign({}, { navs });
+    return { navs, navPath };
   }
 
   let { fields, aliases } = relTree[GENERIC_NAV];
@@ -39,7 +39,7 @@ const extractSubConf = (navPath, tree, schema, uiSchema) => {
     subSchema.description = schema.description;
   }
 
-  return { schema: subSchema, uiSchema: subUiSchema, navs };
+  return { schema: subSchema, uiSchema: subUiSchema, navs, navPath };
 };
 
 export default extractSubConf;

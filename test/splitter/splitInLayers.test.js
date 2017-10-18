@@ -44,6 +44,7 @@ test("return subforms", () => {
         nav: ["first"],
       },
     },
+    navPath: ["first"],
     navs: {
       activeNav: "first",
       links: [
@@ -65,12 +66,13 @@ test("return subforms", () => {
         nav: ["first", "age"],
       },
     },
+    navPath: ["first", "age"],
     navs: {
+      activeNav: "age",
       links: [
         { nav: "age", isActive: true },
         { nav: "phone", isActive: false },
       ],
-      activeNav: "age",
     },
   });
 });

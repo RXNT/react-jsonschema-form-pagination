@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import applyNav from "../../src";
 import Form from "react-jsonschema-form";
-import conf from "./conf";
-import fields from "react-jsonschema-form-extras";
+import conf from "./conf/encounter.json";
+import fields from "react-jsonschema-rxnt-extras";
 
 let FormWithNav = applyNav(Form);
 
@@ -30,6 +30,7 @@ export class App extends Component {
       <FormWithNav
         {...fullConf}
         liveValidation={true}
+        noHtml5Validate={true}
         onSubmit={() => console.log("Submitting form data")}
         onChange={this.handleChange}
         onNavChange={this.handleNavChange}>

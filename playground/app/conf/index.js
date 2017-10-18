@@ -1,7 +1,7 @@
 const schema = {
   type: "object",
   title: "Encounter",
-  required: [],
+  required: ["firstName", "password"],
   properties: {
     encounter: {
       type: "string",
@@ -118,19 +118,16 @@ const uiSchema = {
         nav: "0-tab",
         classNames: "danger",
         icon: "fa fa-address-book",
-        orientation: "vertical",
       },
       {
         nav: "firstName-tab",
         classNames: "danger",
         icon: "glyphicon glyphicon-align-left",
-        orientation: "vertical",
       },
       {
         nav: "lastName-tab",
         classNames: "danger",
         icon: "glyphicon glyphicon-align-right",
-        orientation: "vertical",
       },
     ],
   },

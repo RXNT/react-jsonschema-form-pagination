@@ -1,95 +1,90 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Initial formData rendered 1`] = `
-<div>
-  <div>
+<form
+  acceptCharset={undefined}
+  action={undefined}
+  autoComplete={undefined}
+  className="rjsf"
+  encType={undefined}
+  id={undefined}
+  method={undefined}
+  name={undefined}
+  noValidate={false}
+  onSubmit={[Function]}
+  target={undefined}
+>
+  <div
+    className="form-group field field-object"
+  >
     <fieldset>
       <div
-        className="form-group col-md-12"
+        className="form-group field field-string  col-md-12"
       >
+        <label
+          className="control-label"
+          htmlFor="root_firstName"
+        >
+          firstName
+        </label>
+        <div />
+        <input
+          autoFocus={false}
+          className="form-control"
+          disabled={false}
+          id="root_firstName"
+          label="firstName"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          placeholder=""
+          readOnly={false}
+          required={false}
+          type="text"
+          value="Bill"
+        />
+        <div />
+        <div />
+      </div>
+      <div
+        className="form-group field field-string"
+      >
+        <label
+          className="control-label"
+          htmlFor="root_lastName"
+        >
+          lastName
+        </label>
+        <div />
+        <input
+          autoFocus={false}
+          className="form-control"
+          disabled={false}
+          id="root_lastName"
+          label="lastName"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          placeholder=""
+          readOnly={false}
+          required={false}
+          type="text"
+          value=""
+        />
+        <div />
         <div />
       </div>
     </fieldset>
-    <form
-      acceptCharset={undefined}
-      action={undefined}
-      autoComplete={undefined}
-      className="rjsf"
-      encType={undefined}
-      id={undefined}
-      method={undefined}
-      name={undefined}
-      noValidate={false}
-      onSubmit={[Function]}
-      target={undefined}
-    >
-      <div
-        className="form-group field field-object"
-      >
-        <fieldset>
-          <div
-            className="form-group field field-string  col-md-12"
-          >
-            <label
-              className="control-label"
-              htmlFor="root_firstName"
-            >
-              firstName
-            </label>
-            <div />
-            <input
-              autoFocus={false}
-              className="form-control"
-              disabled={false}
-              id="root_firstName"
-              label="firstName"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              placeholder=""
-              readOnly={false}
-              required={false}
-              type="text"
-              value="Bill"
-            />
-            <div />
-            <div />
-          </div>
-          <div
-            className="form-group field field-string"
-          >
-            <label
-              className="control-label"
-              htmlFor="root_lastName"
-            >
-              lastName
-            </label>
-            <div />
-            <input
-              autoFocus={false}
-              className="form-control"
-              disabled={false}
-              id="root_lastName"
-              label="lastName"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              placeholder=""
-              readOnly={false}
-              required={false}
-              type="text"
-              value=""
-            />
-            <div />
-            <div />
-          </div>
-        </fieldset>
-        <div />
-        <div />
-      </div>
-      <div />
-    </form>
+    <div />
     <div />
   </div>
-</div>
+  <p>
+    <button
+      className="btn btn-info"
+      type="submit"
+    >
+      Submit
+    </button>
+  </p>
+</form>
 `;
