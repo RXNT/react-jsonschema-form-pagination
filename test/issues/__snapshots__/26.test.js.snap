@@ -54,34 +54,6 @@ exports[`encounter title only once 1`] = `
       <div
         className="form-group field field-string"
       >
-        <label
-          className="control-label"
-          htmlFor="root_firstName"
-        >
-          firstName
-        </label>
-        <div />
-        <input
-          autoFocus={false}
-          className="form-control"
-          disabled={false}
-          id="root_firstName"
-          label="firstName"
-          onBlur={[Function]}
-          onChange={[Function]}
-          onFocus={[Function]}
-          placeholder=""
-          readOnly={false}
-          required={false}
-          type="text"
-          value=""
-        />
-        <div />
-        <div />
-      </div>
-      <div
-        className="form-group field field-string"
-      >
         <div>
           <div
             className="col-md-12"
@@ -151,16 +123,16 @@ exports[`encounter title only once 1`] = `
           >
             <label
               className="control-label"
-              htmlFor="root_lastName"
+              htmlFor="root_firstName"
             >
-              lastName
+              firstName
             </label>
             <input
               autoFocus={false}
               className="form-control"
               disabled={false}
-              id="root_lastName"
-              label="lastName"
+              id="root_firstName"
+              label="firstName"
               onBlur={[Function]}
               onChange={[Function]}
               onFocus={[Function]}
@@ -172,6 +144,34 @@ exports[`encounter title only once 1`] = `
             />
           </div>
         </div>
+        <div />
+        <div />
+      </div>
+      <div
+        className="form-group field field-string"
+      >
+        <label
+          className="control-label"
+          htmlFor="root_lastName"
+        >
+          lastName
+        </label>
+        <div />
+        <input
+          autoFocus={false}
+          className="form-control"
+          disabled={false}
+          id="root_lastName"
+          label="lastName"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          placeholder=""
+          readOnly={false}
+          required={false}
+          type="text"
+          value=""
+        />
         <div />
         <div />
       </div>

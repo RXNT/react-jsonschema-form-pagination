@@ -1,9 +1,13 @@
 import { GENERIC_NAV } from "../utils";
 export const UI_NAV_ID = "nav";
 
-export function toNavConf(layer, { navConf: { navs = [] } = {} }) {
-  let nav = navs.find(({ nav }) => nav === layer);
-  return nav;
+export function toNavConf(nav, { navConf: { navs = [] } = {} }) {
+  return navs.find(conf => conf.nav === nav);
+}
+
+export function toNavConfOrDefault(nav, uiSchema) {
+  let navConf = toNavConf(nav, uiSchema);
+  return navConf ? navConf : { nav };
 }
 
 export function findFieldNavs(field, uiSchema) {
@@ -46,10 +50,7 @@ export function orderNavs(navs, uiSchema) {
 export default function extractSubNavs(tree, uiSchema, activeNav) {
   let navs = Object.keys(tree)
     .filter(nav => nav !== GENERIC_NAV)
-    .map(nav => {
-      let navConf = toNavConf(nav, uiSchema);
-      return navConf ? navConf : { nav };
-    })
+    .map(nav => toNavConfOrDefault(nav, uiSchema))
     .map(nav => Object.assign(nav, { isActive: nav.nav === activeNav }));
   let orderedNavs = orderNavs(navs, uiSchema);
   return { links: orderedNavs, activeNav };

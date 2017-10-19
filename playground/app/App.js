@@ -35,6 +35,17 @@ export class App extends Component {
         {...fullConf}
         liveValidation={true}
         noHtml5Validate={true}
+        transformErrors={errors =>
+          errors.map(error => {
+            if (error.activeNav) {
+              let navPostfix = ` (${error.activeNav
+                .map(({ nav, name }) => name || nav)
+                .join(" > ")})`;
+              error.message = `${error.message}${navPostfix}`;
+              error.stack = `${error.stack}${navPostfix}`;
+            }
+            return error;
+          })}
         onSubmit={() => console.log("Submitting form data")}
         onChange={this.handleChange}
         onError={this.handleError}

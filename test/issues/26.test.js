@@ -20,6 +20,16 @@ const schema = {
 };
 
 const uiSchema = {
+  "ui:order": [
+    "encounter",
+    "firstName",
+    "lastName",
+    "age",
+    "nickName",
+    "bio",
+    "password",
+    "telephone",
+  ],
   firstNameAlias: {
     nav: ["0", "lastName"],
   },
