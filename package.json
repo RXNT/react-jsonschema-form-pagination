@@ -45,9 +45,9 @@
     "node": ">=6"
   },
   "peerDependencies": {
-    "prop-types": "15.5.10",
-    "react": "15.6.1",
-    "react-jsonschema-form": "0.51.0"
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-jsonschema-form": "^0.51.0"
   },
   "dependencies": {
     "ajv": "^5.2.3",
