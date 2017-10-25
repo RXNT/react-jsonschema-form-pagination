@@ -62,7 +62,7 @@ const uiSchema = {
   },
 };
 
-test("Component should call componentWillReceiveProps on update", () => {
+test("Re render on activeNav property change", () => {
   let props = { schema, uiSchema, activeNav: ["1"] };
   let ResForm = applyPagination(Form);
   const spy = sinon.spy(ResForm.prototype, "render");
