@@ -78,7 +78,9 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
       if (diffProps) {
         return true;
       }
-      return !deepequal(this.formData, nextProps.formData);
+      return (
+        nextProps.formData && !deepequal(this.formData, nextProps.formData)
+      );
     }
 
     render() {
