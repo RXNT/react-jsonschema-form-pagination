@@ -24,12 +24,13 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
       this.state = { activeNav };
     }
 
-    diffProps({ schema, uiSchema }) {
+    diffProps({ schema, uiSchema, activeNav }) {
       return !deepequal(
-        { schema, uiSchema },
+        { schema, uiSchema, activeNav },
         {
           schema: this.props.schema,
           uiSchema: this.props.uiSchema,
+          activeNav: this.props.activeNav,
         }
       );
     }
@@ -37,8 +38,11 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
     componentWillReceiveProps(nextProps) {
       let diffNav = this.diffProps(nextProps);
       if (diffNav) {
-        let { schema, uiSchema } = nextProps;
+        let { schema, uiSchema, activeNav } = nextProps;
         this.navTree = splitter(schema, uiSchema);
+        if (activeNav) {
+          this.setState({ activeNav: toArray(activeNav) });
+        }
       }
     }
 
