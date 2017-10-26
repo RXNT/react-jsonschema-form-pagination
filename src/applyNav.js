@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import deepequal from "deep-equal";
+import { deepEquals } from "react-jsonschema-form/lib/utils";
 import formWithHiddenField from "./render";
 import Navs from "./render/Navs";
 import splitter from "./splitter";
@@ -25,14 +25,15 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
     }
 
     diffProps({ schema, uiSchema, activeNav }) {
-      return !deepequal(
-        { schema, uiSchema, activeNav },
-        {
-          schema: this.props.schema,
-          uiSchema: this.props.uiSchema,
-          activeNav: this.props.activeNav,
-        }
-      );
+      const schemaChanged = !deepEquals(schema, this.props.schema);
+      if (schemaChanged) {
+        return true;
+      }
+      const uiSchemaChanged = !deepEquals(uiSchema, this.props.uiSchema);
+      if (uiSchemaChanged) {
+        return true;
+      }
+      return !deepEquals(activeNav, this.props.activeNav);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -70,7 +71,10 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
     };
 
     shouldComponentUpdate(nextProps, nextState) {
-      let diffActiveNav = !deepequal(nextState.activeNav, this.state.activeNav);
+      let diffActiveNav = !deepEquals(
+        nextState.activeNav,
+        this.state.activeNav
+      );
       if (diffActiveNav) {
         return true;
       }
@@ -79,7 +83,7 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
         return true;
       }
       return (
-        nextProps.formData && !deepequal(this.formData, nextProps.formData)
+        nextProps.formData && !deepEquals(this.formData, nextProps.formData)
       );
     }
 
