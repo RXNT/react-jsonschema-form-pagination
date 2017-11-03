@@ -2,7 +2,9 @@ export function fetchField({ property, argument }) {
   if (property === "instance") {
     return argument;
   } else {
-    let fullField = property.substring(9);
+    let fullField = property.startsWith("instance")
+      ? property.substring(9)
+      : property.substring(1);
     let nextArrSep = fullField.indexOf("[");
     let nextFieldSep = fullField.indexOf(".");
     let nextSeparator =

@@ -2,7 +2,7 @@ import React from "react";
 import Form from "react-jsonschema-form";
 import applyPagination from "../../src";
 import sinon from "sinon";
-import Adapter from "enzyme-adapter-react-15";
+import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 
 configure({ adapter: new Adapter() });
@@ -65,14 +65,14 @@ const uiSchema = {
 test("Re render on activeNav property change", () => {
   let props = { schema, uiSchema, activeNav: ["1"] };
   let ResForm = applyPagination(Form);
-  const spy = sinon.spy(ResForm.prototype, "render");
+  const renderSpy = sinon.spy(ResForm.prototype, "render");
   const wrapper = shallow(<ResForm {...props} />);
 
-  expect(spy.calledOnce).toEqual(true);
+  expect(renderSpy.calledOnce).toEqual(true);
 
   wrapper.setProps({ schema, uiSchema, activeNav: ["1"] });
-  expect(spy.calledOnce).toEqual(true);
+  expect(renderSpy.calledOnce).toEqual(true);
 
   wrapper.setProps({ schema, uiSchema, activeNav: ["2"] });
-  expect(spy.calledTwice).toEqual(true);
+  expect(renderSpy.calledTwice).toEqual(true);
 });

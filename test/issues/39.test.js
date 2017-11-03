@@ -2,7 +2,7 @@ import React from "react";
 import Form from "react-jsonschema-form";
 import applyPagination from "../../src";
 import sinon from "sinon";
-import Adapter from "enzyme-adapter-react-15";
+import Adapter from "enzyme-adapter-react-16";
 import { mount, configure } from "enzyme";
 
 configure({ adapter: new Adapter() });

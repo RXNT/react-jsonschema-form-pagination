@@ -4,7 +4,7 @@ import { deepEquals } from "react-jsonschema-form/lib/utils";
 import formWithHiddenField from "./render";
 import Navs from "./render/Navs";
 import splitter from "./splitter";
-import { toArray } from "./utils";
+import { toArray, cleanProps } from "./utils";
 import errorHandler from "./errorHandler";
 
 export default function applyPagination(FormComponent, NavComponent = Navs) {
@@ -20,43 +20,67 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
       this.navTree = splitter(schema, uiSchema);
       this.navTree.updateActiveNav(activeNav, 0);
 
+      this.shouldUpdate = false;
       this.formData = formData;
       this.state = { activeNav };
     }
 
-    diffProps({ schema, uiSchema, activeNav }) {
-      const schemaChanged = !deepEquals(schema, this.props.schema);
-      if (schemaChanged) {
-        return true;
-      }
-      const uiSchemaChanged = !deepEquals(uiSchema, this.props.uiSchema);
-      if (uiSchemaChanged) {
-        return true;
-      }
-      return !deepEquals(activeNav, this.props.activeNav);
+    navTreeChanged({ schema, uiSchema }) {
+      return (
+        !deepEquals(schema, this.props.schema) ||
+        !deepEquals(uiSchema, this.props.uiSchema)
+      );
     }
 
     componentWillReceiveProps(nextProps) {
-      let diffNav = this.diffProps(nextProps);
-      if (diffNav) {
-        let { schema, uiSchema, activeNav } = nextProps;
-        this.navTree = splitter(schema, uiSchema);
-        if (activeNav) {
-          this.setState({ activeNav: toArray(activeNav) });
-        }
+      if (this.props === nextProps) {
+        return;
+      }
+
+      if (this.navTreeChanged(nextProps)) {
+        this.navTree = splitter(nextProps.schema, nextProps.uiSchema);
+        this.shouldUpdate = true;
+      }
+
+      if (
+        nextProps.activeNav &&
+        !deepEquals(nextProps.activeNav, this.state.activeNav)
+      ) {
+        this.setState(() => {
+          this.shouldUpdate = true;
+          return { activeNav: toArray(nextProps.activeNav) };
+        });
+      }
+
+      if (
+        nextProps.formData &&
+        !deepEquals(this.formData, nextProps.formData)
+      ) {
+        this.formData = nextProps.formData;
+        this.shouldUpdate = true;
+      }
+
+      if (!this.shouldUpdate) {
+        this.shouldUpdate = !deepEquals(
+          cleanProps(nextProps),
+          cleanProps(this.props)
+        );
       }
     }
 
     handleNavChange = activeNav => {
-      let oldNav = this.state.activeNav;
-      if (
-        oldNav.length === activeNav.length &&
-        oldNav.every((el, i) => el === activeNav[i])
-      ) {
-        return;
-      }
       this.navTree.updateActiveNav(activeNav);
-      this.setState({ activeNav });
+
+      let oldNav = this.state.activeNav;
+      if (deepEquals(oldNav, activeNav)) {
+        return;
+      } else {
+        this.setState(() => {
+          this.shouldUpdate = true;
+          return { activeNav };
+        });
+      }
+
       if (this.props.onNavChange) {
         this.props.onNavChange(activeNav, oldNav);
       }
@@ -70,22 +94,12 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
       }
     };
 
-    shouldComponentUpdate(nextProps, nextState) {
-      let diffActiveNav = !deepEquals(
-        nextState.activeNav,
-        this.state.activeNav
-      );
-      if (diffActiveNav) {
+    shouldComponentUpdate() {
+      if (this.shouldUpdate) {
+        this.shouldUpdate = false;
         return true;
       }
-      let diffProps = this.diffProps(nextProps);
-      if (diffProps) {
-        return true;
-      }
-      let diffFormData =
-        nextProps.formData !== undefined &&
-        !deepEquals(this.formData, nextProps.formData);
-      return diffFormData;
+      return false;
     }
 
     render() {

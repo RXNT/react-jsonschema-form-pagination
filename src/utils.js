@@ -21,6 +21,15 @@ export function toArray(val) {
   }
 }
 
+export function cleanProps(props) {
+  return Object.assign({}, props, {
+    schema: undefined,
+    uiSchema: undefined,
+    formData: undefined,
+    activeNav: undefined,
+  });
+}
+
 export function isEmptySchema(schema) {
   return (
     !schema || !schema.properties || Object.keys(schema.properties).length === 0
