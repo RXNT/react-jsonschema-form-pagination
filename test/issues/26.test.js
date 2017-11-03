@@ -52,6 +52,7 @@ const uiSchema = {
     nav: "2",
   },
   navConf: {
+    navs: [{ nav: "0", name: "First One To Be", icon: "fa fa-search" }],
     aliases: {
       firstName: "firstNameAlias",
     },

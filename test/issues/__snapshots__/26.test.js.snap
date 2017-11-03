@@ -66,8 +66,12 @@ exports[`encounter title only once 1`] = `
                 onClick={[Function]}
               >
                 <a>
+                  <span
+                    aria-hidden="true"
+                    className="fa fa-search"
+                  />
                    
-                  0
+                  First One To Be
                 </a>
               </li>
               <li

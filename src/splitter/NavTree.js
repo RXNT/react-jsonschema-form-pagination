@@ -12,29 +12,29 @@ export default class NavTree {
     this.tree = extractTree(schema, uiSchema);
     this.schema = schema;
     this.uiSchema = uiSchema;
+
+    this.updateActiveNav = this.updateActiveNav.bind(this);
+    this.findActiveNav = this.findActiveNav.bind(this);
+    this.toSubForms = this.toSubForms.bind(this);
   }
 
-  pushToTabFromTree = (relTree, activeNavs) => {
+  updateActiveNav(activeNavs, relTree) {
+    relTree = relTree ? relTree : findRelTree(this.tree, activeNavs);
     let orderedNavs = orderNavByName(Object.keys(relTree), this.uiSchema);
     let nextNav = orderedNavs.find(nav => nav !== GENERIC_NAV);
     if (nextNav) {
       activeNavs.push(nextNav);
-      this.pushToTabFromTree(relTree[nextNav], activeNavs);
+      this.updateActiveNav(activeNavs, relTree[nextNav]);
     }
-  };
+  }
 
-  updateActiveNav = activeNavs => {
-    let relTree = findRelTree(this.tree, activeNavs);
-    this.pushToTabFromTree(relTree, activeNavs);
-  };
-
-  findActiveNav = field => {
+  findActiveNav(field) {
     return findFieldNavs(field, this.uiSchema).map(nav =>
       toNavConfOrDefault(nav, this.uiSchema)
     );
-  };
+  }
 
-  toSubForms = activeNav => {
+  toSubForms(activeNav) {
     let agg = [];
     for (let i = 0; i <= activeNav.length; i++) {
       let subConf = extractSubConf(
@@ -48,5 +48,5 @@ export default class NavTree {
       }
     }
     return agg;
-  };
+  }
 }

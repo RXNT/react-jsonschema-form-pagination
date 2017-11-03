@@ -14,23 +14,19 @@ function Nav({ handleClick, isActive, name, icon }) {
 
 function Navs({ navs: { links }, onNavChange }) {
   let relLinks = links.filter(({ nav }) => nav !== GENERIC_NAV);
-  if (relLinks.length > 0) {
-    return (
-      <ul className="nav nav-pills">
-        {relLinks.map(({ nav, name, icon, isActive }, i) => (
-          <Nav
-            key={i}
-            name={name ? name : nav}
-            icon={icon}
-            isActive={isActive}
-            handleClick={() => onNavChange(nav)}
-          />
-        ))}
-      </ul>
-    );
-  } else {
-    return <div />;
-  }
+  return (
+    <ul className="nav nav-pills">
+      {relLinks.map(({ nav, name, icon, isActive }, i) => (
+        <Nav
+          key={i}
+          name={name ? name : nav}
+          icon={icon}
+          isActive={isActive}
+          handleClick={() => onNavChange(nav)}
+        />
+      ))}
+    </ul>
+  );
 }
 
 export default Navs;

@@ -14,6 +14,7 @@ let schema = {
   },
 };
 let uiSchema = {
+  "ui:order": ["firstName", "lastName"],
   firstName: {
     classNames: "col-md-12",
   },
