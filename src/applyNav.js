@@ -103,14 +103,16 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
     }
 
     render() {
-      let subForms = this.navTree.toSubForms(this.state.activeNav);
+      let uiSchema = this.navTree.toSubForms(
+        this.state.activeNav,
+        this.handleNavChange
+      );
 
       let formProps = Object.assign({}, this.props, {
-        subForms,
+        uiSchema,
         transformErrors: errorHandler(this.navTree, this.props.transformErrors),
         formData: this.formData,
         onChange: this.handleOnChange,
-        onNavChange: this.handleNavChange,
       });
       return <FormWithNavs {...formProps}>{this.props.children}</FormWithNavs>;
     }

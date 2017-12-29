@@ -8,17 +8,14 @@ let FormWithNav = applyNav(Form);
 export class App extends Component {
   constructor(props) {
     super(props);
-
-    this.state = { formData: conf.formData };
   }
 
   handleError(errors) {
     console.log(errors);
   }
 
-  handleChange = ({ formData }) => {
-    console.log(`Data changed ${JSON.stringify(formData)}`);
-    this.setState({ formData });
+  handleChange = conf => {
+    console.log(`Data changed ${JSON.stringify(conf)}`);
   };
 
   handleNavChange = (nextTabs, prevTabs) => {
@@ -28,7 +25,7 @@ export class App extends Component {
   };
 
   render() {
-    let fullConf = Object.assign({}, conf, this.state);
+    let fullConf = Object.assign({}, conf);
     return (
       <FormWithNav
         {...fullConf}

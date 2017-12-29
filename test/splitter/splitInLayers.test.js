@@ -31,48 +31,46 @@ test("select active in layer", () => {
 
 test("return subforms", () => {
   let layers = splitter(schema, uiSchema);
-  let subForms = layers.toSubForms(["first", "age"]);
-  expect(subForms[0]).toEqual({
-    schema: {
-      type: "object",
-      properties: {
-        firstName: { type: "string" },
-      },
-    },
-    uiSchema: {
-      firstName: {
-        nav: ["first"],
-      },
-    },
-    navPath: ["first"],
-    navs: {
-      activeNav: "first",
-      links: [
-        { nav: "first", isActive: true },
-        { nav: "last", isActive: false },
-        { nav: "nick", isActive: false },
+  let resUiSchema = layers.toSubForms(["first", "age"], () => {});
+  expect(JSON.parse(JSON.stringify(resUiSchema))).toEqual({
+    age: {
+      navConfs: [
+        {
+          navs: {
+            activeNav: "age",
+            links: [
+              { isActive: true, nav: "age" },
+              { isActive: false, nav: "phone" },
+            ],
+          },
+        },
       ],
-    },
-  });
-  expect(subForms[1]).toEqual({
-    schema: {
-      type: "object",
-      properties: {
-        age: { type: "string" },
-      },
-    },
-    uiSchema: {
-      age: {
+      origUiSchema: {
         nav: ["first", "age"],
       },
+      "ui:field": "nav",
     },
-    navPath: ["first", "age"],
-    navs: {
-      activeNav: "age",
-      links: [
-        { nav: "age", isActive: true },
-        { nav: "phone", isActive: false },
+    firstName: {
+      navConfs: [
+        {
+          navs: {
+            activeNav: "first",
+            links: [
+              { isActive: true, nav: "first" },
+              { isActive: false, nav: "last" },
+              { isActive: false, nav: "nick" },
+            ],
+          },
+        },
       ],
+      origUiSchema: { nav: ["first"] },
+      "ui:field": "nav",
     },
+    lastName: { "ui:field": "hidden", "ui:widget": "hidden" },
+    nickName: { "ui:field": "hidden", "ui:widget": "hidden" },
+    other: { "ui:field": "hidden", "ui:widget": "hidden" },
+    phone: { "ui:field": "hidden", "ui:widget": "hidden" },
+    navConfs: [],
+    "ui:order": undefined,
   });
 });

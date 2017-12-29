@@ -41,96 +41,33 @@ const schema = {
 };
 
 const uiSchema = {
-  "ui:order": [
-    "encounter",
-    "firstName",
-    "lastName",
-    "age",
-    "nickName",
-    "bio",
-    "telephone",
-    "password",
-  ],
   encounter: {
-    classNames: "col-md-12",
+    nav: "Encounter",
   },
   firstName: {
-    classNames: "col-md-4 col-xs-4 success",
-    "ui:autofocus": true,
-    "ui:emptyValue": "",
-  },
-  firstNameAlias: {
-    classNames: "col-md-8 col-xs-4 success",
-    nav: ["0-tab", "lastName-tab"],
-  },
-  firstNameOneAlias: {
-    classNames: "col-md-8 col-xs-4 success",
-    nav: ["0-tab"],
+    nav: "First name",
   },
   lastName: {
-    classNames: "col-md-4 col-xs-4",
-    nav: ["0-tab", "lastName-tab"],
+    nav: "Last name",
   },
   age: {
-    classNames: "col-md-4 col-xs-4",
-    "ui:widget": "updown",
-    "ui:title": "Age of person",
-    nav: ["0-tab", "firstName-tab", "age-tab"],
+    nav: "Age",
   },
   nickName: {
-    classNames: "col-md-4 col-xs-4",
-    "ui:title": "nickname",
-    nav: ["0-tab", "firstName-tab", "nickName-tab"],
+    type: "string",
+    nav: "nickname",
   },
   bio: {
-    "ui:widget": "textarea",
-    classNames: "col-md-12",
-    nav: "1-tab",
+    type: "string",
+    nav: "Bio",
   },
   password: {
-    classNames: "col-md-6 col-xs-6",
-    "ui:widget": "password",
-    "ui:help": "Hint: Make it strong!",
-    nav: ["2-tab"],
+    type: "string",
+    nav: "Password",
+    minLength: 3,
   },
   telephone: {
-    classNames: "col-md-6 col-xs-6",
-    "ui:options": {
-      inputType: "tel",
-    },
-    nav: "2-tab",
-  },
-  navConf: {
-    aliases: {
-      firstName: ["firstNameAlias"],
-    },
-    order: [
-      "2-tab",
-      "0-tab",
-      "1-tab",
-      "firstName-tab",
-      "lastName-tab",
-      "age-tab",
-      "nickName-tab",
-    ],
-    navs: [
-      {
-        nav: "0-tab",
-        name: "Some",
-        classNames: "danger",
-        icon: "fa fa-address-book",
-      },
-      {
-        nav: "firstName-tab",
-        classNames: "danger",
-        icon: "glyphicon glyphicon-align-left",
-      },
-      {
-        nav: "lastName-tab",
-        classNames: "danger",
-        icon: "glyphicon glyphicon-align-right",
-      },
-    ],
+    nav: "Telephone",
   },
 };
 
@@ -145,5 +82,4 @@ export default {
   schema,
   uiSchema,
   formData,
-  activeNav: "1-tab",
 };

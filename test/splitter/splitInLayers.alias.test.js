@@ -9,9 +9,9 @@ let schema = {
 };
 
 let uiSchema = {
-  firstName: withNav("first"),
-  lastName: withNav(["last"]),
-  firstNameAlias: withNav(["last"]),
+  firstName: Object.assign(withNav("first"), { classNames: "col-md-12" }),
+  lastName: Object.assign(withNav(["last"]), { classNames: "col-md-6" }),
+  firstNameAlias: Object.assign(withNav(["last"]), { classNames: "col-md-6" }),
   navConf: {
     aliases: {
       firstName: "firstNameAlias",
@@ -26,26 +26,30 @@ test("return subforms", () => {
   layers.updateActiveNav(activeNavs);
   // expect(activeTabs).toEqual([ "first", "other" ]);
 
-  let subForms = layers.toSubForms(["last"]);
-  expect(subForms[0]).toEqual({
-    navPath: ["last"],
-    navs: {
-      activeNav: "last",
-      links: [
-        { isActive: false, nav: "first" },
-        { isActive: true, nav: "last" },
+  let resUiSchema = layers.toSubForms(["last"]);
+  expect(JSON.parse(JSON.stringify(resUiSchema))).toEqual({
+    firstName: {
+      nav: ["last"],
+      classNames: "col-md-6",
+    },
+    lastName: {
+      navConfs: [
+        {
+          navs: {
+            activeNav: "last",
+            links: [
+              { isActive: false, nav: "first" },
+              { isActive: true, nav: "last" },
+            ],
+          },
+        },
       ],
-    },
-    schema: {
-      type: "object",
-      properties: {
-        firstName: { type: "string" },
-        lastName: { type: "string" },
+      origUiSchema: {
+        nav: ["last"],
+        classNames: "col-md-6",
       },
+      "ui:field": "nav",
     },
-    uiSchema: {
-      firstName: withNav("last"),
-      lastName: withNav("last"),
-    },
+    navConfs: [],
   });
 });

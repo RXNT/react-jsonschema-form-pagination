@@ -5,6 +5,7 @@ import {
   orderNavByName,
   toNavConfOrDefault,
 } from "./extractSubNavs";
+import extractUiSchema from "./extractUiSchema";
 import { extractTree, findRelTree } from "./extractTree";
 
 export default class NavTree {
@@ -34,7 +35,7 @@ export default class NavTree {
     );
   }
 
-  toSubForms(activeNav) {
+  toSubForms(activeNav, onNavChange) {
     let agg = [];
     for (let i = 0; i <= activeNav.length; i++) {
       let subConf = extractSubConf(
@@ -47,6 +48,7 @@ export default class NavTree {
         agg.push(subConf);
       }
     }
-    return agg;
+
+    return extractUiSchema(agg, this.schema, this.uiSchema, onNavChange);
   }
 }
