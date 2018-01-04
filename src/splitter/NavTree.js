@@ -1,10 +1,6 @@
-import { GENERIC_NAV } from "../utils";
+import { GENERIC_NAV, findFieldNavs } from "../utils";
 import extractSubConf from "./extractSubConf";
-import {
-  findFieldNavs,
-  orderNavByName,
-  toNavConfOrDefault,
-} from "./extractSubNavs";
+import { orderNavByName, toNavConfOrDefault } from "./extractSubNavs";
 import extractUiSchema from "./extractUiSchema";
 import { extractTree, findRelTree } from "./extractTree";
 

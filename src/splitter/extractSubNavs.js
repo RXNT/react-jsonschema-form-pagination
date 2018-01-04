@@ -1,5 +1,4 @@
 import { GENERIC_NAV } from "../utils";
-export const UI_NAV_ID = "nav";
 
 export function toNavConf(nav, { navConf: { navs = [] } = {} }) {
   return navs.find(conf => conf.nav === nav);
@@ -8,18 +7,6 @@ export function toNavConf(nav, { navConf: { navs = [] } = {} }) {
 export function toNavConfOrDefault(nav, uiSchema) {
   let navConf = toNavConf(nav, uiSchema);
   return navConf ? navConf : { nav };
-}
-
-export function findFieldNavs(field, uiSchema) {
-  let navs =
-    uiSchema[field] && uiSchema[field][UI_NAV_ID]
-      ? uiSchema[field][UI_NAV_ID]
-      : [];
-  return Array.isArray(navs) ? navs : [navs];
-}
-
-export function getNavAliases({ navConf: { aliases = {} } = {} }) {
-  return aliases;
 }
 
 export function orderNavByName(navs, { navConf: { order = [] } = {} }) {

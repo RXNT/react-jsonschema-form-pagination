@@ -29,10 +29,6 @@ test("return subforms", () => {
   let resUiSchema = layers.toSubForms(["last"]);
   expect(JSON.parse(JSON.stringify(resUiSchema))).toEqual({
     firstName: {
-      nav: ["last"],
-      classNames: "col-md-6",
-    },
-    lastName: {
       navConfs: [
         {
           navs: {
@@ -49,6 +45,10 @@ test("return subforms", () => {
         classNames: "col-md-6",
       },
       "ui:field": "nav",
+    },
+    lastName: {
+      nav: ["last"],
+      classNames: "col-md-6",
     },
     navConfs: [],
   });

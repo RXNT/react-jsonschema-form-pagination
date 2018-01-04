@@ -1,5 +1,10 @@
-import { GENERIC_NAV, toArray } from "../utils";
-import { getNavAliases, findFieldNavs } from "./extractSubNavs";
+import {
+  GENERIC_NAV,
+  toArray,
+  getNavAliases,
+  findFieldNavs,
+  UI_ORDER,
+} from "../utils";
 
 export function findRelTree(tree, navs) {
   return navs.reduce((pos, nav) => {
@@ -23,7 +28,7 @@ function pushField(tree, field, uiAlias) {
   }
 }
 
-function fillSchemaConf(schema, uiSchema, tree) {
+function fillSchemaConf(tree, schema, uiSchema) {
   Object.keys(schema.properties).forEach(field => {
     let navs = findFieldNavs(field, uiSchema);
     let subTree = findRelTree(tree, navs);
@@ -31,12 +36,11 @@ function fillSchemaConf(schema, uiSchema, tree) {
   }, {});
 }
 
-function fillAliasesConf(uiSchema, tree) {
+function fillAliasesConf(tree, uiSchema) {
   let aliases = getNavAliases(uiSchema);
   Object.keys(aliases).forEach(field => {
-    let fieldAlias = aliases[field];
-    let normFieldAlias = toArray(fieldAlias);
-    normFieldAlias.forEach(alias => {
+    let fieldAlias = toArray(aliases[field]);
+    fieldAlias.forEach(alias => {
       let navs = findFieldNavs(alias, uiSchema);
       let subTree = findRelTree(tree, navs);
       pushField(subTree, field, alias);
@@ -44,9 +48,28 @@ function fillAliasesConf(uiSchema, tree) {
   });
 }
 
+export function orderFields(tree, fieldsOrder) {
+  Object.keys(tree).forEach(nav => {
+    if (nav === GENERIC_NAV) {
+      let { fields } = tree[nav];
+      fields.sort((a, b) => fieldsOrder.indexOf(a) - fieldsOrder.indexOf(b));
+    } else {
+      orderFields(tree[nav], fieldsOrder);
+    }
+  });
+}
+
 export function extractTree(schema, uiSchema) {
   let tree = {};
-  fillSchemaConf(schema, uiSchema, tree);
-  fillAliasesConf(uiSchema, tree);
+
+  fillSchemaConf(tree, schema, uiSchema);
+  fillAliasesConf(tree, uiSchema);
+
+  // Calculate field order, either with UI_ORDER or with natural order
+  let fieldsOrder = uiSchema[UI_ORDER]
+    ? uiSchema[UI_ORDER]
+    : Object.keys(schema.properties);
+  orderFields(tree, fieldsOrder);
+
   return tree;
 }

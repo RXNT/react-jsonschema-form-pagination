@@ -43,3 +43,57 @@ const extractSubConf = (navPath, tree, schema, uiSchema) => {
 };
 
 export default extractSubConf;
+
+function toHiddenUiSchema({ properties }) {
+  return Object.keys(properties).reduce((agg, field) => {
+    agg[field] = {
+      "ui:widget": "hidden",
+      "ui:field": "hidden",
+    };
+    return agg;
+  }, {});
+}
+
+function buildTabUiSchema(
+  activeNav,
+  tree,
+  uiSchema,
+  origSchema,
+  origUiSchema,
+  onNavChange
+) {
+  if (activeNav.length === 0) {
+    return uiSchema;
+  }
+
+  let relTree = tree[activeNav[0]];
+  let { fields, aliases } = tree[activeNav[0]];
+
+  Object.assign(uiSchema, extractSubUiSchema(fields, origUiSchema, aliases));
+
+  return buildTabUiSchema(
+    activeNav.slice(1),
+    relTree,
+    uiSchema,
+    origUiSchema,
+    onNavChange
+  );
+}
+
+export function toTabUiSchema(
+  activeNav,
+  tree,
+  origSchema,
+  origUiSchema,
+  onNavChange
+) {
+  let hiddenUiSchema = toHiddenUiSchema(origSchema);
+  return buildTabUiSchema(
+    activeNav,
+    tree,
+    hiddenUiSchema,
+    origSchema,
+    origUiSchema,
+    onNavChange
+  );
+}
