@@ -4,7 +4,7 @@ import { deepEquals } from "react-jsonschema-form/lib/utils";
 import formWithHiddenField from "./render";
 import Navs from "./render/Navs";
 import splitter from "./splitter";
-import { toArray, cleanProps } from "./utils";
+import { toArray } from "./utils";
 import errorHandler from "./errorHandler";
 
 export default function applyPagination(FormComponent, NavComponent = Navs) {
@@ -58,13 +58,6 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
       ) {
         this.formData = nextProps.formData;
         this.shouldUpdate = true;
-      }
-
-      if (!this.shouldUpdate) {
-        this.shouldUpdate = !deepEquals(
-          cleanProps(nextProps),
-          cleanProps(this.props)
-        );
       }
     }
 

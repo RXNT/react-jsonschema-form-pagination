@@ -8,6 +8,8 @@ let FormWithNav = applyNav(Form);
 export class App extends Component {
   constructor(props) {
     super(props);
+
+    this.state = { formData: {} };
   }
 
   handleError(errors) {
@@ -15,6 +17,7 @@ export class App extends Component {
   }
 
   handleChange = conf => {
+    this.setState({ formData: conf.formData });
     console.log(`Data changed ${JSON.stringify(conf)}`);
   };
 
@@ -24,6 +27,18 @@ export class App extends Component {
     console.log(`To ${nextTabs}`);
   };
 
+  transformErrors = errors =>
+    errors.map(error => {
+      if (error.activeNav) {
+        let navPostfix = ` (${error.activeNav
+          .map(({ nav, name }) => name || nav)
+          .join(" > ")})`;
+        error.message = `${error.message}${navPostfix}`;
+        error.stack = `${error.stack}${navPostfix}`;
+      }
+      return error;
+    });
+
   render() {
     let fullConf = Object.assign({}, conf);
     return (
@@ -31,17 +46,8 @@ export class App extends Component {
         {...fullConf}
         liveValidation={true}
         noHtml5Validate={true}
-        transformErrors={errors =>
-          errors.map(error => {
-            if (error.activeNav) {
-              let navPostfix = ` (${error.activeNav
-                .map(({ nav, name }) => name || nav)
-                .join(" > ")})`;
-              error.message = `${error.message}${navPostfix}`;
-              error.stack = `${error.stack}${navPostfix}`;
-            }
-            return error;
-          })}
+        formData={this.state.formData}
+        transformErrors={this.transformErrors}
         onSubmit={() => console.log("Submitting form data")}
         onChange={this.handleChange}
         onError={this.handleError}
