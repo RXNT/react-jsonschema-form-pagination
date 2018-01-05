@@ -32,7 +32,7 @@ test("select active in layer", () => {
 test("return subforms", () => {
   let layers = splitter(schema, uiSchema);
   let resUiSchema = layers.toSubForms(["first", "age"], () => {});
-  expect(JSON.parse(JSON.stringify(resUiSchema))).toEqual({
+  let expectedNav = {
     age: {
       navConfs: [
         {
@@ -70,7 +70,7 @@ test("return subforms", () => {
     nickName: { "ui:field": "hidden", "ui:widget": "hidden" },
     other: { "ui:field": "hidden", "ui:widget": "hidden" },
     phone: { "ui:field": "hidden", "ui:widget": "hidden" },
-    navConfs: [],
-    "ui:order": undefined,
-  });
+  };
+
+  expect(JSON.parse(JSON.stringify(resUiSchema))).toEqual(expectedNav);
 });

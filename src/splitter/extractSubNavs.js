@@ -34,11 +34,30 @@ export function orderNavs(navs, uiSchema) {
   return orderedNavs.map(ordNav => navs.find(({ nav }) => nav === ordNav));
 }
 
-export default function extractSubNavs(tree, uiSchema, activeNav) {
+export function buildNavs(tree, uiSchema, activeNav) {
   let navs = Object.keys(tree)
     .filter(nav => nav !== GENERIC_NAV)
     .map(nav => toNavConfOrDefault(nav, uiSchema))
     .map(nav => Object.assign({ isActive: nav.nav === activeNav }, nav));
   let orderedNavs = orderNavs(navs, uiSchema);
   return { links: orderedNavs, activeNav };
+}
+
+export default function extractSubNavs(tree, uiSchema, navPath, onNavChange) {
+  let activeNav = navPath[navPath.length - 1];
+  let navs = buildNavs(tree, uiSchema, activeNav);
+  if (navs && navs.links.length > 0) {
+    return {
+      navs,
+      onNavChange: nav => {
+        let selectedNav =
+          navPath.length === 0
+            ? [nav]
+            : navPath.slice(0, navPath.length - 1).concat([nav]);
+        onNavChange(selectedNav);
+      },
+    };
+  } else {
+    return undefined;
+  }
 }

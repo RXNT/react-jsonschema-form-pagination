@@ -32,11 +32,13 @@ test("create default configs", () => {
   };
   let navs = extractSubNavs(tree, uiSchema, "1");
   let expectedNavs = {
-    links: [
-      { nav: "1", name: "Some", isActive: true },
-      { nav: "2", isActive: false },
-    ],
-    activeNav: "1",
+    navs: {
+      activeNav: "1",
+      links: [
+        { isActive: true, name: "Some", nav: "1" },
+        { isActive: false, nav: "2" },
+      ],
+    },
   };
-  expect(navs).toEqual(expectedNavs);
+  expect(JSON.parse(JSON.stringify(navs))).toEqual(expectedNavs);
 });

@@ -50,6 +50,13 @@ test("return subforms", () => {
       nav: ["last"],
       classNames: "col-md-6",
     },
-    navConfs: [],
+    firstNameAlias: Object.assign(withNav(["last"]), {
+      classNames: "col-md-6",
+    }),
+    navConf: {
+      aliases: {
+        firstName: "firstNameAlias",
+      },
+    },
   });
 });

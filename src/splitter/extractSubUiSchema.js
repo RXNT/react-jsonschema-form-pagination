@@ -1,34 +1,23 @@
-import { UI_ORDER } from "../utils";
-
-function keepOrdering(fields, uiSchema, subUiSchema) {
-  if (uiSchema[UI_ORDER] && fields) {
-    subUiSchema[UI_ORDER] = uiSchema[UI_ORDER].filter(field =>
-      fields.includes(field)
-    );
-  }
+function restoreFields(fields, uiSchema, origUiSchema) {
+  fields.forEach(field => (uiSchema[field] = origUiSchema[field]));
+  return uiSchema;
 }
 
-function extractSubUiSchema(fields, uiSchema) {
-  let subUiSchema = {};
-
-  fields.forEach(field => {
-    subUiSchema[field] = uiSchema[field];
-  });
-
-  keepOrdering(fields, uiSchema, subUiSchema);
-
-  return subUiSchema;
-}
-
-function replaceAliases(uiSchema, subUiSchema, aliases) {
+function replaceAliases(aliases, uiSchema, origUiSchema) {
   Object.keys(aliases).forEach(field => {
     let alias = aliases[field];
-    subUiSchema[field] = uiSchema[alias];
+    uiSchema[field] = origUiSchema[alias];
   });
 }
 
-export default function getSubUiSchema(fields, uiSchema, aliases) {
-  let subUiSchema = extractSubUiSchema(fields, uiSchema);
-  replaceAliases(uiSchema, subUiSchema, aliases);
-  return subUiSchema;
+export default function extractSubUiSchema(
+  fields,
+  aliases,
+  origUiSchema,
+  uiSchema = {}
+) {
+  restoreFields(fields, uiSchema, origUiSchema);
+  replaceAliases(aliases, uiSchema, origUiSchema);
+
+  return uiSchema;
 }
