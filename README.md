@@ -278,6 +278,37 @@ CustomNavs will receive 3 properties
 
 Look at pagination for more details.
 
+For example, if we want to use NavBar to navigate in paginated form, we can define `CustomNav` like this
+
+```js
+import React from "react";
+import { GENERIC_NAV } from "react-jsonschema-form-pagination/lib/utils";
+
+function CustomNavs({ navs: { links }, onNavChange }) {
+  let relLinks = links.filter(({ nav }) => nav !== GENERIC_NAV);
+  return (
+    <nav className="navbar navbar-default">
+      <div className="container-fluid">
+        <div className="collapse navbar-collapse">
+          <ul className="nav navbar-nav">
+            {relLinks.map(({ nav, name, icon, isActive }, i) => (
+              <li key={i} onClick={() => onNavChange(nav)} className={isActive ? "active" : null}>
+                <a>
+                  {icon && <span className={icon} aria-hidden="true"/>}
+                  &nbsp;{name || nav}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+export default CustomNavs;
+```
+
 ## Nav ordering
 
 By default all tabs rendered in order they appear in uiSchema, since it's a primary source of layer reference, 

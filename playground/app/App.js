@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import applyNav from "../../src";
 import Form from "react-jsonschema-form";
 import conf from "./conf";
+import CustomNav from "./CustomNavs";
 
-let FormWithNav = applyNav(Form);
+let FormWithNav = applyNav(Form, CustomNav);
 
 export class App extends Component {
   constructor(props) {
