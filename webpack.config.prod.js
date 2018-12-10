@@ -3,6 +3,7 @@ var webpack = require("webpack");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
+    mode: 'development',
     entry: path.join(__dirname, "playground/app"),
     output: {
         path: path.join(__dirname, "build"),
@@ -24,7 +25,7 @@ module.exports = {
       extensions: [".js", ".jsx", ".css"],
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.jsx?$/,
                 loader: "babel-loader",

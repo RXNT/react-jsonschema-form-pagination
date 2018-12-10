@@ -1,0 +1,30 @@
+{
+  "encounter": {
+    "nav": "Encounter"
+  },
+  "firstName": {
+    "nav": "First name"
+  },
+  "lastName": {
+    "nav": "Last name"
+  },
+  "age": {
+    "nav": "Age"
+  },
+  "nickName": {
+    "type": "string",
+    "nav": "nickname"
+  },
+  "bio": {
+    "type": "string",
+    "nav": "Bio"
+  },
+  "password": {
+    "type": "string",
+    "nav": "Password",
+    "minLength": 3
+  },
+  "telephone": {
+    "nav": "Telephone"
+  }
+}

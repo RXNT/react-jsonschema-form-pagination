@@ -1,5 +1,5 @@
-var webpack = require("webpack");
-var path = require("path");
+const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
     cache: true,
@@ -29,7 +29,7 @@ module.exports = {
         }
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
                 loaders: ["babel-loader"],
