@@ -2,17 +2,9 @@
 
 exports[`encounter title only once 1`] = `
 <form
-  acceptCharset={undefined}
-  action={undefined}
-  autoComplete={undefined}
   className="rjsf"
-  encType={undefined}
-  id={undefined}
-  method={undefined}
-  name={undefined}
   noValidate={false}
   onSubmit={[Function]}
-  target={undefined}
 >
   <div
     className="form-group field field-object"
@@ -122,9 +114,7 @@ exports[`encounter title only once 1`] = `
             </ul>
             <br />
           </div>
-          <div
-            className={undefined}
-          >
+          <div>
             <label
               className="control-label"
               htmlFor="root_firstName"

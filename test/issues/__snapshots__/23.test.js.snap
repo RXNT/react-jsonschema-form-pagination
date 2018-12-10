@@ -2,17 +2,9 @@
 
 exports[`Initial formData rendered 1`] = `
 <form
-  acceptCharset={undefined}
-  action={undefined}
-  autoComplete={undefined}
   className="rjsf"
-  encType={undefined}
-  id={undefined}
-  method={undefined}
-  name={undefined}
   noValidate={false}
   onSubmit={[Function]}
-  target={undefined}
 >
   <div
     className="form-group field field-object"
