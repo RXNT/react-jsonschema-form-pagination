@@ -1,30 +1,41 @@
 {
   "encounter": {
-    "nav": "Encounter"
+    "nav": "Encounter",
+    "classNames": "col-md-12"
   },
-  "firstName": {
-    "nav": "First name"
-  },
-  "lastName": {
-    "nav": "Last name"
+  "general": {
+    "nav": "general",
+    "firstName": {
+      "nav": [ "general", "First name"],
+      "classNames": "col-md-12"
+    },
+    "lastName": {
+      "nav": [ "general", "Last name"],
+      "classNames": "col-md-12"
+    }
   },
   "age": {
-    "nav": "Age"
+    "nav": "Age",
+    "classNames": "col-md-12"
   },
   "nickName": {
     "type": "string",
-    "nav": "nickname"
+    "nav": "nickname",
+    "classNames": "col-md-12"
   },
   "bio": {
     "type": "string",
-    "nav": "Bio"
+    "nav": "Bio",
+    "classNames": "col-md-12"
   },
   "password": {
     "type": "string",
     "nav": "Password",
+    "classNames": "col-md-12",
     "minLength": 3
   },
   "telephone": {
-    "nav": "Telephone"
+    "nav": "Telephone",
+    "classNames": "col-md-12"
   }
 }

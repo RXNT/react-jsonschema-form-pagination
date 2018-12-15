@@ -1,44 +1,18 @@
 import { GENERIC_NAV, findFieldNavs } from "../utils";
 import { orderNavByName, toNavConfOrDefault } from "./extractSubNavs";
 import { extractTree, findRelTree } from "./extractTree";
+import { asNavField, toHiddenUiSchema } from "./util";
 import extractSubUiSchema from "./extractSubUiSchema";
 import extractSubNavs from "./extractSubNavs";
-
-function asNavField(field, navConfs, uiSchema) {
-  uiSchema[field] = {
-    navConfs,
-    "ui:field": "nav",
-    origUiSchema: uiSchema[field],
-  };
-}
-
-function asHiddenField(field, uiSchema) {
-  uiSchema[field] = {
-    "ui:widget": "hidden",
-    "ui:field": "hidden",
-  };
-}
-
-function toHiddenUiSchema({ properties }, uiSchema) {
-  let cleanUiSchema = Object.keys(properties).reduce((agg, field) => {
-    asHiddenField(field, agg);
-    return agg;
-  }, Object.assign({}, uiSchema));
-  return cleanUiSchema;
-}
 
 export default class NavTree {
   constructor(schema, uiSchema) {
     this.tree = extractTree(schema, uiSchema);
     this.schema = schema;
     this.uiSchema = uiSchema;
-
-    this.updateActiveNav = this.updateActiveNav.bind(this);
-    this.findActiveNav = this.findActiveNav.bind(this);
-    this.toSubForms = this.toSubForms.bind(this);
   }
 
-  updateActiveNav(activeNavs, relTree) {
+  updateActiveNav = (activeNavs, relTree) => {
     relTree = relTree ? relTree : findRelTree(this.tree, activeNavs);
     let orderedNavs = orderNavByName(Object.keys(relTree), this.uiSchema);
     let nextNav = orderedNavs.find(nav => nav !== GENERIC_NAV);
@@ -46,13 +20,13 @@ export default class NavTree {
       activeNavs.push(nextNav);
       this.updateActiveNav(activeNavs, relTree[nextNav]);
     }
-  }
+  };
 
-  findActiveNav(field) {
+  findActiveNav = field => {
     return findFieldNavs(field, this.uiSchema).map(nav =>
       toNavConfOrDefault(nav, this.uiSchema)
     );
-  }
+  };
 
   buildUiSchema = (
     activeNav,
@@ -65,7 +39,7 @@ export default class NavTree {
     if (tree[GENERIC_NAV]) {
       let { fields, aliases } = tree[GENERIC_NAV];
 
-      extractSubUiSchema(fields, aliases, this.uiSchema, uiSchema);
+      extractSubUiSchema(fields, aliases, this.uiSchema, uiSchema, this.schema);
 
       if (navConfs.length > 0) {
         asNavField(fields[0], navConfs, uiSchema);

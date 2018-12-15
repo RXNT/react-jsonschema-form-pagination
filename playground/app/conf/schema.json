@@ -11,13 +11,18 @@
       "type": "string",
       "title": "Encounter"
     },
-    "firstName": {
-      "type": "string",
-      "title": "First name"
-    },
-    "lastName": {
-      "type": "string",
-      "title": "Last name"
+    "general": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "title": "First name"
+        },
+        "lastName": {
+          "type": "string",
+          "title": "Last name"
+        }
+      }
     },
     "age": {
       "type": "integer",

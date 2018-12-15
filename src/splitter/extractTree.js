@@ -28,11 +28,17 @@ function pushField(tree, field, uiAlias) {
   }
 }
 
-function fillSchemaConf(tree, schema, uiSchema) {
+function fillSchemaConf(tree, schema, uiSchema, prefix = "") {
   Object.keys(schema.properties).forEach(field => {
-    let navs = findFieldNavs(field, uiSchema);
-    let subTree = findRelTree(tree, navs);
-    pushField(subTree, field);
+    const fieldSchema = schema.properties[field];
+    const fieldUiSchema = uiSchema[field];
+    if (fieldSchema.type === "object" && fieldUiSchema) {
+      fillSchemaConf(tree, fieldSchema, fieldUiSchema, field + ".");
+    } else {
+      let navs = findFieldNavs(field, uiSchema);
+      let subTree = findRelTree(tree, navs);
+      pushField(subTree, prefix ? prefix + field : field);
+    }
   }, {});
 }
 

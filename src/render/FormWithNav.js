@@ -4,7 +4,7 @@ import Navs from "./Navs";
 import HiddenField from "./HiddenField";
 import NavField from "./NavField";
 
-const formWithTabs = (FormComponent, NavComponent = Navs) => {
+const formWithNav = (FormComponent, NavComponent = Navs) => {
   class FormWithTabs extends Component {
     render() {
       let { fields = {}, uiSchema } = this.props;
@@ -28,4 +28,4 @@ const formWithTabs = (FormComponent, NavComponent = Navs) => {
   return FormWithTabs;
 };
 
-export default formWithTabs;
+export default formWithNav;
