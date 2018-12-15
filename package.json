@@ -6,12 +6,12 @@
   "version": "0.4.0",
   "scripts": {
     "build:lib": "rimraf lib && cross-env NODE_ENV=production babel -d lib/ src/",
-    "build:dist": "rimraf dist && cross-env NODE_ENV=production webpack --config webpack.config.dist.js --optimize-minimize",
+    "build:dist": "rimraf dist && cross-env NODE_ENV=production webpack --config webpack.config.dist.js --optimize-minimize --display-modules",
     "build:playground": "rimraf build && cross-env NODE_ENV=production webpack --config webpack.config.prod.js --optimize-minimize && cp playground/index.prod.html build/index.html",
     "cs-check": "prettier -l $npm_package_prettierOptions '{playground,src,test}/**/*.js'",
     "cs-format": "prettier $npm_package_prettierOptions '{playground,src,test}/**/*.js' --write",
     "dist": "npm run build:lib && npm run build:dist",
-    "lint": "eslint src test playground",
+    "lint": "eslint src test playground --fix",
     "precommit": "lint-staged",
     "publish-to-gh-pages": "npm run build:playground && gh-pages --dist build/",
     "publish-to-npm": "npm run dist &&  npm publish && npm version patch",
@@ -43,12 +43,10 @@
   "engines": {
     "node": ">=8"
   },
-  "peerDependencies": {
+  "devDependencies": {
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
-    "react-jsonschema-form": "^1.0.0"
-  },
-  "devDependencies": {
+    "react-jsonschema-form": "^1.0.0",
     "atob": "^2.0.3",
     "babel-cli": "^6.0.0",
     "babel-core": "^6.0.0",

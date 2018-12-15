@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { deepEquals } from "react-jsonschema-form/lib/utils";
 import formWithHiddenField from "./render";
 import Navs from "./render/Navs";
 import splitter from "./splitter";
-import { toArray } from "./utils";
+import { toArray, deepEquals } from "./utils";
 import errorHandler from "./errorHandler";
 
 export default function applyPagination(FormComponent, NavComponent = Navs) {
