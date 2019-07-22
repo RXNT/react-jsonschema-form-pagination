@@ -47,7 +47,7 @@ export function Label({
 }) {
   const label = uiSchema["ui:title"] || title || name;
   let { ["ui:options"]: { label: displayLabel = true } = {} } = uiSchema;
-  if (type === "object") {
+  if (type === "object" || uiSchema["ui:displayLabel"] == false) {
     displayLabel = false;
   }
   if (type === "boolean" && !uiSchema["ui:widget"]) {
