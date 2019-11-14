@@ -1,13 +1,7 @@
-import React from "react";
-import Form from "react-jsonschema-form";
-import applyPagination from "../../src";
-import Adapter from "enzyme-adapter-react-16";
-import { shallow, configure } from "enzyme";
 import { extractTree } from "../../src/splitter/extractTree";
 import extractSubUiSchema from "../../src/splitter/extractSubUiSchema";
 import { toHiddenUiSchema } from "../../src/splitter/util";
-
-configure({ adapter: new Adapter() });
+import { GENERIC_NAV } from "../../src/utils";
 
 const schema = {
   type: "object",
@@ -72,26 +66,25 @@ const uiSchema = {
   // },
 };
 
-test("Re render on activeNav property change", () => {
-  let props = { schema, uiSchema, activeNav: ["1"] };
-  let ResForm = applyPagination(Form);
-  const wrapper = shallow(<ResForm {...props} />);
-  wrapper.setProps({ formData: { firstName: "A" } });
+test("Handling more complex nested object structure", () => {
   const tree = extractTree(schema, uiSchema);
 
-  // let expectedNavs = [
-  //     { nav: "0", name: "First" },
-  //     { nav: "1", name: "Second" },
-  //     { nav: "2", name: "Third" },
-  // ];
-
-  //expect(uiSchema.navConf.navs).toEqual(expectedNavs);
+  expect(tree["General"]["name"][GENERIC_NAV].fields).toBeDefined();
+  expect(tree["General"]["name"][GENERIC_NAV].fields[0]).toEqual(
+    "nested.general.firstName"
+  );
   const hiddenUiSchema = toHiddenUiSchema(schema, uiSchema);
-  extractSubUiSchema(
+  expect("nested" in hiddenUiSchema).toEqual(true);
+  expect("general" in hiddenUiSchema.nested).toEqual(true);
+  expect("firstName" in hiddenUiSchema.nested.general).toEqual(true);
+
+  const result = extractSubUiSchema(
     tree["General"]["additional"].default.fields,
     {},
     uiSchema,
     hiddenUiSchema,
     schema
   );
+
+  expect(result.nested.general.firstName).toBeDefined();
 });
