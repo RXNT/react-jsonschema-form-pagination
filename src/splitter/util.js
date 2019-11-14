@@ -24,6 +24,13 @@ function asHiddenField(field, uiSchema) {
 export const toHiddenUiSchema = ({ properties }, uiSchema) => {
   let cleanUiSchema = Object.keys(properties).reduce((agg, field) => {
     asHiddenField(field, agg);
+    if ("properties" in properties[field]) {
+      Object.assign(
+        agg[field],
+        agg[field],
+        toHiddenUiSchema(properties[field], agg[field])
+      );
+    }
     return agg;
   }, Object.assign({}, uiSchema));
   return cleanUiSchema;

@@ -7,44 +7,49 @@
     "nickName"
   ],
   "properties": {
-    "encounter": {
-      "type": "string",
-      "title": "Encounter"
-    },
-    "general": {
+    "nested": {
       "type": "object",
       "properties": {
-        "firstName": {
+        "encounter": {
           "type": "string",
-          "title": "First name"
+          "title": "Encounter"
         },
-        "lastName": {
+        "general": {
+          "type": "object",
+          "properties": {
+            "firstName": {
+              "type": "string",
+              "title": "First name"
+            },
+            "lastName": {
+              "type": "string",
+              "title": "Last name"
+            }
+          }
+        },
+        "age": {
+          "type": "integer",
+          "title": "Age"
+        },
+        "nickName": {
           "type": "string",
-          "title": "Last name"
+          "title": "nickname"
+        },
+        "bio": {
+          "type": "string",
+          "title": "Bio"
+        },
+        "password": {
+          "type": "string",
+          "title": "Password",
+          "minLength": 3
+        },
+        "telephone": {
+          "type": "string",
+          "title": "Telephone",
+          "minLength": 10
         }
       }
-    },
-    "age": {
-      "type": "integer",
-      "title": "Age"
-    },
-    "nickName": {
-      "type": "string",
-      "title": "nickname"
-    },
-    "bio": {
-      "type": "string",
-      "title": "Bio"
-    },
-    "password": {
-      "type": "string",
-      "title": "Password",
-      "minLength": 3
-    },
-    "telephone": {
-      "type": "string",
-      "title": "Telephone",
-      "minLength": 10
     }
   }
 }
