@@ -1,41 +1,49 @@
 {
-  "encounter": {
-    "nav": "Encounter",
-    "classNames": "col-md-12"
-  },
-  "general": {
-    "nav": "general",
-    "firstName": {
-      "nav": [ "general", "First name"],
+  "nested": {
+    "encounter": {
+      "nav": "Encounter",
       "classNames": "col-md-12"
     },
-    "lastName": {
-      "nav": [ "general", "Last name"],
+    "general": {
+      "nav": "general",
+      "firstName": {
+        "nav": [
+          "general",
+          "First name"
+        ],
+        "classNames": "col-md-12"
+      },
+      "lastName": {
+        "nav": [
+          "general",
+          "Last name"
+        ],
+        "classNames": "col-md-12"
+      }
+    },
+    "age": {
+      "nav": "Age",
+      "classNames": "col-md-12"
+    },
+    "nickName": {
+      "type": "string",
+      "nav": "nickname",
+      "classNames": "col-md-12"
+    },
+    "bio": {
+      "type": "string",
+      "nav": "Bio",
+      "classNames": "col-md-12"
+    },
+    "password": {
+      "type": "string",
+      "nav": "Password",
+      "classNames": "col-md-12",
+      "minLength": 3
+    },
+    "telephone": {
+      "nav": "Telephone",
       "classNames": "col-md-12"
     }
-  },
-  "age": {
-    "nav": "Age",
-    "classNames": "col-md-12"
-  },
-  "nickName": {
-    "type": "string",
-    "nav": "nickname",
-    "classNames": "col-md-12"
-  },
-  "bio": {
-    "type": "string",
-    "nav": "Bio",
-    "classNames": "col-md-12"
-  },
-  "password": {
-    "type": "string",
-    "nav": "Password",
-    "classNames": "col-md-12",
-    "minLength": 3
-  },
-  "telephone": {
-    "nav": "Telephone",
-    "classNames": "col-md-12"
   }
 }

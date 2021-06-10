@@ -9,7 +9,9 @@ exports[`encounter title only once 1`] = `
   <div
     className="form-group field field-object"
   >
-    <fieldset>
+    <fieldset
+      id="root"
+    >
       <legend
         id="root__title"
       >
@@ -24,7 +26,6 @@ exports[`encounter title only once 1`] = `
         >
           encounter
         </label>
-        <div />
         <input
           autoFocus={false}
           className="form-control"
@@ -40,8 +41,6 @@ exports[`encounter title only once 1`] = `
           type="text"
           value=""
         />
-        <div />
-        <div />
       </div>
       <div
         className="form-group field field-string"
@@ -138,8 +137,6 @@ exports[`encounter title only once 1`] = `
             />
           </div>
         </div>
-        <div />
-        <div />
       </div>
       <div
         className="form-group field field-string"
@@ -150,7 +147,6 @@ exports[`encounter title only once 1`] = `
         >
           lastName
         </label>
-        <div />
         <input
           autoFocus={false}
           className="form-control"
@@ -166,25 +162,41 @@ exports[`encounter title only once 1`] = `
           type="text"
           value=""
         />
-        <div />
+      </div>
+      <div
+        className="hidden"
+      >
         <div />
       </div>
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
+      <div
+        className="hidden"
+      >
+        <div />
+      </div>
+      <div
+        className="hidden"
+      >
+        <div />
+      </div>
+      <div
+        className="hidden"
+      >
+        <div />
+      </div>
+      <div
+        className="hidden"
+      >
+        <div />
+      </div>
     </fieldset>
-    <div />
-    <div />
   </div>
-  <p>
+  <div>
     <button
       className="btn btn-info"
       type="submit"
     >
       Submit
     </button>
-  </p>
+  </div>
 </form>
 `;
