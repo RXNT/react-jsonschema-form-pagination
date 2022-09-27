@@ -6,8 +6,8 @@
   "version": "0.4.1",
   "scripts": {
     "build:lib": "rimraf lib && cross-env NODE_ENV=production babel -d lib/ src/",
-    "build:dist": "rimraf dist && cross-env NODE_ENV=production webpack --config webpack.config.dist.js --optimize-minimize --display-modules",
-    "build:playground": "rimraf build && cross-env NODE_ENV=production webpack --config webpack.config.prod.js --optimize-minimize && cp playground/index.prod.html build/index.html",
+    "build:dist": "rimraf dist && cross-env NODE_ENV=production webpack --config webpack.config.dist.js",
+    "build:playground": "rimraf build && cross-env NODE_ENV=production webpack --config webpack.config.prod.js  && cp playground/index.prod.html build/index.html",
     "cs-check": "prettier -l $npm_package_prettierOptions '{playground,src,test}/**/*.js'",
     "cs-format": "prettier $npm_package_prettierOptions '{playground,src,test}/**/*.js' --write",
     "dist": "npm run build:lib && npm run build:dist",
@@ -72,7 +72,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "exit-hook": "^2.0.0",
     "express": "^4.15.4",
-    "extract-text-webpack-plugin": "^3.0.2",
+    "mini-css-extract-plugin": "^1.6.2",
     "gh-pages": "^2.0.1",
     "has-flag": "^3.0.0",
     "html": "1.0.0",
@@ -89,10 +89,10 @@
     "rimraf": "^2.6.1",
     "sinon": "^7.2.0",
     "style-loader": "^0.23.1",
-    "webpack": "^4.27.1",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10",
-    "webpack-hot-middleware": "^2.19.1"
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1",
+    "webpack-hot-middleware": "^2.25.2"
   },
   "directories": {
     "test": "test"
