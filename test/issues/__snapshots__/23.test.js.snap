@@ -9,7 +9,9 @@ exports[`Initial formData rendered 1`] = `
   <div
     className="form-group field field-object"
   >
-    <fieldset>
+    <fieldset
+      id="root"
+    >
       <div
         className="form-group field field-string  col-md-12"
       >
@@ -19,7 +21,6 @@ exports[`Initial formData rendered 1`] = `
         >
           firstName
         </label>
-        <div />
         <input
           autoFocus={false}
           className="form-control"
@@ -35,8 +36,6 @@ exports[`Initial formData rendered 1`] = `
           type="text"
           value="Bill"
         />
-        <div />
-        <div />
       </div>
       <div
         className="form-group field field-string"
@@ -47,7 +46,6 @@ exports[`Initial formData rendered 1`] = `
         >
           lastName
         </label>
-        <div />
         <input
           autoFocus={false}
           className="form-control"
@@ -63,20 +61,16 @@ exports[`Initial formData rendered 1`] = `
           type="text"
           value=""
         />
-        <div />
-        <div />
       </div>
     </fieldset>
-    <div />
-    <div />
   </div>
-  <p>
+  <div>
     <button
       className="btn btn-info"
       type="submit"
     >
       Submit
     </button>
-  </p>
+  </div>
 </form>
 `;
