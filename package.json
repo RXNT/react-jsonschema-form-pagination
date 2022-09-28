@@ -1,8 +1,20 @@
 {
-  "name": "@ceonizm/react-jsonschema-form-pagination",
+  "name": "react-jsonschema-form-pagination",
   "description": "Extension of react-jsonschema-form with support for multi-nav forms",
   "private": false,
-  "author": "mavarazy@gmail.com",
+  "authors": [
+    "mavarazy@gmail.com"
+  ],
+  "contributors": [
+    {
+      "name": "Zach Boldyga",
+      "url": "https://github.com/zboldyga"
+    },
+    {
+      "name": "François Boukhalfa",
+      "url": "https://github.com/ceonizm"
+    }
+  ],
   "version": "0.4.1",
   "scripts": {
     "build:lib": "rimraf lib && cross-env NODE_ENV=production babel -d lib/ src/",
@@ -15,7 +27,6 @@
     "precommit": "lint-staged",
     "publish-to-gh-pages": "npm run build:playground && gh-pages --dist build/",
     "publish-to-npm": "npm run dist &&  npm publish && npm version patch",
-    "postinstall": "npm run dist",
     "start": "webpack-dev-server",
     "tdd": "jest --watchAll",
     "test": "jest"
@@ -99,15 +110,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ceonizm/react-jsonschema-form-pagination.git"
+    "url": "https://github.com/RXNT/react-jsonschema-form-pagination.git"
   },
   "keywords": [
     "react",
     "form",
     "json-schema",
     "conditional",
+    "pagination",
     "predicate"
   ],
   "license": "Apache-2.0",
-  "homepage": "https://github.com/RxNT/react-jsonschema-form-conditionals#readme"
+  "homepage": "https://github.com/RxNT/react-jsonschema-form-pagination#readme"
 }
