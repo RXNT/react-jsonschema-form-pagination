@@ -41,8 +41,8 @@ export default class NavTree {
 
       extractSubUiSchema(fields, aliases, this.uiSchema, uiSchema, this.schema);
 
-      const firstInUi = this.uiSchema?.[activeNav[0]]?.['ui:order']?.[0];
-      const firstField = firstInUi && `${activeNav[0]}.${firstInUi}`;
+      const firstInUi = activeNav[0] && uiSchema && uiSchema[activeNav[0]] && uiSchema[activeNav[0]]['ui:order'] && uiSchema[activeNav[0]]['ui:order'][0];
+      const firstField = firstInUi ? activeNav[0] + '.' + firstInUi : null;
       if (navConfs.length > 0) {
         asNavField(firstField || fields[0], navConfs, uiSchema);
       }
