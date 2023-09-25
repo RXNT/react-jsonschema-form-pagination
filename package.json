@@ -13,7 +13,7 @@
     "dist": "npm run build:lib && npm run build:dist",
     "lint": "eslint src test playground --fix",
     "precommit": "lint-staged",
-    "prepare": "npm run dist",
+    "prepare": "npm run build:lib",
     "publish-to-gh-pages": "npm run build:playground && gh-pages --dist build/",
     "publish-to-npm": "npm run dist &&  npm publish && npm version patch",
     "start": "webpack-dev-server",
