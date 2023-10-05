@@ -3,7 +3,7 @@ import {
   toArray,
   getNavAliases,
   findFieldNavs,
-  UI_ORDER,
+  UI_ORDER
 } from "../utils";
 
 export function findRelTree(tree, navs) {
@@ -19,7 +19,7 @@ function pushField(tree, field, uiAlias) {
   if (tree[GENERIC_NAV] === undefined) {
     tree[GENERIC_NAV] = {
       fields: [],
-      aliases: {},
+      aliases: {}
     };
   }
   tree[GENERIC_NAV].fields.push(field);
@@ -33,7 +33,12 @@ function fillSchemaConf(tree, schema, uiSchema, prefix = "") {
     const fieldSchema = schema.properties[field];
     const fieldUiSchema = uiSchema[field];
     if (fieldSchema.type === "object" && fieldUiSchema) {
-      fillSchemaConf(tree, fieldSchema, fieldUiSchema, field + ".");
+      fillSchemaConf(
+        tree,
+        fieldSchema,
+        fieldUiSchema,
+        prefix.length ? prefix + field + "." : field + "."
+      );
     } else {
       let navs = findFieldNavs(field, uiSchema);
       let subTree = findRelTree(tree, navs);
