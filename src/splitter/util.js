@@ -4,7 +4,7 @@ export const asNavField = (field, navConfs, uiSchema) => {
     uiSchema[field] = {
       navConfs,
       "ui:field": "nav",
-      origUiSchema: uiSchema[field],
+      origUiSchema: uiSchema[field]
     };
   } else {
     const parentField = field.substr(0, separatorIndex);
@@ -17,13 +17,22 @@ export const asNavField = (field, navConfs, uiSchema) => {
 function asHiddenField(field, uiSchema) {
   uiSchema[field] = {
     "ui:widget": "hidden",
-    "ui:field": "hidden",
+    "ui:field": "hidden"
   };
 }
 
 export const toHiddenUiSchema = ({ properties }, uiSchema) => {
   let cleanUiSchema = Object.keys(properties).reduce((agg, field) => {
     asHiddenField(field, agg);
+    if (typeof properties[field] == "object") {
+      if ("properties" in properties[field]) {
+        Object.assign(
+          agg[field],
+          agg[field],
+          toHiddenUiSchema(properties[field], agg[field])
+        );
+      }
+    }
     return agg;
   }, Object.assign({}, uiSchema));
   return cleanUiSchema;

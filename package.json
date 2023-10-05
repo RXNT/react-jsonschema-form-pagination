@@ -2,7 +2,15 @@
   "name": "react-jsonschema-form-pagination",
   "description": "Extension of react-jsonschema-form with support for multi-nav forms",
   "private": false,
-  "author": "mavarazy@gmail.com",
+  "authors": [
+    "mavarazy@gmail.com"
+  ],
+  "contributors": [
+    {
+      "name": "Ayush",
+      "url": "https://github.com/Ayush1959"
+    }
+  ],
   "version": "0.4.1",
   "scripts": {
     "build:lib": "rimraf lib && cross-env NODE_ENV=production babel -d lib/ src/",
