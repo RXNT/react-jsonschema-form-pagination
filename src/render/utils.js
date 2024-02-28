@@ -6,6 +6,7 @@ const COMPONENT_TYPES = {
   integer: "NumberField",
   number: "NumberField",
   object: "ObjectField",
+  undefined: "StringField",
   string: "StringField",
 };
 
