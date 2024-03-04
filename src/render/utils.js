@@ -18,7 +18,14 @@ export function getFieldComponent(schema, uiSchema, fields) {
   if (typeof field === "string" && field in fields) {
     return fields[field];
   }
-  const componentName = COMPONENT_TYPES[schema.type];
+  let componentName = COMPONENT_TYPES[schema.type];
+  if (
+    Array.isArray(schema.type) &&
+    schema.type.includes("string") &&
+    schema.type.includes("object")
+  ) {
+    componentName = "StringField";
+  }
   return componentName in fields
     ? fields[componentName]
     : () => <h1>Unknown field type {schema.type}</h1>;
