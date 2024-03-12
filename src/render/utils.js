@@ -41,7 +41,10 @@ function DefaultLabel(props) {
   }
   return (
     <label className="control-label" htmlFor={id}>
-      {required ? label + REQUIRED_FIELD_SYMBOL : label}
+      {required && (
+        <span style={{ color: "#ff4d4f" }}>{REQUIRED_FIELD_SYMBOL}</span>
+      )}
+      {label}
     </label>
   );
 }
@@ -61,7 +64,9 @@ export function Label({
   if (type === "boolean" && !uiSchema["ui:widget"]) {
     displayLabel = false;
   }
-
+  if (uiSchema["ui:widget"] && uiSchema["ui:widget"] === "hidden") {
+    displayLabel = false;
+  }
   if (displayLabel) {
     return (
       <DefaultLabel label={label} required={required} id={idSchema["$id"]} />
