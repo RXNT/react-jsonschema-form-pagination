@@ -31,7 +31,7 @@ export function getFieldComponent(schema, uiSchema, fields) {
     : () => <h1>Unknown field type {schema.type}</h1>;
 }
 
-const REQUIRED_FIELD_SYMBOL = "*";
+const REQUIRED_FIELD_SYMBOL = "* ";
 
 function DefaultLabel(props) {
   const { label, required, id } = props;
