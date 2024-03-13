@@ -6,6 +6,7 @@ const COMPONENT_TYPES = {
   integer: "NumberField",
   number: "NumberField",
   object: "ObjectField",
+  undefined: "StringField",
   string: "StringField",
 };
 
@@ -17,13 +18,20 @@ export function getFieldComponent(schema, uiSchema, fields) {
   if (typeof field === "string" && field in fields) {
     return fields[field];
   }
-  const componentName = COMPONENT_TYPES[schema.type];
+  let componentName = COMPONENT_TYPES[schema.type];
+  if (
+    Array.isArray(schema.type) &&
+    schema.type.includes("string") &&
+    schema.type.includes("object")
+  ) {
+    componentName = "StringField";
+  }
   return componentName in fields
     ? fields[componentName]
     : () => <h1>Unknown field type {schema.type}</h1>;
 }
 
-const REQUIRED_FIELD_SYMBOL = "*";
+const REQUIRED_FIELD_SYMBOL = "* ";
 
 function DefaultLabel(props) {
   const { label, required, id } = props;
@@ -33,7 +41,10 @@ function DefaultLabel(props) {
   }
   return (
     <label className="control-label" htmlFor={id}>
-      {required ? label + REQUIRED_FIELD_SYMBOL : label}
+      {required && (
+        <span style={{ color: "#ff4d4f" }}>{REQUIRED_FIELD_SYMBOL}</span>
+      )}
+      {label}
     </label>
   );
 }
@@ -53,7 +64,9 @@ export function Label({
   if (type === "boolean" && !uiSchema["ui:widget"]) {
     displayLabel = false;
   }
-
+  if (uiSchema["ui:widget"] && uiSchema["ui:widget"] === "hidden") {
+    displayLabel = false;
+  }
   if (displayLabel) {
     return (
       <DefaultLabel label={label} required={required} id={idSchema["$id"]} />
